@@ -4,7 +4,8 @@ require_once 'bootstart.php';
 try
 {
     $req=new Request();
-    FrontController::dispatch($req);
+    FrontController::getInstance()->dispatch($req);
+
 }
 catch (Exception $e)
 {

@@ -5,6 +5,10 @@ class FrontController
      * @var FrontController
      */
     static protected $instance;
+
+    private function __construct(){}
+    private function __clone(){}
+
     public static function getInstance()
     {
         if (!self::$instance) {
@@ -40,7 +44,7 @@ class FrontController
         return $controller_class->$action();
     }
 
-    public static function dispatch(Request $request)
+    public function dispatch(Request $request)
     {
         $module=$request->getModule();
         Registry::setValue($module, 'module');
