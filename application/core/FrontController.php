@@ -54,8 +54,4 @@ class FrontController
         $controller_class=self::getInstance()->getControllerClass($controller, $controller_file);
         self::getInstance()->getControllerMethod($controller_class, $action, $controller_file);
     }
-    private function isCssFile(){
-        if(end(explode(".",  $_SERVER['REQUEST_URI']))=='css')
-            return TRUE;
-    }
 }
