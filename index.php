@@ -5,6 +5,7 @@ try
 {
     $req=new Request();
     FrontController::dispatch($req);
+
 }
 catch (Exception $e)
 {
