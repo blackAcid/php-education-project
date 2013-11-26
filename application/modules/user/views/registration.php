@@ -36,4 +36,4 @@
         <input type="submit" name="send" class="send" value="Отправить">
     </p>
     </form>
-<div id="results"></div>
+<div id="results""></div>

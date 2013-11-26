@@ -41,6 +41,20 @@ class View
         return $links;
     }
 
+    public function addJsFile(){
+        $links=array();
+        $path_to_js="application/modules/".$this->module."/views/js/";
+        if(is_dir($path_to_js)){
+            $files = scandir($path_to_js);
+            for($i=2;$i<count($files);$i++)
+            {
+                $temp='<script type="text/javascript" src="'.'http://'.$_SERVER['SERVER_NAME'].'/'.$path_to_js.$files[$i].'"></script>';
+                $links[$i-2]=$temp;
+            }
+        }
+        return $links;
+    }
+
     public function assign($name,$value)
     {
         $this->variables[$name]=$value;

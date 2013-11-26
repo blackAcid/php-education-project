@@ -8,6 +8,10 @@
       {
           echo $value;
       }
+     foreach($this->addJsFile() as $value)
+      {
+          echo $value;
+      }
       ;?>
 </head>
 <body>
