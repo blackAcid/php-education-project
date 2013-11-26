@@ -14,7 +14,11 @@ class Config
 
     private static function parseConfig()
     {
-        self::$config = parse_ini_file('config.ini', true);
+        $match = glob(DIR_CORE . '*.ini');
+        if (is_array($match)) {
+            $ConfigName = $match[0];
+        }
+        self::$config = parse_ini_file($ConfigName, true);
     }
 
     public static function getSection($section)
@@ -37,10 +41,11 @@ class Config
         if (!self::$config) {
             self::parseConfig();
         }
-            self::$section = self::getSection($section);
-            if (isset(self::$section[$property])) {
-                return self::$section[$property];
-            }
+        self::$section = self::getSection($section);
+        if (isset(self::$section[$property])) {
+            return self::$section[$property];
+        } else {
+            return null;
         }
+    }
 }
-
