@@ -11,9 +11,9 @@ if ($emailVal->isValid()) {
 }
 
 $passVal = new Validator($pass1);
-$passVal->isAlnum('Password has to be alnum')
-    ->hasFormat('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', 'Password too weak')
-    ->isEqual($pass2, 'Passwords dont match');
+$passVal->isAlnum()
+    ->hasFormat('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/')
+    ->isEqual($pass2);
 if ($passVal->isValid()) {
     echo 'Password:Everything OK';
 } else {
