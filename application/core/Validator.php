@@ -1,47 +1,64 @@
 <?php
 
-
 class Validator
 {
-    private $errorsStack;
-    public $isValid = true;
+    private $errorStack;
+    private $input;
 
-    public function isEmail($input, $alias)
+    public function __construct($input)
     {
-        if (!is_string($input) || filter_var($input, FILTER_VALIDATE_EMAIL) == false) {
-            $this->errorsStack[$alias] = 'Email введен неверно.';
-            $this->isValid = false;
-        }
+        $this->input = $input;
     }
 
-    public function isPassword($input, $alias)
+    public function isEmail($error)
     {
-        if (preg_match('/\s/', $input)) {
-            $this->errorsStack[$alias][] = 'Пароль не может содержать пробелы.';
-            $this->isValid = false;
+        if (!is_string($this->input) || filter_var($this->input, FILTER_VALIDATE_EMAIL) == false) {
+            $this->errorStack[] = $error;
         }
 
-        if (!preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $input)) {
-            if (!preg_match('/[a-z]/', $input)) {
-                $this->errorsStack[$alias][] = 'Пароль должен содержать хотя бы одну строчную букву.';
-                $this->isValid = false;
-            }
+        return $this;
+    }
 
-            if (!preg_match('/[A-Z]/', $input)) {
-                $this->errorsStack[$alias][] = 'Пароль должен содержать хотя бы одну заглавную букву.';
-                $this->isValid = false;
-            }
-
-            if (!preg_match('/\d/', $input)) {
-                $this->errorsStack[$alias][] = 'Пароль должен содержать хотя бы одну цифру.';
-                $this->isValid = false;
-            }
+    public function isAlnum($error)
+    {
+        if (!ctype_alnum($this->input)) {
+            $this->errorStack[] = $error;
         }
+
+        return $this;
+    }
+
+    public function hasFormat($pattern, $error)
+    {
+        if (!preg_match($pattern, $this->input)) {
+            $this->errorStack[] = $error;
+        }
+
+        return $this;
+    }
+
+    public function isEqual($comparedTo, $error)
+    {
+        if ($this->input != $comparedTo) {
+            $this->errorStack[] = $error;
+        }
+
+        return $this;
+    }
+
+    public function isValid()
+    {
+        if (count($this->errorStack))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public function getErrors()
     {
-            return $this->errorsStack;
+        return $this->errorStack;
     }
 
 }
