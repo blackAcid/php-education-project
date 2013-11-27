@@ -1,0 +1,64 @@
+<?php
+
+class Validator
+{
+    private $errorStack;
+    private $input;
+
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    public function isEmail($error)
+    {
+        if (!is_string($this->input) || filter_var($this->input, FILTER_VALIDATE_EMAIL) == false) {
+            $this->errorStack[] = $error;
+        }
+
+        return $this;
+    }
+
+    public function isAlnum($error)
+    {
+        if (!ctype_alnum($this->input)) {
+            $this->errorStack[] = $error;
+        }
+
+        return $this;
+    }
+
+    public function hasFormat($pattern, $error)
+    {
+        if (!preg_match($pattern, $this->input)) {
+            $this->errorStack[] = $error;
+        }
+
+        return $this;
+    }
+
+    public function isEqual($comparedTo, $error)
+    {
+        if ($this->input != $comparedTo) {
+            $this->errorStack[] = $error;
+        }
+
+        return $this;
+    }
+
+    public function isValid()
+    {
+        if (count($this->errorStack))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getErrors()
+    {
+        return $this->errorStack;
+    }
+
+}
