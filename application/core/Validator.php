@@ -10,7 +10,7 @@ class Validator
         $this->input = $input;
     }
 
-    public function isEmail($error)
+    public function isEmail($error = 'Incorrect email format')
     {
         if (!is_string($this->input) || filter_var($this->input, FILTER_VALIDATE_EMAIL) == false) {
             $this->errorStack[] = $error;
@@ -19,7 +19,7 @@ class Validator
         return $this;
     }
 
-    public function isAlnum($error)
+    public function isAlnum($error = 'Not an alnum')
     {
         if (!ctype_alnum($this->input)) {
             $this->errorStack[] = $error;
@@ -28,7 +28,7 @@ class Validator
         return $this;
     }
 
-    public function hasFormat($pattern, $error)
+    public function hasFormat($pattern, $error = 'Wrong format')
     {
         if (!preg_match($pattern, $this->input)) {
             $this->errorStack[] = $error;
@@ -37,7 +37,7 @@ class Validator
         return $this;
     }
 
-    public function isEqual($comparedTo, $error)
+    public function isEqual($comparedTo, $error = 'Not equal')
     {
         if ($this->input != $comparedTo) {
             $this->errorStack[] = $error;
