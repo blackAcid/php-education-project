@@ -14,11 +14,32 @@ class Config
 
     private static function parseConfig()
     {
-        $match = glob(DIR_CORE . '*.ini');
+       /* $match = glob(DIR_CORE . '*.ini');
         if (is_array($match)) {
             $ConfigName = $match[0];
         }
         self::$config = parse_ini_file($ConfigName, true);
+       */
+        $ConfigFiles = glob(DIR_CORE . '*.ini');
+        if (is_array($ConfigFiles))
+        {
+            if(count($ConfigFiles) > 1)
+            {
+                for($i = 0; $i > count($ConfigFiles); $i++)
+                {
+                    $ConfigArray[$i] = parse_ini_file($ConfigFiles[$i], true);
+                }
+                $NumberOfConfigFiles = count($ConfigArray);
+                self::$config = $ConfigArray[0];
+                for($i = 1; $i < $NumberOfConfigFiles; $i++)
+                {
+                    self::$config = array_merge((array)self::$config, $ConfigArray[$i]);
+                }
+                return self::$config;
+            } else {
+                self::$config = parse_ini_file($ConfigFiles[0], true);
+            }
+        }
     }
 
     public static function getSection($section)
