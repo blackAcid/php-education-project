@@ -1,7 +1,7 @@
 <?php
 class Config
 {
-    private static $config = array();
+    private static $config;
     private static $section;
 
     public static function getConfig()
@@ -9,46 +9,30 @@ class Config
         if (!self::$config) {
             self::parseConfig();
         }
+
         return self::$config;
     }
 
-    /*private static function parseConfig()
+    private static function parseConfig()
     {
-        $match = glob(DIR_CORE . '*.ini');
-        if (is_array($match)) {
-            $ConfigName = $match[0];
-        }
-        self::$config = parse_ini_file($ConfigName, true);
-    }*/
+        $ConfigFiles = glob(DIR_CORE . '*.ini');
+        if (is_array($ConfigFiles)) {
+            if (count($ConfigFiles) > 1) {
+                for ($i = 0; $i < count($ConfigFiles); $i++) {
+                    $ConfigArray[$i] = parse_ini_file($ConfigFiles[$i], true);
+                }
 
-    public static function parseConfig()
-    {
-        $matches = glob(DIR_CORE . '*.ini');
-        if (is_array($matches))
-        {
-            /*for($i = 0; count($matches) > $i; $i++ )
-            {
-                if($matches[$i])
-                {
-                    $configFile = parse_ini_file($matches[$i], true);
-                    self::$config[$i] = $configFile;
+                $NumberOfConfigFiles = count($ConfigArray);
+                self::$config = $ConfigArray[0];
+                for ($i = 1; $i < $NumberOfConfigFiles; $i++) {
+                    self::$config = array_merge((array)self::$config, $ConfigArray[$i]);
                 }
-            }*/
-            if (count($matches) > 1)
-            {
-                for($i = 1; count($matches) > $i; $i++ )
-                {
-                    $content = file_get_contents($matches[$i]);
-                    $openIni = fopen($matches[0], 'a');
-                    $finalIni = fwrite($openIni, $content);
-                }
-                fclose($openIni);
-                self::$config = parse_ini_file($finalIni, true);
+
+                return self::$config;
             } else {
-                self::$config = parse_ini_file($matches[0], true);
+                self::$config = parse_ini_file($ConfigFiles[0], true);
             }
         }
-        return self::$config;
     }
 
     public static function getSection($section)
@@ -71,6 +55,7 @@ class Config
         if (!self::$config) {
             self::parseConfig();
         }
+
         self::$section = self::getSection($section);
         if (isset(self::$section[$property])) {
             return self::$section[$property];
