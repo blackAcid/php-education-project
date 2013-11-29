@@ -11,7 +11,6 @@
 
 <section>
     <?php require_once DIR_MOD.$module.'/views/'.$content;?></br>
-    <?php var_dump(Config::parseConfig());?>
 </section>
 <footer>
 
