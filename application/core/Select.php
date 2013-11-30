@@ -33,12 +33,30 @@ class Select {
         $order=$this->order;
         $limit=$this->limit;
         $innerJoin=$this->innerJoin;
-        $this->sql="SELECT $cols FROM `$this->table` $innerJoin $where $order $limit";
+        //$this->sql="SELECT $cols FROM `$this->table` $innerJoin $where $order $limit";
+        $this->sql="SELECT ".$cols." FROM `$this->table` ".$innerJoin.$where.$order.$limit;
       return $this;
     }
-    public function where($construct=null)
+   /* public function where($construct=null)
     {
        $this->where_val="WHERE ".$construct;
+        return $this;
+    }*/
+    public function where($construct=null)
+    {
+        $keys=array_keys($construct);
+        $values=array_values($construct);
+        $convert="";
+        for ($i=0;$i<count($construct);$i++)
+        {
+            if ($values[$i] != '?')
+            {
+                $values[$i]=$this->db->quote($values[$i]);
+            }
+            $convert.=$keys[$i].$values[$i]." ";
+
+        }
+        $this->where_val="WHERE ".$convert;
         return $this;
     }
     public function order($field,$flag=null)
@@ -59,9 +77,9 @@ class Select {
     public function limit($count=null,$end=null)
     {
         if (empty($end)){
-            $this->limit='LIMIT '.$count;
+            $this->limit=' LIMIT '.$count;
         }
-        else $this->limit='LIMIT '.$count.','.$end;
+        else $this->limit=' LIMIT '.$count.','.$end;
         return $this;
     }
     public function fetchAll($values=null)
