@@ -12,7 +12,6 @@ class View
         'xss_protection' => true
     );
 
-
     public function __construct($module,$page)
     {
         $this->path=DIR_MOD.$module."/views/";
@@ -27,29 +26,28 @@ class View
         }
         return true;
     }
-    public function addCssFile(){
+    public function getCssFile(){
         $links=array();
-        $path_to_css="application/modules/".$this->module."/views/css/";
-        if(is_dir($path_to_css)){
-            $files = scandir($path_to_css);
-            for($i=2;$i<count($files);$i++)
-            {
-                $temp='<link rel="stylesheet" type="text/css" media="screen" href="'.'http://'.$_SERVER['SERVER_NAME'].'/'.$path_to_css.$files[$i].'" />';
-                $links[$i-2]=$temp;
+        $path_to_css="css/".$this->module."/";
+        $matches = glob($path_to_css."*.css");
+        $s=substr($matches[0],strlen($path_to_css));
+        if ( is_array ( $matches ) ) {
+            for($i=0;$i<count($matches);$i++) {
+               $temp='<link rel="stylesheet" type="text/css" media="screen" href="'."/".$matches[$i].'" />';
+               $links[$i]=$temp;
             }
         }
         return $links;
     }
 
-    public function addJsFile(){
+    public function getJsFile(){
         $links=array();
-        $path_to_js="application/modules/".$this->module."/views/js/";
-        if(is_dir($path_to_js)){
-            $files = scandir($path_to_js);
-            for($i=2;$i<count($files);$i++)
-            {
-                $temp='<script type="text/javascript" src="'.'http://'.$_SERVER['SERVER_NAME'].'/'.$path_to_js.$files[$i].'"></script>';
-                $links[$i-2]=$temp;
+        $path_to_js="js/".$this->module."/";
+        $matches = glob($path_to_js."*.js");
+        if ( is_array ( $matches ) ) {
+            for($i=0;$i<count($matches);$i++) {
+                $temp='<script type="text/javascript" src="'."/".$matches[$i].'"></script>';
+                $links[$i]=$temp;
             }
         }
         return $links;

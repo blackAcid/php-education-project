@@ -22,7 +22,7 @@ class FrontController
     {
         $file=DIR_MOD.$module.'/controllers/'.$controller.'.php';
         if (!file_exists($file)) {
-            throw new Exception("File not found");
+            throw new Exception("File not found".$file);
         }
         return $file;
     }

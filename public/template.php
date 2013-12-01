@@ -4,15 +4,16 @@
     <meta charset=utf-8>
     <title><?php echo $this->title;?></title>
     <?php
-      foreach($this->addCssFile() as $value)
+      foreach($this->getCssFile() as $value)
       {
-          echo $value;
+          print $value;
       }
-     foreach($this->addJsFile() as $value)
+     foreach($this->getJsFile() as $value)
       {
-          echo $value;
+          print $value;
       }
-      ;?>
+
+    ;?>
 </head>
 <body>
 <header>
