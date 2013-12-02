@@ -12,11 +12,6 @@ class DataBase {
     private $dsn;
     private $user;
     private $password;
-  /*  public function __construct(){
-        $this->className=get_class($this);
-        $dsn = 'mysql:dbname=u_student_mems;host=localhost';
-        $this->db = new PDO($dsn,'root','anna');
-    }*/
     public function __construct(){
         $this->className=get_class($this);
         $this->getDbConfig();

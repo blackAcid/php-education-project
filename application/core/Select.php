@@ -9,17 +9,17 @@
 class Select {
     private  $table;
     private  $where_val;
-   // public $cols_val;
     private  $db;
     private  $sql;
     private $order;
     private  $limit;
-    private $innerJoin;
+    private $join;
     public function __construct($table, PDO $db)
     {
        $this->table=$table;
        $this->db=$db;
     }
+
     public function printSmt()
     {
         $result=$this->table;
@@ -32,16 +32,11 @@ class Select {
         $where=$this->where_val;
         $order=$this->order;
         $limit=$this->limit;
-        $innerJoin=$this->innerJoin;
+        $Join=$this->join;
         //$this->sql="SELECT $cols FROM `$this->table` $innerJoin $where $order $limit";
-        $this->sql="SELECT ".$cols." FROM `$this->table` ".$innerJoin.$where.$order.$limit;
+        $this->sql="SELECT ".$cols." FROM `$this->table` ".$Join.$where.$order.$limit;
       return $this;
     }
-   /* public function where($construct=null)
-    {
-       $this->where_val="WHERE ".$construct;
-        return $this;
-    }*/
     public function where($construct=null)
     {
         $keys=array_keys($construct);
@@ -49,7 +44,7 @@ class Select {
         $convert="";
         for ($i=0;$i<count($construct);$i++)
         {
-            if ($values[$i] != '?')
+            if ($values[$i] != '?' && strtoupper($values[$i])!='IS NULL')
             {
                 $values[$i]=$this->db->quote($values[$i]);
             }
@@ -110,14 +105,10 @@ class Select {
         $sql->debugDumpParams();
         return $result;
     }
-    public function innerJoin($table,$column)
+    public function Join($flag,$table2,$col1,$col2)
     {
-        $this->innerJoin=" INNER JOIN `$table` ON {$this->table}.`$column`=$table.`$column`";
+        $flag=strtoupper($flag);
+        $this->join=" ".$flag." JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
         return $this;
     }
-    public function outerJoin($flag)
-    {
-
-    }
-
 }
