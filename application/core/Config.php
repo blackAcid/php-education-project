@@ -1,4 +1,7 @@
 <?php
+
+namespace core\config;
+
 class Config
 {
     private static $config;
