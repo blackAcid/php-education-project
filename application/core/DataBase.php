@@ -6,7 +6,6 @@ class DataBase
     private $className;
     public function __construct()
     {
-        //$this->className=get_class($this);
         $class=get_class($this);
         $this->className=$class::$classTable;
         $this->getDbConfig();
