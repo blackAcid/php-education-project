@@ -1,0 +1,10 @@
+
+<VirtualHost *:80>
+  ServerName php-project
+  DocumentRoot /opt/lampp/htdocs/php-education-project/public
+ <Directory /opt/lampp/htdocs/php-education-project/public>      
+  AllowOverride All
+  Order allow,deny
+  Allow from all
+ </Directory>
+</VirtualHost>

@@ -8,7 +8,7 @@ class Request
     // private $view;
     public function __construct()
     {
-        //$this->parseURI();
+        $this->parseURI();
     }
     public function getController()
     {
@@ -31,6 +31,7 @@ class Request
     {
         $routes = explode('/', $_SERVER['REQUEST_URI']);
         //  print_r($routes);
+        echo $this->isCssFile();
         if (!empty($routes[1]) && !empty($routes[2])) {
             $this->module=$routes[1];
             $this->controller=$routes[2];
@@ -51,4 +52,10 @@ class Request
             }
         }
     }
+
+    private function isCssFile(){
+        if(end(explode(".",  $_SERVER['REQUEST_URI']))=='css')
+        return 'css';
+    }
+
 }

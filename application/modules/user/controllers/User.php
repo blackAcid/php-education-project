@@ -1,12 +1,12 @@
 <?php
 
-class IndexController
+class UserController
 {
-    public function indexAction()
+    public function registrationAction()
     {
         $module=Registry::getValue('module');
-        $v = new View($module,'home.php');
-        $v->assign('title','Home page');
+        $v = new View($module,'registration.php');
+        $v->assign('title','New user');
 
         try{
             $v->addIntoTemplate();
