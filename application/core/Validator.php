@@ -1,5 +1,7 @@
 <?php
 
+namespace core\Validator;
+
 class Validator
 {
     private $errorStack;
@@ -48,17 +50,11 @@ class Validator
 
     public function isValid()
     {
-        if (count($this->errorStack))
-        {
-            return false;
-        }
-
-        return true;
+        return !count($this->errorStack);
     }
 
     public function getErrors()
     {
         return $this->errorStack;
     }
-
 }

@@ -39,7 +39,11 @@ class FrontController
         }
         return $controller_class->$action();
     }
-
+    public function connectModel($module)
+    {
+        require_once DIR_TABLES.'tables.php';
+        require_once DIR_MOD."$module/model/DefaultModel.php";
+    }
     public static function dispatch(Request $request)
     {
         $module=$request->getModule();
@@ -48,6 +52,7 @@ class FrontController
         $action=$request->getAction().'Action';
         $controller_file=self::getInstance()->getControllerPath($controller, $module);
         $controller_class=self::getInstance()->getControllerClass($controller, $controller_file);
+        self::getInstance()->connectModel($module);
         self::getInstance()->getControllerMethod($controller_class, $action, $controller_file);
     }
 }

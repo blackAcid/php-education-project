@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset=utf-8>
-    <title></title>
+    <title><?php echo Config::getProperty('title', 'title'); ?></title>
 </head>
 <body>
 <header>
@@ -10,7 +10,7 @@
 </header>
 
 <section>
-    <?php require_once DIR_MOD.$module.'/views/'.$content;?>
+    <?php require_once DIR_MOD.$module.'/views/'.$content;?></br>
 </section>
 <footer>
 
