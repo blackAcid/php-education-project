@@ -5,7 +5,7 @@
  * Date: 30.11.13
  * Time: 18:33
  */
-
-class banlist extends DataBase {
-
-} 
+class Banlist extends DataBase
+{
+    static protected $classTable="banlist";
+}

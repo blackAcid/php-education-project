@@ -5,7 +5,7 @@
  * Date: 30.11.13
  * Time: 18:38
  */
-
-class users extends DataBase{
-
-} 
+class Users extends DataBase
+{
+    static protected $classTable="users";
+}

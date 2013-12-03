@@ -1,5 +1,6 @@
 <?php
 require_once 'bootstart.php';
+use Core;
 try
 {
     $req=new Request();

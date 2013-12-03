@@ -6,6 +6,7 @@
  * Time: 18:34
  */
 
-class categories extends DataBase{
-
-} 
+class Categories extends DataBase
+{
+    static protected $classTable="categories";
+}

@@ -6,6 +6,7 @@
  * Time: 18:38
  */
 
-class text_areas extends DataBase{
-
-} 
+class TextAreas extends DataBase
+{
+    static protected $classTable="text_areas";
+}

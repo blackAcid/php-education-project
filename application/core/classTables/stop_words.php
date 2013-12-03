@@ -6,6 +6,7 @@
  * Time: 18:37
  */
 
-class stop_words extends DataBase{
-
-} 
+class StopWords extends DataBase
+{
+    static protected $classTable="stop_words";
+}

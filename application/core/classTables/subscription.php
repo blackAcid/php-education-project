@@ -6,6 +6,7 @@
  * Time: 18:37
  */
 
-class subscription extends DataBase{
-
-} 
+class Subscription extends DataBase
+{
+    static protected $classTable="subscription";
+}

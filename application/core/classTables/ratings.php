@@ -6,6 +6,7 @@
  * Time: 18:36
  */
 
-class ratings extends DataBase{
-
-} 
+class Ratings extends DataBase
+{
+    static protected $classTable="ratings";
+}

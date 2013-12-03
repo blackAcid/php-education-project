@@ -6,6 +6,7 @@
  * Time: 18:36
  */
 
-class memes_tags extends DataBase{
-
-} 
+class MemesTags extends DataBase
+{
+    static protected $classTable="memes_tags";
+}
