@@ -65,6 +65,12 @@ class Select
         }
         return $this;
     }
+    public function join($flag, $table2, $col1, $col2)
+    {
+        $flag=strtoupper($flag);
+        $this->join=" ".$flag." JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
+        return $this;
+    }
     public function fetchAll($values = null)
     {
         $this->sql="SELECT ".$this->cols." FROM `$this->table` ".$this->join.$this->where.$this->order.$this->limit;
@@ -81,8 +87,8 @@ class Select
     }
     public function fetch($values = null)
     {
-        $query=$this->sql;
-        $sql=$this->db->prepare($query);
+        $this->sql="SELECT ".$this->cols." FROM `$this->table` ".$this->join.$this->where.$this->order.$this->limit;
+        $sql=$this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i=0; $i<count($values); $i++) {
                 $sql->bindParam($i+1, $values[$i]);
@@ -93,10 +99,5 @@ class Select
         $sql->debugDumpParams();
         return $result;
     }
-    public function join($flag, $table2, $col1, $col2)
-    {
-        $flag=strtoupper($flag);
-        $this->join=" ".$flag." JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
-        return $this;
-    }
 }
+
