@@ -1,11 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 30.11.13
- * Time: 18:36
- */
+namespace core\classTables;
 
-class memes_comments extends DataBase{
+use core\DataBase;
+
+class Memes_comments extends DataBase{
 
 } 
