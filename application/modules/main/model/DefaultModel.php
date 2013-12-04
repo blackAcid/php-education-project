@@ -1,10 +1,12 @@
 <?php
 namespace modules\main\controllers;
+
 use core\classTables\Roles;
 use core\classTables\Users;
+
 class DefaultModel
 {
-    public  static function printDb()
+    public static function printDb()
     {
         $roles=new Roles();
         $sel=$roles->selectPrepare();
@@ -15,7 +17,7 @@ class DefaultModel
     public static function insertUsers()
     {
         $insertUser=new Users();
-        $insertUser->insert(['login'=>'user@mail.ru','email'=>'user@mail.ru','password'=>'354546']);
+        $insertUser->insert(['login'=>'user@mail.ru', 'email'=>'user@mail.ru', 'password'=>'354546']);
     }
     public static function deleteUsers()
     {
@@ -27,7 +29,7 @@ class DefaultModel
     public static function updateUsers()
     {
         $updateUser=new Users();
-        $updateUser->update(['login'=>'new@mail','password'=>'77777'],'id=?',[3]);
+        $updateUser->update(['login'=>'new@mail', 'password'=>'77777'], 'id=?', [3]);
     }
     public static function selectUsers()
     {
@@ -37,7 +39,7 @@ class DefaultModel
         //возвращает ассициативный массив, содержащий все строки:
         //3 записи с полями login и password, отсортированные по полю role
        //$resultRowSet=$selObj->limit(3,null)->order('role','ASC')->select(['login','password'])->fetchAll(null);
-        $resultRowSet=$selObj->selectColumns(['id','login','email'])->where(['id>'=>'2'])->fetchAll(null);
+        $resultRowSet=$selObj->selectColumns(['id', 'login', 'email'])->where(['id>'=>'2'])->fetchAll(null);
         /* example 2 */
         //возвращает 1 запись в виде массива: с полями login и password,
             //отсортированными по полю role
