@@ -1,12 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 30.11.13
- * Time: 18:35
- */
+namespace core\classTables;
 
-class MemeBase extends DataBase
+use core\DataBase;
+
+class Meme_base extends DataBase
 {
     static protected $classTable="meme_base";
-}
+} 

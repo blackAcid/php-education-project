@@ -1,20 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 28.11.13
- * Time: 16:29
- */
-
+namespace core;
+use \PDO;
 class Select
 {
     private $table;
-    private $where_val;
+    private $where;
     private $db;
     private $sql;
     private $order;
     private $limit;
     private $join;
+    private $cols;
     public function __construct($table, PDO $db)
     {
         $this->table=$table;
@@ -26,16 +22,9 @@ class Select
         $result=$this->table;
         var_dump($result);
     }
-    public function select($cols)
+    public function selectColumns($cols)
     {
-        $cols=implode(",", $cols);
-        $table=$this->table;
-        $where=$this->where_val;
-        $order=$this->order;
-        $limit=$this->limit;
-        $Join=$this->join;
-        //$this->sql="SELECT $cols FROM `$this->table` $innerJoin $where $order $limit";
-        $this->sql="SELECT ".$cols." FROM `$this->table` ".$Join.$where.$order.$limit;
+        $this->cols=implode(",", $cols);
         return $this;
     }
     public function where($construct = null)
@@ -50,7 +39,7 @@ class Select
             $convert.=$keys[$i].$values[$i]." ";
 
         }
-        $this->where_val="WHERE ".$convert;
+        $this->where="WHERE ".$convert;
         return $this;
     }
     public function order($field, $flag = null)
@@ -78,8 +67,8 @@ class Select
     }
     public function fetchAll($values = null)
     {
-        $query=$this->sql;
-        $sql=$this->db->prepare($query);
+        $this->sql="SELECT ".$this->cols." FROM `$this->table` ".$this->join.$this->where.$this->order.$this->limit;
+        $sql=$this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i=0; $i<count($values); $i++) {
                 $sql->bindParam($i+1, $values[$i]);
