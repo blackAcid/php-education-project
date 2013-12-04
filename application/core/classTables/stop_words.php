@@ -1,11 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 30.11.13
- * Time: 18:37
- */
+namespace core\classTables;
 
-class stop_words extends DataBase{
+use core\DataBase;
+
+class Stop_words extends DataBase{
 
 } 

@@ -1,11 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 30.11.13
- * Time: 18:38
- */
+namespace core\classTables;
 
-class text_areas extends DataBase{
+use core\DataBase;
+
+class Text_areas extends DataBase{
 
 } 

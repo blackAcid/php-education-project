@@ -1,9 +1,11 @@
 <?php
+namespace core;
+
 class Request
 {
     private $controller="index";
     private $action="index";
-    private $module="default";
+    private $module="main";
     private $params;
     // private $view;
     public function __construct()

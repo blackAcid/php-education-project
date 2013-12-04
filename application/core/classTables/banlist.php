@@ -1,11 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 30.11.13
- * Time: 18:33
- */
+namespace core\classTables;
 
-class banlist extends DataBase {
+use core\DataBase;
+
+class Banlist extends DataBase
+{
 
 } 
