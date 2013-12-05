@@ -10,5 +10,6 @@ class IndexController
         //DefaultModel::deleteUsers();
         //DefaultModel::updateUsers();
         DefaultModel::selectUsers();
+        DefaultModel::selectRoles();
     }
 }

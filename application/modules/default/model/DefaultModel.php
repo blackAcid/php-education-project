@@ -66,9 +66,18 @@ class DefaultModel
         var_dump($resultRowSet2);*/
 
         /* example 4 joins */
-        $resultRowSet2=$selObj->where(['roles.id '=>'IS NULL'])->Join('left', 'roles', 'role', 'id')
+        /*$resultRowSet2=$selObj->where(['roles.id '=>'IS NULL'])->Join('left', 'roles', 'role', 'id')
             ->select(['*'])->fetchAll(null);
         echo "<br><pre>";
-        var_dump($resultRowSet2);
+        var_dump($resultRowSet2);*/
+    }
+    public static function selectRoles()
+    {
+        $selRoles=new Roles();
+        $selObj=$selRoles->selectPrepare();
+        $resultRowSet=$selObj->where()
+        $resultRowSet=$selObj->select(['*'])->fetchAll(null);
+        echo "<br><pre>";
+        var_dump($resultRowSet);
     }
 }
