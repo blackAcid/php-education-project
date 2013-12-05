@@ -1,17 +1,21 @@
 <?php
+
 namespace core;
 
-class DataBase {
+use \PDO;
+
+class DataBase
+{
     private $db;
     private $className;
-    private $dsn;
-    private $user;
-    private $password;
-    public function __construct(){
-        $this->className=get_class($this);
+    public function __construct()
+    {
+        $class=get_class($this);
+        $this->className=$class::$classTable;
         $this->getDbConfig();
     }
-    public function getDbConfig()
+
+    private function getDbConfig()
     {
         $type=Config::getProperty('Database', 'type');
         $host=Config::getProperty('Database', 'host');
@@ -19,22 +23,24 @@ class DataBase {
         $user=Config::getProperty('Database', 'user');
         $password=Config::getProperty('Database', 'password');
         $dsn="$type:dbname=$dbname;host=$host";
-        $this->db = new PDO($dsn,$user,$password);
+        $this->db = new PDO($dsn, $user, $password);
         return $this->db;
     }
-   function selectPrepare() {
-       return new Select($this->className,$this->db);
+    public function selectPrepare()
+    {
+        return new Select($this->className, $this->db);
     }
-   private function quote($arr){
+    private function quote($arr)
+    {
         $res=array();
-        for ($i=0;$i<count($arr);$i++){
+        for ($i=0; $i<count($arr); $i++) {
             $val=$this->db->quote($arr[$i]);
             $res[$i]=$val;
         }
-        $values=implode(",",$res);
+        $values=implode(",", $res);
         return $values;
     }
-    function insert($col=null)
+    public function insert($col = null)
     {
         $cols=implode(',', array_keys($col));
         $values=array_values($col);
@@ -43,44 +49,41 @@ class DataBase {
         $sql->execute();
         $sql->debugDumpParams();
     }
-   function update($fields,$construct=null,$values=null)
+    public function update($fields, $construct = null, $values = null)
     {
         $fields_res=array();
-        for ($i=0;$i<count($fields);$i++) {
+        for ($i=0; $i<count($fields); $i++) {
             $fields_cols=array_keys($fields);
             $fields_val=array_values(($fields));
             $fields_res[$i]="$fields_cols[$i]='$fields_val[$i]'";
         }
-        $fields_res=implode(",",$fields_res);
+        $fields_res=implode(",", $fields_res);
         $sql=$this->db->prepare("UPDATE `{$this->className}` SET $fields_res where $construct");
 
-        if (!empty($values)){
+        if (!empty($values)) {
             $sql=$this->db->prepare("UPDATE `{$this->className}` SET $fields_res where $construct");
-            for($i=0;$i<count($values);$i++){
+            for ($i=0; $i<count($values); $i++) {
                 $sql->bindParam($i+1, $values[$i]);
             }
             $sql->execute();
             $sql->debugDumpParams();
-        }
-        else {
+        } else {
             $sql->execute();
             $sql->debugDumpParams();
         }
     }
-   function delete($construct=null,$log=null)
-   {
+    public function delete($construct = null, $log = null)
+    {
         $sql=$this->db->prepare("DELETE FROM `{$this->className}` WHERE $construct ");
-        if (!empty($log)){
-            for($i=0;$i<count($log);$i++){
+        if (!empty($log)) {
+            for ($i=0; $i<count($log); $i++) {
                 $sql->bindParam($i+1, $log[$i]);
             }
             $sql->execute();
             $sql->debugDumpParams();
-        }
-        else {
+        } else {
             $sql->execute();
             $sql->debugDumpParams();
         }
     }
-
 }

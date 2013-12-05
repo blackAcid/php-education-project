@@ -10,7 +10,7 @@ class Request
     // private $view;
     public function __construct()
     {
-//        $this->parseURI();
+        //$this->parseURI();
     }
     public function getController()
     {
@@ -55,9 +55,10 @@ class Request
         }
     }
 
-    private function isCssFile(){
-        if(end(explode(".",  $_SERVER['REQUEST_URI']))=='css')
-        return 'css';
+    private function isCssFile()
+    {
+        if (end(explode(".", $_SERVER['REQUEST_URI']))=='css') {
+            return 'css';
+        }
     }
-
 }

@@ -9,7 +9,6 @@ try
 {
     $req=new Request();
     FrontController::getInstance()->dispatch($req);
-
 }
 catch (Exception $e)
 {

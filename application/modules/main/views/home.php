@@ -1,1 +1,5 @@
-<h2>Home Page</h2>
+<h2>Home page</h2>
+<br><pre>
+<?php var_dump($this->users);?>
+</pre>
+

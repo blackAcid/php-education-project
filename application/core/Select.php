@@ -1,18 +1,23 @@
 <?php
+
 namespace core;
 
-class Select {
-    private  $table;
-    private  $where_val;
-    private  $db;
-    private  $sql;
+use \PDO;
+
+class Select
+{
+    private $table;
+    private $where;
+    private $db;
+    private $sql;
     private $order;
-    private  $limit;
+    private $limit;
     private $join;
+    private $cols;
     public function __construct($table, PDO $db)
     {
-       $this->table=$table;
-       $this->db=$db;
+        $this->table=$table;
+        $this->db=$db;
     }
 
     public function printSmt()
@@ -20,90 +25,81 @@ class Select {
         $result=$this->table;
         var_dump($result);
     }
-    public function select($cols)
+    public function selectColumns($cols)
     {
-        $cols=implode(",",$cols);
-        $table=$this->table;
-        $where=$this->where_val;
-        $order=$this->order;
-        $limit=$this->limit;
-        $Join=$this->join;
-        //$this->sql="SELECT $cols FROM `$this->table` $innerJoin $where $order $limit";
-        $this->sql="SELECT ".$cols." FROM `$this->table` ".$Join.$where.$order.$limit;
-      return $this;
+        $this->cols=implode(",", $cols);
+        return $this;
     }
-    public function where($construct=null)
+    public function where($construct = null)
     {
         $keys=array_keys($construct);
         $values=array_values($construct);
         $convert="";
-        for ($i=0;$i<count($construct);$i++)
-        {
-            if ($values[$i] != '?' && strtoupper($values[$i])!='IS NULL')
-            {
+        for ($i=0; $i<count($construct); $i++) {
+            if ($values[$i] != '?' && strtoupper($values[$i])!='IS NULL') {
                 $values[$i]=$this->db->quote($values[$i]);
             }
             $convert.=$keys[$i].$values[$i]." ";
 
         }
-        $this->where_val="WHERE ".$convert;
+        $this->where="WHERE ".$convert;
         return $this;
     }
-    public function order($field,$flag=null)
+    public function order($field, $flag = null)
     {
-         switch ($flag)
-        {
+        switch ($flag) {
             case 'ASC':
                 $this->order='ORDER BY '.$field.' ASC'; //в восходящем порядке
-            break;
+                break;
             case 'DESC':
                 $this->order='ORDER BY '.$field.' DESC';//в обратном
-            break;
+                break;
             default:
                 $this->order='ORDER BY '.$field;
         }
             return $this;
     }
-    public function limit($count=null,$end=null)
+    public function limit($count = null, $end = null)
     {
-        if (empty($end)){
+        if (empty($end)) {
             $this->limit=' LIMIT '.$count;
+        } else {
+            $this->limit=' LIMIT '.$count.','.$end;
         }
-        else $this->limit=' LIMIT '.$count.','.$end;
         return $this;
     }
-    public function fetchAll($values=null)
+    public function join($flag, $table2, $col1, $col2)
     {
-        $query=$this->sql;
-        $sql=$this->db->prepare($query);
-        if (!empty($values)){
-        for($i=0;$i<count($values);$i++) {
-            $sql->bindParam($i+1, $values[$i]);
-        }
+        $flag=strtoupper($flag);
+        $this->join=" ".$flag." JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
+        return $this;
+    }
+    public function fetchAll($values = null)
+    {
+        $this->sql="SELECT ".$this->cols." FROM `$this->table` ".$this->join.$this->where.$this->order.$this->limit;
+        $sql=$this->db->prepare($this->sql);
+        if (!empty($values)) {
+            for ($i=0; $i<count($values); $i++) {
+                $sql->bindParam($i+1, $values[$i]);
+            }
         }
         $sql->execute();
         $result=$sql->fetchAll(PDO::FETCH_ASSOC);
-        $sql->debugDumpParams();
+        //$sql->debugDumpParams();
         return $result;
     }
-    public function fetch($values=null,$flag=null)
+    public function fetch($values = null)
     {
-        $query=$this->sql;
-        $sql=$this->db->prepare($query);
-        if (!empty($values)){
-            for($i=0;$i<count($values);$i++) {
+        $this->sql="SELECT ".$this->cols." FROM `$this->table` ".$this->join.$this->where.$this->order.$this->limit;
+        $sql=$this->db->prepare($this->sql);
+        if (!empty($values)) {
+            for ($i=0; $i<count($values); $i++) {
                 $sql->bindParam($i+1, $values[$i]);
             }
         }
         $sql->execute();
         $result=$sql->fetch(PDO::FETCH_ASSOC);
-        $sql->debugDumpParams();
+        //$sql->debugDumpParams();
         return $result;
-    }
-    public function Join($flag,$table2,$col1,$col2)
-    {
-        $flag=strtoupper($flag);
-        $this->join=" ".$flag." JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
-        return $this;
     }
 }
