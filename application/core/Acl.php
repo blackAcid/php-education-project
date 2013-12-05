@@ -11,9 +11,6 @@ class Acl
 
     public function hasPermission($module, $controller, $action)
     {
-        $dbh = new PDO('mysql:host=localhost;dbname=test_acl', 'admin', 'admin');
-        $sth = $dbh->prepare("SELECT module, controller, action FROM access WHERE role='" . $this->role . "'");
-        $sth->execute();
         $selectAccess = new Access();
         $selectObj = $selectAccess->selectPrepare();
         $result = $selectObj->where(['role' => "$this->role"])->selectColumn(['module', 'controller', 'action']);
