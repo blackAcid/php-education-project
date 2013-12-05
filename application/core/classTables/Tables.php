@@ -13,3 +13,4 @@ require_once "Stop_words.php";
 require_once "Subscription.php";
 require_once "Text_areas.php";
 require_once "Users.php";
+require_once "Access.php";
