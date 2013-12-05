@@ -1,10 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 30.11.13
- * Time: 18:36
- */
+namespace core\classTables;
+
+use core\DataBase;
 
 class Ratings extends DataBase
 {
