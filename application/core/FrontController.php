@@ -3,6 +3,7 @@ namespace core;
 
 use \Exception;
 use core\Request;
+use core\Acl;
 
 class FrontController
 {
@@ -24,6 +25,11 @@ class FrontController
         return self::$instance;
     }
 
+    /*public function getAcl($controller, $module,$method)
+    {
+        $obj = new Acl('admin');
+        $obj->setPermission('admin','user','mem','delete');
+    }*/
     public function getControllerPath($controller, $module)
     {
         $file=DIR_MOD.$module.'/controllers/'.$controller.'Controller.php';
@@ -58,6 +64,8 @@ class FrontController
     {
         $module=$request->getModule();
         Registry::setValue($module, 'module');
+        $obj = new Acl('admin');
+        $obj->setPermission('admin','user','mem','delete');
         $controller = ucfirst($request->getController());
         $action=$request->getAction().'Action';
         $controller_file=self::getInstance()->getControllerPath($controller, $module);

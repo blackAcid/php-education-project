@@ -1,5 +1,8 @@
-﻿<?php
+<?php
 namespace core;
+
+use core\classTables\Access;
+
 class Acl
 {
     public $role;
@@ -33,6 +36,6 @@ class Acl
     }
 }
 
-$obj = new Acl('admin');
-$obj->setPermission('admin','user','mem','delete');
+
+
 
