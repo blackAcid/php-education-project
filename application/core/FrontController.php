@@ -58,7 +58,7 @@ class FrontController
         $action=$request->getAction().'Action';
         $controller_file=self::getInstance()->getControllerPath($controller, $module);
         $controller_class=self::getInstance()->getControllerClass($controller, $controller_file, $module);
-        self::getInstance()->connectModel($module);
+        //self::getInstance()->connectModel($module);
         self::getInstance()->getControllerMethod($controller_class, $action, $controller_file);
     }
 }

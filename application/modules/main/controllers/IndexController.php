@@ -20,7 +20,7 @@ class IndexController
             //DefaultModel::insertUsers();
             //DefaultModel::deleteUsers();
             //DefaultModel::updateUsers();
-            DefaultModel::selectUsers();
+            //DefaultModel::selectUsers();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
