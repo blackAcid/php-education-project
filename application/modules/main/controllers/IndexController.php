@@ -12,7 +12,7 @@ class IndexController
         $module=Registry::getValue('module');
         $v = new View($module, 'home.php');
         $v->assign('title', 'Home page');
-
+        $v->assign('users', DefaultModel::selectUsers());
         try {
             $v->addIntoTemplate();
             $v->display();
@@ -20,7 +20,7 @@ class IndexController
             //DefaultModel::insertUsers();
             //DefaultModel::deleteUsers();
             //DefaultModel::updateUsers();
-            DefaultModel::selectUsers();
+            //DefaultModel::selectUsers();
         } catch (Exception $e) {
             echo $e->getMessage();
         }

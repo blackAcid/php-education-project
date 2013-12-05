@@ -38,16 +38,16 @@ class DefaultModel
         /* example 1 */
         //возвращает ассициативный массив, содержащий все строки:
         //3 записи с полями login и password, отсортированные по полю role
-       //$resultRowSet=$selObj->limit(3,null)->order('role','ASC')->select(['login','password'])->fetchAll(null);
-        $resultRowSet=$selObj->selectColumns(['id', 'login', 'email'])->where(['id>'=>'2'])->fetchAll(null);
+        //$resultRowSet=$selObj->limit(3,null)->order('role','ASC')->select(['login','password'])->fetchAll(null);
+        $resultRowSet=$selObj->selectColumns(['id', 'login', 'email'])->where(['id>'=>'0'])->fetchAll(null);
         /* example 2 */
         //возвращает 1 запись в виде массива: с полями login и password,
             //отсортированными по полю role
         /*$result=$selObj->order('role','ASC')->select(['login','password'])->fetch(null);
         print "<br>login: <b>".$result['login']
             ."</b><br>password: <b>".$result['password']."</b>";*/
-        echo "<br><pre>";
-        var_dump($resultRowSet);
+        //echo "<br><pre>";
+        //var_dump($resultRowSet);
 
         /* example 3 */
         //возвращает ассициативный массив, содержащий все строки:
@@ -68,8 +68,9 @@ class DefaultModel
             ->select(['*'])->fetchAll(null);
         echo "<br><pre>";
         var_dump($resultRowSet2);*/
+        return $resultRowSet;
     }
-   /* public static function selectRoles()
+    /* public static function selectRoles()
     {
         $selRoles=new Roles();
         $selObj=$selRoles->selectPrepare();

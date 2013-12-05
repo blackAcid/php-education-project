@@ -1,7 +1,11 @@
 <?php
+
 namespace core;
+
 use \PDO;
-class DataBase {
+
+class DataBase
+{
     private $db;
     private $className;
     public function __construct()

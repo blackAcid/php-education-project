@@ -1,5 +1,7 @@
 <?php
 
+namespace core;
+
 class Mail
 {
     private $headers = '';
@@ -84,7 +86,7 @@ class Mail
         fclose($connect);
     }
 
-    private function mk_headers()
+    private function mkHeaders()
     {
         $this->headers = "MIME-Version: 1.0" . self::NEW_LINE;
         $this->headers .= "Content-type: text/html; charset=utf-8" . self::NEW_LINE;
@@ -93,7 +95,7 @@ class Mail
         $this->headers .= "Subject: {$this->mail_subject}" . self::NEW_LINE;
     }
 
-    private function get_data($connect)
+    private function getData($connect)
     {
         $data = "";
         while ($str = fgets($connect, 515)) {
@@ -104,4 +106,4 @@ class Mail
         }
         return $data;
     }
-} 
+}
