@@ -9,6 +9,6 @@ define('DIR_TABLES',DIR_CORE.'classTables/');
 function __autoload($file){
     $file = str_replace('\\', '/', $file);
     $file = DIR_APP . $file . '.php';
-    require_once($file);
+        require_once($file);
 }
 
