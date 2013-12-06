@@ -1,5 +1,8 @@
 <?php
 namespace core;
+
+use core\classTables\Access;
+
 class Acl
 {
     public $role;
@@ -14,14 +17,13 @@ class Acl
         $selectAccess = new Access();
         $selectObj = $selectAccess->selectPrepare();
         $result = $selectObj->where(['role' => "$this->role"])->selectColumn(['module', 'controller', 'action']);
-        /*while ($result = $result->fetchAll()) {
+        while ($result = $result->fetchAll()) {
             foreach ($result as $value) {
-                if ($value['module'] == $module && $value['controller'] == $controller && $value['action'] == $action) {
+                if ($value['module'] == "$module" && $value['controller'] == "$controller" && $value['action'] == "$action") {
                     return true;
                 }
             }
-        }*/
-        var_dump($result);
+        }
     }
 
     public function setPermission($role, $module, $controller = null, $action = null)
@@ -33,6 +35,6 @@ class Acl
     }
 }
 
-$obj = new Acl('admin');
-$obj->setPermission('admin','user','mem','delete');
+
+
 
