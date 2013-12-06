@@ -42,7 +42,14 @@ class DataBase
     }
     public function insert($col = null)
     {
-        $cols=implode(',', array_keys($col));
+        //$cols=implode(',', array_keys($col));
+        $cols_v=array_keys($col);
+        $cols_value=array();
+        for ($i=0;$i<count($col);$i++)
+        {
+            $cols_value[$i]='`'.$cols_v[$i].'`';
+        }
+        $cols=implode(',', $cols_value);
         $values=array_values($col);
         $values=$this->quote($values);
         $sql=$this->db->prepare("INSERT INTO `{$this->className}` ($cols) VALUES ($values);");

@@ -1,5 +1,5 @@
 <?php
-namespace modules\main\controllers;
+namespace modules\main\model;
 
 use core\classTables\Roles;
 use core\classTables\Users;
