@@ -5,7 +5,7 @@ class Request
 {
     private $controller="index";
     private $action="index";
-    private $module="news";
+    private $module="main";
     private $params;
     // private $view;
     public function __construct()
