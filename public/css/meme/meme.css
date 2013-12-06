@@ -1,0 +1,12 @@
+#images {
+    height: 300px;
+    background-color: black;
+}
+#selected {
+    height: 400px;
+    background-color: blue;
+}
+#inputs {
+    height: 400px;
+    background-color: gray;
+}

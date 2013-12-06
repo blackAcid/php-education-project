@@ -5,7 +5,7 @@ use core\Registry;
 use core\View;
 use \Exception;
 
-class IndexController
+class MemeController
 {
     public function createAction()
     {
