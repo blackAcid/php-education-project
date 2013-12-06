@@ -58,14 +58,14 @@ class FrontController
     public function connectModel($module)
     {
         //require_once DIR_TABLES.'Tables.php';
-        require_once DIR_MOD."$module/model/DefaultModel.php";
+        //require_once DIR_MOD."$module/model/DefaultModel.php";
     }
     public function dispatch(Request $request)
     {
         $module=$request->getModule();
         Registry::setValue($module, 'module');
         $obj = new Acl('admin');
-        $obj->setPermission('admin','user','mem','delete');
+        //$obj->setPermission('admin','user','mem','delete');
         $controller = ucfirst($request->getController());
         $action=$request->getAction().'Action';
         $controller_file=self::getInstance()->getControllerPath($controller, $module);
