@@ -9,6 +9,11 @@ img.avatar
     margin-top: 10px;
 }
 
+div.avatar
+{
+    text-align: center;
+}
+
 div.profile-navigation ul
 {
     clear: both;
@@ -37,4 +42,14 @@ div.profile-content
 {
     border-left: 1px solid #c0c0c0;
     text-align: center;
+}
+
+div.profile-info > img
+{
+    margin-top: 10px;
+}
+
+ul.user-info
+{
+    border-bottom: 1px solid #c0c0c0;
 }

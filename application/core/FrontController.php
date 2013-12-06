@@ -47,8 +47,8 @@ class FrontController
     }
     public function connectModel($module)
     {
-        require_once DIR_TABLES.'Tables.php';
-        require_once DIR_MOD."$module/model/DefaultModel.php";
+        //require_once DIR_TABLES.'Tables.php';
+        //require_once DIR_MOD."$module/model/DefaultModel.php";
     }
     public function dispatch(Request $request)
     {

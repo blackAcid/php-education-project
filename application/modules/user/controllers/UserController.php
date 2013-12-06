@@ -25,20 +25,26 @@ class UserController
     public function profileAction()
     {
         $User = new model\User();
-        $User->profile($_SESSION['user_id']);
+        $User->profile($_GET['id']);
         $module = Registry::getValue('module');
-        $v = new View($module, 'profile.php');
+        $ViewUser = new View($module, 'profile.php');
         foreach ($User as $property => $value)
         {
-            $v->assign($property, $value);
+            $ViewUser->assign($property, $value);
         }
         try
         {
-            $v -> addIntoTemplate();
-            $v -> display();
+            $ViewUser -> addIntoTemplate();
+            $ViewUser -> display();
         } catch (Exception $e)
         {
             echo $e -> getMessage();
         }
+    }
+
+    public function changeAction()
+    {
+        $User = new model\User();
+        $User->changeProfile($_GET['id']);
     }
 }
