@@ -5,12 +5,12 @@ class Request
 {
     private $controller="index";
     private $action="index";
-    private $module="main";
+    private $module="news";
     private $params;
     // private $view;
     public function __construct()
     {
-//        $this->parseURI();
+        //$this->parseURI();
     }
     public function getController()
     {
@@ -55,9 +55,10 @@ class Request
         }
     }
 
-    private function isCssFile(){
-        if(end(explode(".",  $_SERVER['REQUEST_URI']))=='css')
-        return 'css';
+    private function isCssFile()
+    {
+        if (end(explode(".", $_SERVER['REQUEST_URI']))=='css') {
+            return 'css';
+        }
     }
-
 }

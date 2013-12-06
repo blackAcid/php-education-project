@@ -1,6 +1,9 @@
 <?php
+
 namespace core;
+
 use \PDO;
+
 class Select
 {
     private $table;
@@ -82,7 +85,7 @@ class Select
         }
         $sql->execute();
         $result=$sql->fetchAll(PDO::FETCH_ASSOC);
-        $sql->debugDumpParams();
+        //$sql->debugDumpParams();
         return $result;
     }
     public function fetch($values = null)
@@ -96,8 +99,7 @@ class Select
         }
         $sql->execute();
         $result=$sql->fetch(PDO::FETCH_ASSOC);
-        $sql->debugDumpParams();
+        //$sql->debugDumpParams();
         return $result;
     }
 }
-
