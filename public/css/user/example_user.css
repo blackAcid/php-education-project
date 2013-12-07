@@ -53,3 +53,8 @@ ul.user-info
 {
     border-bottom: 1px solid #c0c0c0;
 }
+
+img.meme
+{
+    margin: 10px;
+}

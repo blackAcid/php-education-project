@@ -16,15 +16,9 @@
         </div>
     </div>
     <div class="profile-content col-md-9">
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
-        <h3>My Memes</h3>
+        <?php for($i = 0; $this->MemesNumber > $i; $i++)
+        {
+            echo '<img src="'.$this->paths_to_my_memes[$i]['path'].'" class="meme"></br>';
+        } ?>
     </div>
 </div>
