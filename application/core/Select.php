@@ -14,6 +14,7 @@ class Select
     private $limit;
     private $join;
     private $cols;
+    //public $row;
     public function __construct($table, PDO $db)
     {
         $this->table=$table;
@@ -99,7 +100,15 @@ class Select
         }
         $sql->execute();
         $result=$sql->fetch(PDO::FETCH_ASSOC);
-        //$sql->debugDumpParams();
+        $sql->debugDumpParams();
         return $result;
     }
+    /*public function rowCount($val)
+    {
+        $this->sql="SELECT ".$this->cols." FROM `$this->table` ".$this->join.$this->where.$this->order.$this->limit;
+        $sql=$this->db->prepare($this->sql);
+        $sql->execute();
+        $rows=$sql->rowCount();
+        return $rows;
+    }*/
 }
