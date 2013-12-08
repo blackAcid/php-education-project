@@ -1,13 +1,21 @@
-<div class="col-md-12">
-    <div class="col-md-12" id="images">
-
+<div class="col-md-12" id="page">
+    <div class="col-md-12 row" id="images">
+        <?php  echo html_entity_decode($this->images);?>
     </div>
-    <div class="row">
-        <div class="col-md-8" id="selected">
+    <div id="create">
+        <div class="row">
+            <div class="col-md-8" id="main">
+                <span class="aligner"></span>
+                <img src="#" alt="selected">
 
+            </div>
+            <div class="col-md-4" id="inputs">
+                <?php  echo html_entity_decode($this->inputs);?>
+            </div>
         </div>
-        <div class="col-md-4" id="inputs">
-
+        <div class="col-md-12" id="submit">
+            <input type="button" value="Создать мем">
         </div>
     </div>
 </div>
+<img src="/images/ajax.gif" alt="ajax" id="ajax">

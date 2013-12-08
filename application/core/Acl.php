@@ -14,7 +14,7 @@ class Acl
 
     public function hasPermission($module, $controller, $action)
     {
-        $selectAccess = new Access();
+        /*$selectAccess = new Access();
         $selectObj = $selectAccess->selectPrepare();
         $result = $selectObj->where(['role' => "$this->role"])->selectColumn(['module', 'controller', 'action']);
         while ($result = $result->fetchAll()) {
@@ -23,15 +23,15 @@ class Acl
                     return true;
                 }
             }
-        }
+        }*/
     }
 
     public function setPermission($role, $module, $controller = null, $action = null)
     {
-        $insertAccess = new Access();
+        /*$insertAccess = new Access();
         $insertAccess->insert(
             ['role' => "$role", 'module' => "$module", 'controller' => "$controller", 'action' => "$action"]
-        );
+        );*/
     }
 }
 

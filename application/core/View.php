@@ -71,7 +71,7 @@ class View
             $variable = $this->variables[$name];
 
             if ($this->params['xss_protection']) {
-                $variable = $this->xssProtection($variable);
+                //$variable = $this->xssProtection($variable);
             }
             return $variable;
         }

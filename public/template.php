@@ -5,6 +5,7 @@
     <title><?php echo $this->title;?></title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="/css/main-style.css"/>
+    <script type="text/javascript" src="/js/jquery.js"></script>
     <?php
       foreach($this->getCssFile() as $value)
       {
@@ -30,6 +31,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="#">Главная</a></li>
                 <li><a href="#">Новости</a></li>
+                <li><a href="/meme/Meme/create">Создать мем</a></li>
+                <li><a href="/meme/Meme/view">Посмотреть мем</a></li>
             </ul>
         </div>
     </nav>

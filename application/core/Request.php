@@ -10,7 +10,7 @@ class Request
     // private $view;
     public function __construct()
     {
-        //$this->parseURI();
+        $this->parseURI();
     }
     public function getController()
     {
