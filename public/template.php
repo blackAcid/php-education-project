@@ -3,8 +3,20 @@
 <head>
     <meta charset=utf-8>
     <title><?php echo $this->title;?></title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="css/main-style.css"/>
+    <?php
+      $rootDirName=core\Registry::getValue("rootDirName");
+      if(isConfiguredDocRoot())
+    {
+       echo '<link rel="stylesheet" type="text/css" href="http://php-project/css/bootstrap.css"/>';
+       echo '<link rel="stylesheet" type="text/css" href="http://php-project/css/main-style.css"/>';
+    }
+    else
+    {
+        echo '<link rel="stylesheet" type="text/css" href="http://php-project/'."$rootDirName".'/css/bootstrap.css"/>';
+        echo '<link rel="stylesheet" type="text/css" href="http://php-project/'."$rootDirName".'/css/main-style.css"/>';
+    }
+    ?>
+
     <?php
       foreach($this->getCssFile() as $value)
       {

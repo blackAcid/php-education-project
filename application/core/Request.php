@@ -7,7 +7,6 @@ class Request
     private $action="index";
     private $module="main";
     private $params;
-    private $rootDirName="";
 
     public function __construct()
     {
@@ -30,36 +29,17 @@ class Request
         return $this->params;
     }
 
-    /**
-     * Проверить настроен ли в VirtualHost DOCUMENT_ROOT
-     */
-     private function isConfiguredDocRoot()
-     {
-         $arr=explode('/', ROOT);
-         if(is_array($arr) && $arr!==null)
-         {
-             $this->rootDirName=array_pop($arr).'/public/';
-         }
-         $match=strstr($this->rootDirName,$_SERVER['DOCUMENT_ROOT']);
-         if($match)
-         {
-             return true;
-         }
-         else
-         {
-             return false;
-         }
-     }
+
 
     private function parseURI()
     {
-        if($this->isConfiguredDocRoot())
+        if(isConfiguredDocRoot())
         {
             $routes = explode('/',$_SERVER['REQUEST_URI']);
         }
         else
         {
-            $routes = explode('/', str_replace($this->rootDirName,'',$_SERVER['REQUEST_URI']));
+            $routes = explode('/', str_replace(Registry::getValue('rootDirName'),'',$_SERVER['REQUEST_URI']));
         }
         // print_r($routes);
         if (!empty($routes[1]) && !empty($routes[2])) {
