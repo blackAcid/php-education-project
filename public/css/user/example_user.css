@@ -57,4 +57,6 @@ ul.user-info
 img.meme
 {
     margin: 10px;
+    width: 350px;
+    height: 300px;
 }
