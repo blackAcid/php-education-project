@@ -21,16 +21,15 @@ function isConfiguredDocRoot()
     $arr=explode('/', ROOT);
     if(is_array($arr) && $arr!==null)
     {
-
-        Registry::setValue(array_pop($arr).'/public/','rootDirName');
+        Registry::setValue(array_pop($arr).'/public','rootDirName');
     }
-    $match=strstr(Registry::getValue('rootDirName'),$_SERVER['DOCUMENT_ROOT']);
+    $match=strstr($_SERVER['DOCUMENT_ROOT'], Registry::getValue('rootDirName'));
     if($match)
     {
         return true;
     }
     else
-    {
+    {   echo $match;
         return false;
     }
 }
