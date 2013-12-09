@@ -6,7 +6,7 @@ define('DIR_CORE', DIR.'/application/core/');
 define('DIR_APP', DIR.'/application/');
 define('DIR_MOD', DIR.'/application/modules/');
 define('DIR_TABLES',DIR_CORE.'classTables/');
-define('DIR_CSS', "\"http://".$_SERVER['SERVER_NAME']
+define('DIR_ROOT', "http://".$_SERVER['SERVER_NAME']
         .str_replace($_SERVER['DOCUMENT_ROOT'],'',DIR_PUBLIC));
 define('DIR_TEMP_USERS',DIR.'/temp/users/user_id/');
 define('DIR_USERS',"\"http://".$_SERVER['SERVER_NAME']

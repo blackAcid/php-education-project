@@ -14,7 +14,6 @@ class Request
         //echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
         //echo "<br>dir=".DIR_PUBLIC;
         //echo "<br>document_root=".$_SERVER['DOCUMENT_ROOT'];
-
     }
     public function getController()
     {
@@ -35,12 +34,12 @@ class Request
 
     private function parseURI()
     {
-        $rep=str_replace($_SERVER['DOCUMENT_ROOT'],'',DIR_PUBLIC);
+        $rep=str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_PUBLIC);
         //echo "<br>rep=".$rep;
         //$rout=str_replace($rep,'',$_SERVER['REQUEST_URI']);
         //echo "rout=".$rout;
         //$routes = explode('/', $_SERVER['REQUEST_URI']);
-        $routes = explode('/', str_replace($rep,'',$_SERVER['REQUEST_URI']));
+        $routes = explode('/', str_replace($rep, '', $_SERVER['REQUEST_URI']));
         //print_r($routes);
         echo $this->isCssFile();
         /*if (!empty($routes[1]) && !empty($routes[2])) {
@@ -62,7 +61,7 @@ class Request
                 $this->action = $routes[3];
             }
         }*/
-       if (!empty($routes[0]) && !empty($routes[1])) {
+        if (!empty($routes[0]) && !empty($routes[1])) {
             $this->module=$routes[0];
             $this->controller=$routes[1];
         }

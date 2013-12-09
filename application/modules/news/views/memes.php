@@ -1,25 +1,36 @@
-<h2>Home page</h2>
-<br>
+<header class="news">News</header>
 <div class="news">
 <?php
-//$memesPath=$this->memesPath;
-//$strPath="";
-for ($i=0;$i<count($this->memes);$i++) {
-    echo "<div class=\"container\">";
-    print "<header>".$this->memes[$i]['name']."</header>";
-    print "<img src=".DIR_USERS.$this->memes[$i]['path']."\" class=\"img-thumbnail\">";
-    print "<div class=\"likes_dislikes\">";
-    print "<a href=\"#\"><img src=".DIR_CSS."css/news/dislike.gif\" height=\"33px\"/></a>\t"
-        ."<a href=\"#\"><img src=".DIR_CSS."css/news/like.gif\" height=\"37px\"/></a>";
-    print "</div><div class=\"row-fluid\"><div class=\"date\">".$this->memes[$i]['date_create']
-        ."</div><div class=\"rating\"><span id=\"dislikes\">-".$this->memes[$i]['dislikes']."</span>
-        <span id=\"likes\">+".$this->memes[$i]['likes']."</span></div></div>";
-    echo "</div>";
-
+for ($i=0; $i<count($this->memes); $i++) {
+    echo "<div class=\"container\">"
+        ."<header>".$this->memes[$i]['name']."</header>"
+    ."<img alt=\"memes\" src=".DIR_USERS.$this->memes[$i]['path']."\" class=\"img-thumbnail\"/>"
+    ."<div class=\"likes_dislikes\">"
+    ."<form id='likes' action=\"".DIR_ROOT."news/index/like\" method=post></form>"
+        ."<form id='dislikes' action=\"".DIR_ROOT."news/index/dislike\" method=post></form>"
+    ."<button type='submit' form='likes' name='like' value=\"".$this->memes[$i]['id']."\">
+        <img alt=\"like\" src=\"".DIR_ROOT."css/news/like1.jpg\" height=\"20\"/></button>"
+    ."<button type='submit' form='dislikes' name='dislike' value=\"".$this->memes[$i]['id']."\">
+        <img alt=\"dislike\" src=\"".DIR_ROOT."css/news/dislike1.jpg\" height=\"20\"/></button>";
+    $date=strtotime($this->memes[$i]['date_create']);
+    print "</div><div class=\"row-fluid\"><div class=\"date\">Опубликовано ".date('j.m.y', $date)." в "
+        .date('H:i')." by ".$this->memes[$i]['login']."</div><div class=\"rating\"><span class=\"dislikes\">-"
+        .$this->memes[$i]['dislikes']."</span>
+        <span class=\"likes\">+".$this->memes[$i]['likes']."</span></div></div>"
+    ."</div>";
 }
-//var_dump($this->memesDate);?>
-    <ul class="pager">
-        <li class="previous"><a href="#">&larr; Previous</a></li>
-        <li class="next"><a href="#">Next &rarr;</a></li>
-    </ul>
+
+echo "<div class='pages_number'><ul class=\"pagination\">
+        <li class=\"disabled\"><a href=\"#\">&larr;</a></li>";
+$page=$this->countPages;
+for ($j=1; $j<$page+1; $j++) {
+
+        //$ulr="\"".DIR_ROOT."news/index/pagination/$j\">";
+        echo "<li><a href=\"".DIR_ROOT."news/index/index?page=$j\">".$j
+            ."</a></li>";
+}
+echo "<li class=\"disabled\"><a href=\"#\">&rarr;</a></li></ul></div>";
+/*echo "<pre>";
+var_dump($this->memes);*/
+?>
 </div>
