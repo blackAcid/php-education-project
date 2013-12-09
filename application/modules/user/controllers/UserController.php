@@ -51,6 +51,23 @@ class UserController
         if(isset($_POST['User']))
         {
             $User->changeProfile($_POST['User']);
+            $module = Registry::getValue('module');
+            $ViewUser = new View($module, 'profile.php');
+            $MemesNumber = count($User->paths_to_my_memes);
+            $ViewUser->assign('MemesNumber',$MemesNumber);
+            foreach ($User as $property => $value)
+            {
+                $ViewUser->assign($property, $value);
+            }
+            try
+            {
+                $ViewUser -> addIntoTemplate();
+                $ViewUser -> display();
+            } catch (Exception $e)
+            {
+                echo $e -> getMessage();
+            }
+
         } else
         {
             $module = Registry::getValue('module');

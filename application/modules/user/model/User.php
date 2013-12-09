@@ -33,13 +33,10 @@ class User
     {
         if(isset($ChangeData['login']))
         {
-
+            $UpdateUser = new Users();
+            /*$UpdateUserObject = $UpdateUser->update()*/
         }
         if(isset($ChangeData['email']))
-        {
-
-        }
-        if(isset($ChangeData['date_of_birth']))
         {
 
         }
@@ -48,7 +45,8 @@ class User
             $UploadDir = DIR_PUBLIC.'/images/user_avatars/';
             $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
             move_uploaded_file($_FILES['userfile']['tmp_name'], $UploadFile);
-            rename($UploadFile, $UploadDir.$this->id.'_user.jpg');
+            rename($UploadFile, $UploadDir.'/'.$this->id.'_user.jpg');
+            $this->avatar = $UploadDir.'/'.$this->id.'_user.jpg';
         }
     }
 }
