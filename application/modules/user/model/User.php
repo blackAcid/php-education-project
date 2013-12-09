@@ -29,8 +29,26 @@ class User
         $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])->selectColumns(['path'])->fetchAll();
     }
 
-    public function changeProfile($user_id)
+    public function changeProfile($ChangeData)
     {
+        if(isset($ChangeData['login']))
+        {
 
+        }
+        if(isset($ChangeData['email']))
+        {
+
+        }
+        if(isset($ChangeData['date_of_birth']))
+        {
+
+        }
+        if(isset($ChangeData['avatar']))
+        {
+            $UploadDir = DIR_PUBLIC.'/images/user_avatars/';
+            $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
+            move_uploaded_file($_FILES['userfile']['tmp_name'], $UploadFile);
+            rename($UploadFile, $UploadDir.$this->id.'_user.jpg');
+        }
     }
 }

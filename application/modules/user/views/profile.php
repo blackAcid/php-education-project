@@ -1,7 +1,7 @@
 <div class="user-profile row col-md-12">
     <div class="profile-info col-md-3">
         <div class="avatar">
-            <img src="<?php echo '/images/'.$this->avatar['avatar']; ?>" class="avatar">
+            <img src="<?php echo '/images/user_avatars/'.$this->avatar['avatar']; ?>" class="avatar">
         </div>
         <div class="profile-navigation">
             <ul class="user-info">

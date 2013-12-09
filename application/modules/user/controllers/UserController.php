@@ -47,6 +47,27 @@ class UserController
     public function changeAction()
     {
         $User = new model\User();
-        $User->changeProfile($_GET['id']);
+        $User->profile($_GET['id']);
+        if(isset($_POST['User']))
+        {
+            $User->changeProfile($_POST['User']);
+        } else
+        {
+            $module = Registry::getValue('module');
+            $ViewUser = new View($module, 'change.php');
+            foreach ($User as $property => $value)
+            {
+                $ViewUser->assign($property, $value);
+            }
+            try
+            {
+                $ViewUser -> addIntoTemplate();
+                $ViewUser -> display();
+            } catch (Exception $e)
+            {
+                echo $e -> getMessage();
+            }
+        }
+
     }
 }
