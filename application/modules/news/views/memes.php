@@ -1,5 +1,9 @@
 <header class="news">News</header>
 <div class="news">
+    <ul class="nav nav-tabs">
+        <li><a href="<?=HTTP_URL_PUB."news/index/index"?>">Последние</a></li>
+        <li><a href="<?=HTTP_URL_PUB."news/index/rating"?>">Лучшие</a></li>
+    </ul>
 <?php
 for ($i=0; $i<count($this->memes); $i++) {
     echo "<div class=\"container\">"

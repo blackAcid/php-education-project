@@ -34,6 +34,25 @@ class IndexController
             echo $e->getMessage();
         }
     }
+    public function ratingAction()
+    {
+        $module=Registry::getValue('module');
+        $v = new View($module, 'memes.php');
+        $v->assign('title', 'News');
+        if (!empty($_GET)) {
+            $page=(int)$_GET['page'];
+        } else {
+            $page=1;
+        }
+        $v->assign('memes', NewsModel::getMemesByRating());
+        //$v->assign('countPages', NewsModel::getCountPages());
+        try {
+            $v->addIntoTemplate();
+            $v->display();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
     public function likeAction()
     {
         if (!empty($_POST)) {
