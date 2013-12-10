@@ -39,7 +39,7 @@ class IndexController
         if (!empty($_POST)) {
             $id_meme=$_POST['like'];
             NewsModel::updateLike($id_meme);
-            header("Location:".DIR_ROOT."news/index/index");
+            header("Location:".HTTP_URL_PUB."news/index/index");
         }
     }
     public function dislikeAction()
@@ -47,7 +47,7 @@ class IndexController
         if (!empty($_POST)) {
             $id_meme=$_POST['dislike'];
             NewsModel::updateDislike($id_meme);
-            header("Location:".DIR_ROOT."news/index/index");
+            header("Location:".HTTP_URL_PUB."news/index/index");
         }
     }
     public function paginationAction()
@@ -55,7 +55,6 @@ class IndexController
         if (!empty($_GET)) {
             $pagesNumber=(int)$_GET['page'];
             var_dump($pagesNumber);
-           // return $pagesNumber;
         }
     }
 }

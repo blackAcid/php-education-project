@@ -6,15 +6,15 @@ for ($i=0; $i<count($this->memes); $i++) {
         ."<header>".$this->memes[$i]['name']."</header>"
     ."<img alt=\"memes\" src=".DIR_USERS.$this->memes[$i]['path']."\" class=\"img-thumbnail\"/>"
     ."<div class=\"likes_dislikes\">"
-    ."<form id='likes' action=\"".DIR_ROOT."news/index/like\" method=post></form>"
-        ."<form id='dislikes' action=\"".DIR_ROOT."news/index/dislike\" method=post></form>"
+    ."<form id='likes' action=\"".HTTP_URL_PUB."news/index/like\" method=post></form>"
+        ."<form id='dislikes' action=\"".HTTP_URL_PUB."news/index/dislike\" method=post></form>"
     ."<button type='submit' form='likes' name='like' value=\"".$this->memes[$i]['id']."\">
-        <img alt=\"like\" src=\"".DIR_ROOT."css/news/like1.jpg\" height=\"20\"/></button>"
+        <img alt=\"like\" src=\"".HTTP_URL_PUB."css/news/like1.jpg\" height=\"20\"/></button>"
     ."<button type='submit' form='dislikes' name='dislike' value=\"".$this->memes[$i]['id']."\">
-        <img alt=\"dislike\" src=\"".DIR_ROOT."css/news/dislike1.jpg\" height=\"20\"/></button>";
+        <img alt=\"dislike\" src=\"".HTTP_URL_PUB."css/news/dislike1.jpg\" height=\"20\"/></button>";
     $date=strtotime($this->memes[$i]['date_create']);
     print "</div><div class=\"row-fluid\"><div class=\"date\">Опубликовано ".date('j.m.y', $date)." в "
-        .date('H:i')." by ".$this->memes[$i]['login']."</div><div class=\"rating\"><span class=\"dislikes\">-"
+        .date('H:i')." by ".$this->memes[$i]['username']."</div><div class=\"rating\"><span class=\"dislikes\">-"
         .$this->memes[$i]['dislikes']."</span>
         <span class=\"likes\">+".$this->memes[$i]['likes']."</span></div></div>"
     ."</div>";
@@ -26,7 +26,7 @@ $page=$this->countPages;
 for ($j=1; $j<$page+1; $j++) {
 
         //$ulr="\"".DIR_ROOT."news/index/pagination/$j\">";
-        echo "<li><a href=\"".DIR_ROOT."news/index/index?page=$j\">".$j
+        echo "<li><a href=\"".HTTP_URL_PUB."news/index/index?page=$j\">".$j
             ."</a></li>";
 }
 echo "<li class=\"disabled\"><a href=\"#\">&rarr;</a></li></ul></div>";
