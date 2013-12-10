@@ -14,6 +14,7 @@ class Select
     private $limit;
     private $join;
     private $cols;
+    private $group;
 
     public function __construct($table, PDO $db)
     {
@@ -93,7 +94,7 @@ class Select
 
     public function fetchAll($values = null)
     {
-        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` " . $this->join . $this->where . $this->order . $this->limit;
+        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` " . $this->join . $this->where . $this->group . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i = 0; $i < count($values); $i++) {

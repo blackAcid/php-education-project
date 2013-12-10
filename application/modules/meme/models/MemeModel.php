@@ -75,12 +75,16 @@ class MemeModel
     {
         $textAreas = new TextAreas();
         $selected = $textAreas->selectPrepare();
-        $coords = $selected->selectColumns(array('start_x', 'start_y', 'end_x', 'end_y'))
+        $coords = $selected->selectColumns(array('start_x', 'start_y', 'end_x', 'end_y', 'color'))
             ->join('LEFT','meme_base','meme_id', 'id')->where(array('base_picture = ' => "$path"))->fetchAll();
         for ($i = 0; $i < count($text); $i++)
         {
             $areas[$i] = array($text[$i], $coords[$i]['start_x'], $coords[$i]['start_y'],
                 $coords[$i]['end_x'], $coords[$i]['end_y'],);
+        }
+        if ($coords[0]['color'] == 2) {
+            $this->fontColor = '#000';
+            $this->strokeColor = '#FFF';
         }
         $this->font = DIR_PUBLIC . 'fonts/russo.ttf';
 
