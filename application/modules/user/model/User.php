@@ -7,7 +7,7 @@ use core\classTables\Memes;
 class User
 {
     public $id;
-    public $login;
+    public $username;
     public $email;
     public $date_of_birth;
     public $role;
@@ -19,7 +19,7 @@ class User
         $this->id = $user_id;
         $selectUser = new Users();
         $select_User_Object = $selectUser->selectPrepare();
-        $this->login = $select_User_Object->where(['id='=>"$this->id"])->selectColumns(['login'])->fetch();
+        $this->username = $select_User_Object->where(['id='=>"$this->id"])->selectColumns(['username'])->fetch();
         $this->email = $select_User_Object->where(['id=' => "$this->id"]) -> selectColumns(['email'])->fetch();
         $this->date_of_birth = $select_User_Object->where(['id=' => "$this->id"]) -> selectColumns(['date_of_birth'])->fetch();
         $this->role = $select_User_Object->where(['id=' => "$this->id"]) -> selectColumns(['role'])->fetch();
@@ -31,17 +31,17 @@ class User
 
     public function changeProfile($ChangeData)
     {
-        if(isset($ChangeData['login']))
+        if(isset($ChangeData['name']))
         {
             $UpdateUser = new Users();
-            $UpdateUserObject = $UpdateUser->update(['login'=>$ChangeData['login']],'id='.$this-id);
+            $UpdateUserObject = $UpdateUser->update(['username'=>$ChangeData['name']],'id='.$this-id);
         }
         if(isset($ChangeData['email']))
         {
             $UpdateUser = new Users();
-            $UpdateUserObject = $UpdateUser->update(['login'=>$ChangeData['email']],'id='.$this-id);
+            $UpdateUserObject = $UpdateUser->update(['email'=>$ChangeData['email']],'id='.$this-id);
         }
-        if(isset($ChangeData['avatar']))
+        if(isset($ChangeData['userfile']))
         {
             $UploadDir = DIR_PUBLIC.'/images/user_avatars/';
             $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
