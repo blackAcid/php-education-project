@@ -1,7 +1,40 @@
-h1 {
-    color: mediumblue;
-}
-h2{
-    color:gold;
+div.user-profile
+{
+    font-family: tahoma,arial,verdana,sans-serif,Lucida Sans;
+    font-size: 18px;
 }
 
+img.avatar
+{
+    margin-top: 10px;
+}
+
+div.profile-navigation ul
+{
+    clear: both;
+}
+div.profile-navigation li
+{
+    list-style: none;
+}
+
+div.profile-navigation li
+{
+    padding: 7px;
+}
+
+div.profile-navigation li>a
+{
+    color: #000000;
+}
+
+div.profile-navigation li>a:hover
+{
+    text-decoration: none;
+}
+
+div.profile-content
+{
+    border-left: 1px solid #c0c0c0;
+    text-align: center;
+}
