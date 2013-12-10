@@ -51,6 +51,7 @@ class UserController
         if(isset($_POST['User']))
         {
             $User->changeProfile($_POST['User']);
+            $User->profile($_GET['id']);
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'profile.php');
             $MemesNumber = count($User->paths_to_my_memes);

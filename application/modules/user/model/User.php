@@ -34,11 +34,12 @@ class User
         if(isset($ChangeData['login']))
         {
             $UpdateUser = new Users();
-            /*$UpdateUserObject = $UpdateUser->update()*/
+            $UpdateUserObject = $UpdateUser->update(['login'=>$ChangeData['login']],'id='.$this-id);
         }
         if(isset($ChangeData['email']))
         {
-
+            $UpdateUser = new Users();
+            $UpdateUserObject = $UpdateUser->update(['login'=>$ChangeData['email']],'id='.$this-id);
         }
         if(isset($ChangeData['avatar']))
         {
