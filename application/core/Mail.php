@@ -5,9 +5,9 @@ namespace core;
 class Mail
 {
     private $headers = '';
-    private $smtp_server = '';
+    private $smtp_host = '';
     private $smtp_port = '';
-    private $smtp_user = '';
+    private $smtp_login = '';
     private $smtp_pass = '';
 
     private $mail_from = '';
@@ -15,22 +15,29 @@ class Mail
     private $mail_subject = '';
     private $mail_body = '';
 
+    private $view = array(
+        "head" => "Header",
+        "footer" => "Footer",
+        "content" => "Content"
+    );
+
     private $errors = array();
 
     const NEW_LINE = "\r\n";
 
-    public function __construct($server, $port, $user = '', $pass = '', $from = '', $to = '', $subject = '', $body = '')
+    public function __construct($from = '', $to = '', $subject = '', $body = '')
     {
-        $this->smtp_server = $server;
-        $this->smtp_port = $port;
-        $this->smtp_user = $user;
-        $this->smtp_pass = $pass;
+        $this->smtp_host = Config::getProperty("smtp","host");
+        $this->smtp_port = Config::getProperty("smtp","port");
+        $this->smtp_login = Config::getProperty("smtp","login");
+        $this->smtp_pass = Config::getProperty("smtp","password");;
 
         $this->mail_from = $from;
         $this->mail_to = $to;
         $this->mail_subject = $subject;
-        $this->mail_body = $body;
-        $this->mk_headers();
+        $this->view['content'] = $body;
+        $this->mkHeaders();
+        include 'mailtemplate.php';
     }
 
     public function __set($key, $value)
@@ -49,7 +56,7 @@ class Mail
                 $this->mail_body = $value;
                 break;
             case 'smtp_user':
-                $this->smtp_user = $value;
+                $this->smtp_login = $value;
                 break;
             case 'smtp_pass':
                 $this->smtp_pass = $value;
@@ -59,30 +66,30 @@ class Mail
 
     public function send()
     {
-        $connect = fsockopen($this->smtp_server, $this->smtp_port, $errno, $errstr, 10);
-        $this->get_data($connect);
-        fputs($connect, "EHLO " . $this->smtp_server . self::NEW_LINE);
-        $this->get_data($connect);
+        $connect = fsockopen($this->smtp_host, $this->smtp_port, $errno, $errstr, 10);
+        $this->getData($connect);
+        fputs($connect, "EHLO " . $this->smtp_host . self::NEW_LINE);
+        $this->getData($connect);
         fputs($connect, "AUTH LOGIN" . self::NEW_LINE);
-        $this->get_data($connect);
-        fputs($connect, base64_encode($this->smtp_user) . self::NEW_LINE);
-        $this->get_data($connect);
+        $this->getData($connect);
+        fputs($connect, base64_encode($this->smtp_login) . self::NEW_LINE);
+        $this->getData($connect);
         fputs($connect, base64_encode($this->smtp_pass) . self::NEW_LINE);
-        $this->get_data($connect);
+        $this->getData($connect);
         fputs($connect, "MAIL FROM:" . $this->mail_from . self::NEW_LINE);
-        $this->get_data($connect);
+        $this->getData($connect);
         fputs($connect, "RCPT TO:" . $this->mail_to . self::NEW_LINE);
-        $this->get_data($connect);
+        $this->getData($connect);
         fputs($connect, "DATA" . self::NEW_LINE);
-        $this->get_data($connect);
+        $this->getData($connect);
         fputs($connect, $this->headers . self::NEW_LINE . $this->mail_body . self::NEW_LINE . "." . self::NEW_LINE);
-        $data = $this->get_data($connect);
+        $data = $this->getData($connect);
         $code = substr($data, 0, 3);
         if ((int)$code == 500) {
             $this->errors[] = "Sending email was failed!";
         }
         fputs($connect, "QUIT" . self::NEW_LINE);
-        $this->get_data($connect);
+        $this->getData($connect);
         fclose($connect);
     }
 
