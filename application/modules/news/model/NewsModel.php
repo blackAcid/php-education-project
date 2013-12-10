@@ -44,9 +44,19 @@ class NewsModel
         $selectMemes=new Memes();
         $selObj=$selectMemes->selectPrepare();
         //$result=$selObj->selectColumns(['*'])->fetchAll(null);
-        $result=$selObj->selectColumns(['login', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
+        $result=$selObj->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
             ->from(['users'])->where(['memes.user_id='=>'users.id'])->order('memes.date_create', 'DESC')
             ->limit($begin, $end)->fetchAll(null);
+        return $result;
+    }
+    public static function getMemesByRating()
+    {
+        $selectMemes=new Memes();
+        $selObj=$selectMemes->selectPrepare();
+        //$result=$selObj->selectColumns(['*'])->fetchAll(null);
+        $result=$selObj->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
+            ->from(['users'])->where(['memes.user_id='=>'users.id'])->order('likes', 'DESC')
+            ->fetchAll(null);
         return $result;
     }
     public static function updateLike($meme_id)
@@ -65,10 +75,12 @@ class NewsModel
         $selObj=$selectMemes->selectPrepare();
         //$result=$selObj->selectColumns(['*'])->fetchAll(null);
         $countPages=
-            $selObj->selectColumns(['login', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
+            $selObj->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
             ->from(['users'])->where(['memes.user_id='=>'users.id'])
             ->order('memes.date_create', 'DESC')->fetchAll(null);
-        $countPages=ceil(count($countPages)/self::$memesOnPage);
+        if ($countPages!=null){
+            $countPages=ceil(count($countPages)/self::$memesOnPage);
+        }
         return $countPages;
     }
     public static function limitPages($page)
