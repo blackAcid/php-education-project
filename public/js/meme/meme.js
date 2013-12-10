@@ -61,7 +61,7 @@ $(document).ready(function () {
             $.post( "/meme/Meme/generate", {text : inputsVal , path : path})
                 .done(function() {
                     window.location.replace('/meme/Meme/view');
-                });
+                })
         }
 
     });

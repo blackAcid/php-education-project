@@ -18,4 +18,4 @@
         </div>
     </div>
 </div>
-<img src="/images/ajax.gif" alt="ajax" id="ajax">
+<img src="/public/images/ajax.gif" alt="ajax" id="ajax">

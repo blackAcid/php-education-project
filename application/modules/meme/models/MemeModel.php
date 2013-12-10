@@ -82,9 +82,9 @@ class MemeModel
             $areas[$i] = array($text[$i], $coords[$i]['start_x'], $coords[$i]['start_y'],
                 $coords[$i]['end_x'], $coords[$i]['end_y'],);
         }
-        $this->font = DIR_PUBLIC . 'fonts/impact.ttf';
+        $this->font = DIR_PUBLIC . 'fonts/russo.ttf';
 
-        $this->img = new imagick(DIR_PUBLIC.$path);
+        $this->img = new imagick(DIR.$path);
         $this->textAreas = $areas;
         $this->getDraw();
         $this->getMeme();

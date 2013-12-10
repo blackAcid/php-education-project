@@ -3,9 +3,9 @@
 <head>
     <meta charset=utf-8>
     <title><?php echo $this->title;?></title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/main-style.css"/>
-    <script type="text/javascript" src="/js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/css/main-style.css"/>
+    <script type="text/javascript" src="/public/js/jquery.js"></script>
     <?php
       foreach($this->getCssFile() as $value)
       {
@@ -21,7 +21,7 @@
 <body>
 <header>
     <nav class="navbar navbar-default col-md-8 col-md-offset-2 row" role="navigation">
-        <a class="navbar-brand" href="#"><img src="/images/palette.png"></a>
+        <a class="navbar-brand" href="#"><img src="/public/images/palette.png"></a>
         <form class="navbar-form navbar-right" role="search">
             <div class="form-group">
                 <input type="text" class="form-control input-sm"><span class="glyphicon glyphicon-search"></span>
