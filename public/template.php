@@ -3,9 +3,10 @@
 <head>
     <meta charset=utf-8>
     <title><?php echo $this->title;?></title>
-    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="/public/css/main-style.css"/>
-    <script type="text/javascript" src="/public/js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href=<?php
+    print "\"".HTTP_URL_PUB."css/bootstrap.css\""?>/>
+    <link rel="stylesheet" type="text/css" href=<?php
+    print "\"".HTTP_URL_PUB."css/main-style.css\"";?>/>
     <?php
       foreach($this->getCssFile() as $value)
       {
@@ -21,7 +22,7 @@
 <body>
 <header>
     <nav class="navbar navbar-default col-md-8 col-md-offset-2 row" role="navigation">
-        <a class="navbar-brand" href="#"><img src="/public/images/palette.png"></a>
+        <a class="navbar-brand" href="#"><img alt="palette" src=<?="\"".HTTP_URL_PUB."images/palette.png\"";?>></a>
         <form class="navbar-form navbar-right" role="search">
             <div class="form-group">
                 <input type="text" class="form-control input-sm"><span class="glyphicon glyphicon-search"></span>
@@ -31,8 +32,6 @@
             <ul class="nav navbar-nav">
                 <li><a href="#">Главная</a></li>
                 <li><a href="#">Новости</a></li>
-                <li><a href="/meme/Meme/create">Создать мем</a></li>
-                <li><a href="/meme/Meme/view">Посмотреть мем</a></li>
             </ul>
         </div>
     </nav>

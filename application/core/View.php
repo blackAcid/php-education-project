@@ -39,7 +39,7 @@ class View
         $matches = glob($path_to_css . "*.css");
         if (is_array($matches)) {
             for ($i = 0; $i < count($matches); $i++) {
-                $temp = '<link rel="stylesheet" type="text/css" media="screen" href="' . "/public/" . $matches[$i] . '" />';
+                $temp = '<link rel="stylesheet" type="text/css" media="screen" href="' .HTTP_URL_PUB. "/" . $matches[$i] . '" />';
                 $links[$i] = $temp;
             }
         }
@@ -53,7 +53,7 @@ class View
         $matches = glob($path_to_js . "*.js");
         if (is_array($matches)) {
             for ($i = 0; $i < count($matches); $i++) {
-                $temp = '<script type="text/javascript" src="' . "/public/" . $matches[$i] . '"></script>';
+                $temp = '<script type="text/javascript" src="' . "/" . $matches[$i] . '"></script>';
                 $links[$i] = $temp;
             }
         }
@@ -71,7 +71,7 @@ class View
             $variable = $this->variables[$name];
 
             if ($this->params['xss_protection']) {
-                //$variable = $this->xssProtection($variable);
+                $variable = $this->xssProtection($variable);
             }
             return $variable;
         }
