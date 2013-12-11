@@ -7,6 +7,7 @@
             <ul class="user-info">
                 <li><?php echo $this->username['username']; ?></li>
                 <li><?php echo $this->date_of_birth['date_of_birth']; ?></li>
+                <li><a href="change"><button type="button" class="btn btn-default">Редактировать Профиль</button></a></li>
             </ul>
 
             <ul class="navigation">
