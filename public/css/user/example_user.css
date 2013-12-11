@@ -6,7 +6,9 @@ div.user-profile
 
 img.avatar
 {
-    margin-top: 10px;
+   margin-top: 10px;
+   width: 250px;
+   height: 250px;
 }
 
 div.avatar
@@ -68,4 +70,25 @@ div.meme-zone
 img.meme
 {
     margin: 10px;
+}
+
+div.user-change
+{
+    width: 20%;
+}
+
+input.form-control:focus
+{
+    border-color: #9724d2;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(189, 77, 247, 0.6);
+}
+
+ul.change-data
+{
+    list-style: none;
+}
+
+ul.change-data li
+{
+    margin-bottom: 15px;
 }

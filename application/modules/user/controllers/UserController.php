@@ -47,11 +47,10 @@ class UserController
     public function changeAction()
     {
         $User = new model\User();
-        $User->profile($_GET['id']);
-        if(isset($_POST['User']))
+        if(isset($_POST['user']))
         {
-            $User->changeProfile($_POST['User']);
-            $User->profile($_GET['id']);
+            $User->changeProfile($_POST, '1');
+            $User->profile('1');
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'profile.php');
             $MemesNumber = count($User->paths_to_my_memes);

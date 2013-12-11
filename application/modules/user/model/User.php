@@ -29,25 +29,25 @@ class User
         $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])->selectColumns(['path'])->fetchAll();
     }
 
-    public function changeProfile($ChangeData)
+    public function changeProfile($ChangeData, $UserId)
     {
-        if(isset($ChangeData['name']))
+        if(!empty($ChangeData['name']))
         {
             $UpdateUser = new Users();
-            $UpdateUserObject = $UpdateUser->update(['username'=>$ChangeData['name']],'id='.$this-id);
+            $UpdateUser->update(['username'=>$ChangeData['name']],'id='.$UserId);
         }
-        if(isset($ChangeData['email']))
+        if(!empty($ChangeData['email']))
         {
             $UpdateUser = new Users();
-            $UpdateUserObject = $UpdateUser->update(['email'=>$ChangeData['email']],'id='.$this-id);
+            $UpdateUser->update(['email'=>$ChangeData['email']],'id='.$UserId);
         }
-        if(isset($ChangeData['userfile']))
+        if(!empty($_FILES['userfile']['size']))
         {
-            $UploadDir = DIR_PUBLIC.'/images/user_avatars/';
+            $UploadDir = DIR_PUBLIC.'images/user_avatars/';
             $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
             move_uploaded_file($_FILES['userfile']['tmp_name'], $UploadFile);
-            rename($UploadFile, $UploadDir.'/'.$this->id.'_user.jpg');
-            $this->avatar = $UploadDir.'/'.$this->id.'_user.jpg';
+            rename($UploadFile, $UploadDir.$UserId.'_user.jpg');
+            $this->avatar = $UploadDir.$UserId.'_user.jpg';
         }
     }
 }
