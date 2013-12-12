@@ -24,19 +24,15 @@ div.profile-navigation ul
 div.profile-navigation li
 {
     list-style: none;
-}
-
-div.profile-navigation li
-{
     padding: 7px;
 }
 
-div.profile-navigation li > button
+div.profile-navigation li > a > button
 {
-    width: 80%;
+    width: 85%;
 }
 
-div.profile-navigation li a
+div.profile-navigation li > a
 {
     color: #000000;
 }

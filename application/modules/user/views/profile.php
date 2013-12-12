@@ -11,10 +11,10 @@
             </ul>
 
             <ul class="navigation">
-                <li><button type="button" class="btn btn-default"><a href="#">Создать Мем</a></button></li>
-                <li><button type="button" class="btn btn-default"><a href="#">Друзья</a></button></li>
-                <li><button type="button" class="btn btn-default"><a href="#">Новости</a></button></li>
-                <li><button type="button" class="btn btn-default"><a href="#">Подписки</a></button></li>
+                <li><a href="meme/meme/create"><button type="button" class="btn btn-default">Создать Мем</button></a></li>
+                <li><a href="user/friends/index"><button type="button" class="btn btn-default">Друзья</button></a></li>
+                <li><a href="news/index/index"><button type="button" class="btn btn-default">Новости</button></a></li>
+                <li><a href="#"><button type="button" class="btn btn-default">Подписки</button></a></li>
             </ul>
         </div>
     </div>
