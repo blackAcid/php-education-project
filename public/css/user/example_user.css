@@ -1,3 +1,4 @@
+
 div.user-profile
 {
     font-family: tahoma,arial,verdana,sans-serif,Lucida Sans;
@@ -63,8 +64,15 @@ ul.user-info
 
 div.meme-zone
 {
-    height: 500px;
+    max-height: 500px;
     text-align: center;
+    width: 70%;
+    margin:3% 20%;
+    padding: 2%;
+    background-color: #ffffff;
+    border: 2px solid rgb(85, 66, 158);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(85, 66, 158,1);
 }
 
 img.meme
