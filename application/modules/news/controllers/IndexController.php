@@ -20,19 +20,33 @@ class IndexController
         $module=Registry::getValue('module');
         $v = new View($module, 'memes.php');
         $v->assign('title', 'News');
-        if (!empty($_GET)) {
-            $page=(int)$_GET['page'];
+       // echo "post=".$_POST['startFrom'];
+        if (isset($_POST['startFrom'])){
+           $startFrom=$_POST['startFrom'];
         } else {
-            $page=1;
+            $startFrom=0;
         }
-        $v->assign('memes', NewsModel::getMemes($page));
-        $v->assign('countPages', NewsModel::getCountPages());
+        $v->assign('memes', NewsModel::getMemes($startFrom));
         try {
-            $v->addIntoTemplate();
-            $v->display();
+                $v->addIntoTemplate();
+                $v->display();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+    }
+    public function memesAction()
+    {
+        $module=Registry::getValue('module');
+        if (isset($_POST['startFrom'])){
+            $startFrom=$_POST['startFrom'];
+
+        }
+        else {
+            $startFrom=0;
+        }
+        $memes=NewsModel::getMemes($startFrom);
+        include $file=DIR_MOD.$module."/views/printMemes.php";
+
     }
     public function ratingAction()
     {
