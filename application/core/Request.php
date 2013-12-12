@@ -34,7 +34,7 @@ class Request
 
     private function parseURI()
     {
-        $rep=str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_PUBLIC);
+        /*$rep=str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_PUBLIC);
         //echo "<br>rep=".$rep;
         //$rout=str_replace($rep,'',$_SERVER['REQUEST_URI']);
         //echo "rout=".$rout;
@@ -42,7 +42,7 @@ class Request
         $routes = explode('/', str_replace($rep, '', $_SERVER['REQUEST_URI']));
         //print_r($routes);
         echo $this->isCssFile();
-        /*if (!empty($routes[1]) && !empty($routes[2])) {
+        if (!empty($routes[1]) && !empty($routes[2])) {
             $this->module=$routes[1];
             $this->controller=$routes[2];
         }
@@ -60,7 +60,7 @@ class Request
             } else {
                 $this->action = $routes[3];
             }
-        }*/
+        }
         if (!empty($routes[0]) && !empty($routes[1])) {
             $this->module=$routes[0];
             $this->controller=$routes[1];
@@ -78,6 +78,28 @@ class Request
                 }
             } else {
                 $this->action = $routes[2];
+            }
+        }*/
+        $routes = explode('/', $_SERVER['REQUEST_URI']);
+        //  print_r($routes);
+        echo $this->isCssFile();
+        if (!empty($routes[1]) && !empty($routes[2])) {
+            $this->module=$routes[1];
+            $this->controller=$routes[2];
+        }
+        if (!empty($routes[3])) {
+            $temp=preg_split("/\?/", $routes[3]);
+            if (!empty($temp)) {
+                $this->action=array_shift($temp);
+                for ($j=0; $j<count($temp); $j++) {
+                    $key_val=explode('&', $temp[$j]);
+                    $eq=strpos($key_val[$j], '=');
+                    $key=substr($key_val[$j], 0, $eq);
+                    $value=substr($key_val[$j], $eq+1);
+                    $this->params[$key][$value];
+                }
+            } else {
+                $this->action = $routes[3];
             }
         }
     }
