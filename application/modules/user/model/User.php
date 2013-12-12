@@ -41,6 +41,15 @@ class User
             $UpdateUser = new Users();
             $UpdateUser->update(['email'=>$ChangeData['email']],'id='.$UserId);
         }
+        if(!empty($ChangeData['password']) && !empty($ChangeData['password-repeat']))
+        {
+            if($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat'])
+            {
+                $password = md5($password);
+                $UpdateUser = new Users();
+                $UpdateUser->update(['password'=>$password], 'id='.$UserId);
+            }
+        }
         if(!empty($_FILES['userfile']['size']))
         {
             $UploadDir = DIR_PUBLIC.'images/user_avatars/';

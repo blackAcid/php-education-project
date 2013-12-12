@@ -70,6 +70,7 @@ class UserController
 
         } else
         {
+            $User->profile('1'); //There must be session variable with user id.
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'change.php');
             foreach ($User as $property => $value)
