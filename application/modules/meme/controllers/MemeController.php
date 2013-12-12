@@ -32,10 +32,10 @@ class MemeController
 
     public function generateAction()
     {
-        Registry::setValue('1', 'user');
+        Registry::setValue('11', 'user');
         $meme = new models\MemeModel();
         $meme->createMeme($_POST['name'], $_POST['path'], $_POST['text']);
-        //$meme->createMeme('собака', '/public/images/memes/base/orig/advice_dog.jpg', array('advice', 'dawg'));
+        //$meme->createMeme('собака', 'http://192.168.224.128/project/public/images/memes/base/orig/advice_dog.jpg', array('advice', 'dawg'));
         echo json_encode(['id' => $meme->getMemeId()]);
         die;
     }
@@ -44,10 +44,10 @@ class MemeController
     {
         $module = Registry::getValue('module');
         $meme = new models\MemeModel();
-        $path = $meme->getMemePath($_GET[id]);
+        $path = $meme->getMemePath($_GET['id']);
         $v = new View($module, 'view.php');
         $v->assign('title', 'View');
-        $v->assign('path', $path);
+        $v->assign('memePath', $path);
 
         try {
             $v->addIntoTemplate();

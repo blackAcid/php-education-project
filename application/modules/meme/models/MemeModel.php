@@ -32,7 +32,7 @@ class MemeModel
     {
         $id = new Memes();
         $id = $id->selectPrepare();
-        $id = $id->selectColumns(['id'])->where(['path = ' => str_replace(DIR_PUBLIC, '', $this->fileName)])->fetch();;
+        $id = $id->selectColumns(['id'])->where(['path = ' => str_replace(DIR_PUBLIC, '', $this->fileName)])->fetch();
         return $id['id'];
     }
 
@@ -56,7 +56,7 @@ class MemeModel
             $pic = str_replace('/orig/', '/thumb/', $pics[$i]['base_picture']);
             preg_match('/(?<=\/)\w+(?=\.)/', $pic, $matches);
             $match = $matches[0];
-            $output .= "<img src='/public/" . $pic . "' class='thumb' inputs='" . $pics[$i]['fields'] .
+            $output .= "<img src='" . HTTP_URL_PUB . $pic . "' class='thumb' inputs='" . $pics[$i]['fields'] .
                 "' alt='" . $match . "'>";
         }
         return $output;
@@ -89,7 +89,7 @@ class MemeModel
     {
         $textAreas = new TextAreas();
         $selected = $textAreas->selectPrepare();
-        $path = str_replace('/public/', '', $path);
+        $path = str_replace(HTTP_URL_PUB, '', $path);
         $coords = $selected->selectColumns(array('meme_base.id', 'alias', 'start_x', 'start_y', 'end_x', 'end_y', 'color'))
             ->join('LEFT', 'meme_base', 'meme_id', 'id')->where(array('base_picture = ' => "$path"))->fetchAll();
         for ($i = 0; $i < count($text); $i++) {
@@ -151,12 +151,9 @@ class MemeModel
 
     private function saveMeme()
     {
-        $memes = new Memes();
-
         $dir = DIR_PUBLIC . 'images/memes/user_memes/' . Registry::getValue('user') . '/';
 
         $this->fileName = $dir . $this->memeAlias . '_' . time() . '.jpg';
-
 
         if (file_exists($dir)) {
             file_put_contents($this->fileName, $this->img);
@@ -165,9 +162,15 @@ class MemeModel
             file_put_contents($this->fileName, $this->img);
         }
 
-        $memes->insert(['name' => $this->memeName, 'path' => str_replace(DIR_PUBLIC, '', $this->fileName), 'meme_base_id' => $this->memeBaseId,
-            'user_id' => Registry::getValue('user'), 'date_create' => date('Y-m-d-h-m-s', time()) , 'date_update' => date('Y-m-d-h-m-s', time()),
+        $memes = new Memes();
+        $memes->insert(['name' => $this->memeName, 'path' => str_replace(DIR_PUBLIC, '', $this->fileName),
+            'meme_base_id' => $this->memeBaseId, 'user_id' => Registry::getValue('user'),
+            'date_create' => date('Y-m-d-h-m-s', time()), 'date_update' => date('Y-m-d-h-m-s', time()),
             'likes' => 0, 'dislikes' => 0]);
+
+
+
+
     }
 
     private function getYShift($textHeight, $area)
@@ -215,9 +218,11 @@ class MemeModel
 
     public function getMemePath($id)
     {
-        $id = new Memes();
-        $id = $id->selectPrepare();
-        $id = $id->selectColumns(['path'])->where(['id = ' => $id])->fetch();
-        return $id['path'];
+        $meme = new Memes();
+        $meme = $meme->selectPrepare();
+        $meme = $meme->selectColumns(['path'])->where(['id = ' => $id])->fetch();
+
+        return str_replace(DIR, '', $meme['path']);
+
     }
 }

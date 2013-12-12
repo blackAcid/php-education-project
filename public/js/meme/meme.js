@@ -4,7 +4,7 @@ $(document).ready(function () {
     var path = $('.selected').attr('src');
     path = path.replace('/thumb/', '/orig/');
     $('#main img').attr('src', path);
-    setInputs();
+    setInputs(true);
 
 
     $('.thumb').bind('click', function () {
@@ -13,7 +13,7 @@ $(document).ready(function () {
         var path = $('.selected').attr('src');
         path = path.replace('/thumb/', '/orig/');
         $('#main img').attr('src', path);
-        setInputs();
+        setInputs(true);
     });
 
     $('#inputs input').focus(function () {
@@ -29,15 +29,15 @@ $(document).ready(function () {
         }
     });
 
-    function setInputs() {
+    function setInputs(changed) {
         $('#inputs input').not('#name').hide();
         var inputs = $('.selected').attr('inputs');
-        if (!$('#name').hasClass('initial')) {
+        if (!$('#name').hasClass('initial') && changed) {
             $('#name').val('Название мема').addClass('initial');
         }
         for (var i = 1; i <= inputs; i++) {
             $('#inputs #' + i).show();
-            if ($('#inputs #' + i).hasClass('initial')) {
+            if ($('#inputs #' + i).hasClass('initial') || changed) {
                 $('#inputs #' + i).val(i).addClass('initial');
             }
         }
@@ -60,19 +60,20 @@ $(document).ready(function () {
 
         if ($('#name').hasClass('initial')) {
             alert('Введите название создаваемого мема');
-            setInputs();
+            setInputs(false);
         } else if (inputsVal.length < 1) {
             alert('Заполните хотя бы одно поле ввода!');
-            setInputs();
+            setInputs(false);
         } else {
             var div = $('<div></div>').addClass('darkened');
             $('body').append(div);
             $('#ajax').show();
             var current = window.location.href;
             $.post(current.replace('create', 'generate'), {name: name, text: inputsVal, path: path})
-                .done(function (data) {
-                    window.location.replace(current.replace('create', 'view?id='+$.(parseJSON(data)).id));
+                .done(function(data){
+                   window.location.replace(current.replace('create', 'view?id='+ ($.parseJSON(data)).id))
                 });
+
 
         }
 

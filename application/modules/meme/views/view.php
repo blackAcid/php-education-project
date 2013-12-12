@@ -1,3 +1,3 @@
 <div class="col-md-12" id ="lastpic">
-    <img src="/public/<?php echo $this->path ?>">
+    <img src="<?php echo HTTP_URL_PUB.$this->memePath ?>">
 </div>

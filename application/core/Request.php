@@ -11,10 +11,12 @@ class Request
     public function __construct()
     {
         $this->parseURI();
-        /*echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
+        /*
+        echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
         echo "<br>dir=".DIR_PUBLIC;
         echo "<br>document_root=".$_SERVER['DOCUMENT_ROOT'];
         */
+
     }
     public function getController()
     {
@@ -35,11 +37,7 @@ class Request
 
     private function parseURI()
     {
-        $rep=str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_PUBLIC);
-        //echo "<br>rep=".$rep;
-        //$rout=str_replace($rep,'',$_SERVER['REQUEST_URI']);
-        //echo "rout=".$rout;
-        //$routes = explode('/', $_SERVER['REQUEST_URI']);
+        $rep=str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR);
         $routes = explode('/', str_replace($rep, '', $_SERVER['REQUEST_URI']));
         //print_r($routes);
         echo $this->isCssFile();
@@ -62,27 +60,6 @@ class Request
                 $this->action = $routes[3];
             }
         }
-        /*
-        if (!empty($routes[0]) && !empty($routes[1])) {
-            $this->module=$routes[0];
-            $this->controller=$routes[1];
-        }
-        if (!empty($routes[2])) {
-            $temp=preg_split("/\?/", $routes[2]);
-            if (!empty($temp)) {
-                $this->action=array_shift($temp);
-                for ($j=0; $j<count($temp); $j++) {
-                    $key_val=explode('&', $temp[$j]);
-                    $eq=strpos($key_val[$j], '=');
-                    $key=substr($key_val[$j], 0, $eq);
-                    $value=substr($key_val[$j], $eq+1);
-                    $this->params[$key][$value];
-                }
-            } else {
-                $this->action = $routes[2];
-            }
-        }
-        */
     }
 
     private function isCssFile()
