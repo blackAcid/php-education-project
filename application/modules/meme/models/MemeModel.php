@@ -3,6 +3,8 @@ namespace modules\meme\models;
 
 use core\classTables\MemeBase;
 use core\classTables\TextAreas;
+use core\classTables\Memes;
+use core\Registry;
 use \Imagick;
 use \ImagickPixel;
 use \ImagickDraw;
@@ -21,6 +23,18 @@ class MemeModel
     private $draw;
     private $fontPixel;
     private $strokePixel;
+    private $memeBaseId;
+    private $memeAlias;
+    private $memeName;
+    private $fileName;
+
+    public function getMemeId()
+    {
+        $id = new Memes();
+        $id = $id->selectPrepare();
+        $id = $id->selectColumns(['id'])->where(['path = ' => str_replace(DIR_PUBLIC, '', $this->fileName)])->fetch();;
+        return $id['id'];
+    }
 
     //Getting images info from DB
     public function getBasePictures()
@@ -28,7 +42,7 @@ class MemeModel
         $pics = new MemeBase();
         $selected = $pics->selectPrepare();
         $queryResult = $selected->selectColumns(array('base_picture',
-            'COUNT(text_areas.id) as fields'))->join('LEFT','text_areas','id','meme_id')
+            'COUNT(text_areas.id) as fields'))->join('LEFT', 'text_areas', 'id', 'meme_id')
             ->group('base_picture')->fetchAll();
         $this->pictures = $this->getPicturesOuput($queryResult);
         $this->inputs = $this->getInputsOutput($queryResult);
@@ -54,7 +68,7 @@ class MemeModel
         $output = '';
         $inputsCount = $this->getMaxInputs($pics);
         for ($i = 1; $i <= $inputsCount; $i++) {
-            $output .= "<input type='text' id='" . $i . "' value='".$i."' class='initial'>";
+            $output .= "<input type='text' id='" . $i . "' value='" . $i . "' class='initial'>";
         }
 
         return $output;
@@ -71,15 +85,14 @@ class MemeModel
         return $max;
     }
 
-    public function createMeme($path, $text)
+    public function createMeme($name, $path, $text)
     {
         $textAreas = new TextAreas();
         $selected = $textAreas->selectPrepare();
         $path = str_replace('/public/', '', $path);
-        $coords = $selected->selectColumns(array('start_x', 'start_y', 'end_x', 'end_y', 'color'))
-            ->join('LEFT','meme_base','meme_id', 'id')->where(array('base_picture = ' => "$path"))->fetchAll();
-        for ($i = 0; $i < count($text); $i++)
-        {
+        $coords = $selected->selectColumns(array('meme_base.id', 'alias', 'start_x', 'start_y', 'end_x', 'end_y', 'color'))
+            ->join('LEFT', 'meme_base', 'meme_id', 'id')->where(array('base_picture = ' => "$path"))->fetchAll();
+        for ($i = 0; $i < count($text); $i++) {
             $areas[$i] = array($text[$i], $coords[$i]['start_x'], $coords[$i]['start_y'],
                 $coords[$i]['end_x'], $coords[$i]['end_y'],);
         }
@@ -87,9 +100,15 @@ class MemeModel
             $this->fontColor = '#000';
             $this->strokeColor = '#FFF';
         }
+
+        $this->memeBaseId = $coords[0]['id'];
+        $this->memeAlias = $coords[0]['alias'];
+        $this->memeName = $name;
+
+
         $this->font = DIR_PUBLIC . 'fonts/russo.ttf';
 
-        $this->img = new imagick(DIR_PUBLIC.$path);
+        $this->img = new imagick(DIR_PUBLIC . $path);
         $this->textAreas = $areas;
         $this->getDraw();
         $this->getMeme();
@@ -126,8 +145,29 @@ class MemeModel
             }
         }
 
-        file_put_contents(DIR_PUBLIC.'images/memes/1/test.jpg', $this->img);
+        $this->saveMeme();
 
+    }
+
+    private function saveMeme()
+    {
+        $memes = new Memes();
+
+        $dir = DIR_PUBLIC . 'images/memes/user_memes/' . Registry::getValue('user') . '/';
+
+        $this->fileName = $dir . $this->memeAlias . '_' . time() . '.jpg';
+
+
+        if (file_exists($dir)) {
+            file_put_contents($this->fileName, $this->img);
+        } else {
+            mkdir($dir);
+            file_put_contents($this->fileName, $this->img);
+        }
+
+        $memes->insert(['name' => $this->memeName, 'path' => str_replace(DIR_PUBLIC, '', $this->fileName), 'meme_base_id' => $this->memeBaseId,
+            'user_id' => Registry::getValue('user'), 'date_create' => date('Y-m-d-h-m-s', time()) , 'date_update' => date('Y-m-d-h-m-s', time()),
+            'likes' => 0, 'dislikes' => 0]);
     }
 
     private function getYShift($textHeight, $area)
@@ -171,5 +211,13 @@ class MemeModel
         $this->draw->setfillcolor($this->fontPixel);
         $this->draw->setstrokealpha(0);
         $this->img->annotateImage($this->draw, $x, $y, 0, $text);
+    }
+
+    public function getMemePath($id)
+    {
+        $id = new Memes();
+        $id = $id->selectPrepare();
+        $id = $id->selectColumns(['path'])->where(['id = ' => $id])->fetch();
+        return $id['path'];
     }
 }

@@ -32,16 +32,22 @@ class MemeController
 
     public function generateAction()
     {
+        Registry::setValue('1', 'user');
         $meme = new models\MemeModel();
-        $meme->createMeme($_POST['path'], $_POST['text']);
-        //$meme->createMeme('/public/images/memes/base/orig/advice_dog.jpg', array('advice', 'dawg'));
+        $meme->createMeme($_POST['name'], $_POST['path'], $_POST['text']);
+        //$meme->createMeme('собака', '/public/images/memes/base/orig/advice_dog.jpg', array('advice', 'dawg'));
+        echo json_encode(['id' => $meme->getMemeId()]);
+        die;
     }
 
     public function viewAction()
     {
         $module = Registry::getValue('module');
+        $meme = new models\MemeModel();
+        $path = $meme->getMemePath($_GET[id]);
         $v = new View($module, 'view.php');
         $v->assign('title', 'View');
+        $v->assign('path', $path);
 
         try {
             $v->addIntoTemplate();

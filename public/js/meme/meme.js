@@ -22,23 +22,32 @@ $(document).ready(function () {
     });
 
     $('#inputs input').focusout(function () {
-        if ($(this).val() == '')
+        if ($.trim($(this).val()) == '') {
             $(this).addClass('initial').val($(this).attr('id'));
+            if ($(this).attr('id') == 'name')
+                $(this).val('Название мема');
+        }
     });
 
     function setInputs() {
-        $('#inputs input').hide();
+        $('#inputs input').not('#name').hide();
         var inputs = $('.selected').attr('inputs');
+        if (!$('#name').hasClass('initial')) {
+            $('#name').val('Название мема').addClass('initial');
+        }
         for (var i = 1; i <= inputs; i++) {
             $('#inputs #' + i).show();
-            $('#inputs #' + i).val(i).addClass('initial');
+            if ($('#inputs #' + i).hasClass('initial')) {
+                $('#inputs #' + i).val(i).addClass('initial');
+            }
         }
     };
 
     $('input[type*="button"]').bind('click', function () {
-        var inputs = $('#inputs input');
+        var inputs = $('#inputs input').not('#name');
         var inputsVal = new Array();
         var path = $('#main img').attr('src');
+        var name = $.trim($('#name').val());
 
         for (var i = 0; i < inputs.length; i++) {
             if ($(inputs[i]).hasClass('initial')) {
@@ -49,18 +58,22 @@ $(document).ready(function () {
         }
 
 
-        if (inputsVal.length < 1) {
-            alert('Заполните хотя бы одно поле!');
+        if ($('#name').hasClass('initial')) {
+            alert('Введите название создаваемого мема');
+            setInputs();
+        } else if (inputsVal.length < 1) {
+            alert('Заполните хотя бы одно поле ввода!');
             setInputs();
         } else {
             var div = $('<div></div>').addClass('darkened');
             $('body').append(div);
             $('#ajax').show();
             var current = window.location.href;
-            $.post(current.replace('create', 'generate'), {text: inputsVal, path: path})
-                .done(function () {
-                    window.location.replace(current.replace('create', 'view'));
-                })
+            $.post(current.replace('create', 'generate'), {name: name, text: inputsVal, path: path})
+                .done(function (data) {
+                    window.location.replace(current.replace('create', 'view?id='+$.(parseJSON(data)).id));
+                });
+
         }
 
     });

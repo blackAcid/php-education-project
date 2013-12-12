@@ -10,6 +10,7 @@
 
             </div>
             <div class="col-md-4" id="inputs">
+                <input type="text" id="name" value="Название мема" class="initial"><br />
                 <?php  echo html_entity_decode($this->inputs);?>
             </div>
         </div>

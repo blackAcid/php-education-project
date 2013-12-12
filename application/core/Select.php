@@ -121,4 +121,16 @@ class Select
         //$sql->debugDumpParams();
         return $result;
     }
+
+    public function from($tables = null)
+    {
+        $t_old=array();
+        if ($tables!=null) {
+            for ($i=0; $i<count($tables); $i++) {
+                $t_old[$i]="`".$tables[$i]."`";
+            }
+            $this->tables=",".implode(",", $t_old);
+            return $this;
+        }
+    }
 }
