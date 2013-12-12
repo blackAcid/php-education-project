@@ -49,8 +49,8 @@ class UserController
         $User = new model\User();
         if(isset($_POST['user']))
         {
-            $User->changeProfile($_POST, '1');
-            $User->profile('1');
+            $User->changeProfile($_POST, '1'); //There must be session variable with user id.
+            $User->profile('1'); //There must be session variable with user id.
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'profile.php');
             $MemesNumber = count($User->paths_to_my_memes);
