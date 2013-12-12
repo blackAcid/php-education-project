@@ -35,11 +35,7 @@ class Request
     private function parseURI()
     {
         $rep=str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_PUBLIC);
-        //echo "<br>rep=".$rep;
-        //$rout=str_replace($rep,'',$_SERVER['REQUEST_URI']);
-        //echo "rout=".$rout;
-        //$routes = explode('/', $_SERVER['REQUEST_URI']);
-        $routes = explode('/', str_replace($rep, '', $_SERVER['REQUEST_URI']));
+         $routes = explode('/', str_replace($rep, '', $_SERVER['REQUEST_URI']));
         //print_r($routes);
         echo $this->isCssFile();
         /*if (!empty($routes[1]) && !empty($routes[2])) {

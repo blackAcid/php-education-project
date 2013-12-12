@@ -2,6 +2,7 @@
 namespace modules\main\model;
 
 use core\classTables\Roles;
+use core\classTables\Subscription;
 use core\classTables\Users;
 
 class DefaultModel
@@ -13,6 +14,13 @@ class DefaultModel
         $result=$sel->select(['*'])->fetchAll(null);
         echo "<br><pre>";
         var_dump($result);
+    }
+    public static function ptinSub()
+    {
+        $sub=new Subscription();
+        $selObj=$sub->selectPrepare();
+        $result=$selObj->selectColumns(['*'])->fetchAll(null);
+        return $result;
     }
     public static function insertUsers()
     {
