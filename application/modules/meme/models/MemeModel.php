@@ -42,7 +42,7 @@ class MemeModel
             $pic = str_replace('/orig/', '/thumb/', $pics[$i]['base_picture']);
             preg_match('/(?<=\/)\w+(?=\.)/', $pic, $matches);
             $match = $matches[0];
-            $output .= "<img src='" . $pic . "' class='thumb' inputs='" . $pics[$i]['fields'] .
+            $output .= "<img src='/public/" . $pic . "' class='thumb' inputs='" . $pics[$i]['fields'] .
                 "' alt='" . $match . "'>";
         }
         return $output;
@@ -75,6 +75,7 @@ class MemeModel
     {
         $textAreas = new TextAreas();
         $selected = $textAreas->selectPrepare();
+        $path = str_replace('/public/', '', $path);
         $coords = $selected->selectColumns(array('start_x', 'start_y', 'end_x', 'end_y', 'color'))
             ->join('LEFT','meme_base','meme_id', 'id')->where(array('base_picture = ' => "$path"))->fetchAll();
         for ($i = 0; $i < count($text); $i++)
@@ -88,7 +89,7 @@ class MemeModel
         }
         $this->font = DIR_PUBLIC . 'fonts/russo.ttf';
 
-        $this->img = new imagick(DIR.$path);
+        $this->img = new imagick(DIR_PUBLIC.$path);
         $this->textAreas = $areas;
         $this->getDraw();
         $this->getMeme();

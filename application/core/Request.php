@@ -11,9 +11,10 @@ class Request
     public function __construct()
     {
         $this->parseURI();
-        //echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
-        //echo "<br>dir=".DIR_PUBLIC;
-        //echo "<br>document_root=".$_SERVER['DOCUMENT_ROOT'];
+        /*echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
+        echo "<br>dir=".DIR_PUBLIC;
+        echo "<br>document_root=".$_SERVER['DOCUMENT_ROOT'];
+        */
     }
     public function getController()
     {
@@ -42,7 +43,7 @@ class Request
         $routes = explode('/', str_replace($rep, '', $_SERVER['REQUEST_URI']));
         //print_r($routes);
         echo $this->isCssFile();
-        /*if (!empty($routes[1]) && !empty($routes[2])) {
+        if (!empty($routes[1]) && !empty($routes[2])) {
             $this->module=$routes[1];
             $this->controller=$routes[2];
         }
@@ -60,7 +61,8 @@ class Request
             } else {
                 $this->action = $routes[3];
             }
-        }*/
+        }
+        /*
         if (!empty($routes[0]) && !empty($routes[1])) {
             $this->module=$routes[0];
             $this->controller=$routes[1];
@@ -80,6 +82,7 @@ class Request
                 $this->action = $routes[2];
             }
         }
+        */
     }
 
     private function isCssFile()

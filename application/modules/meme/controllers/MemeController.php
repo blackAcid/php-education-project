@@ -34,6 +34,7 @@ class MemeController
     {
         $meme = new models\MemeModel();
         $meme->createMeme($_POST['path'], $_POST['text']);
+        //$meme->createMeme('/public/images/memes/base/orig/advice_dog.jpg', array('advice', 'dawg'));
     }
 
     public function viewAction()

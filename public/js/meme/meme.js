@@ -49,8 +49,6 @@ $(document).ready(function () {
         }
 
 
-
-
         if (inputsVal.length < 1) {
             alert('Заполните хотя бы одно поле!');
             setInputs();
@@ -58,9 +56,10 @@ $(document).ready(function () {
             var div = $('<div></div>').addClass('darkened');
             $('body').append(div);
             $('#ajax').show();
-            $.post( "/meme/Meme/generate", {text : inputsVal , path : path})
-                .done(function() {
-                    window.location.replace('/meme/Meme/view');
+            var current = window.location.href;
+            $.post(current.replace('create', 'generate'), {text: inputsVal, path: path})
+                .done(function () {
+                    window.location.replace(current.replace('create', 'view'));
                 })
         }
 
