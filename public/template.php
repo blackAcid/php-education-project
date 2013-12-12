@@ -7,6 +7,7 @@
     print "\"".HTTP_URL_PUB."css/bootstrap.css\""?>/>
     <link rel="stylesheet" type="text/css" href=<?php
     print "\"".HTTP_URL_PUB."css/main-style.css\"";?>/>
+
     <?php
       foreach($this->getCssFile() as $value)
       {

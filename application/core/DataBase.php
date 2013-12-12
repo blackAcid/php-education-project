@@ -54,7 +54,7 @@ class DataBase
         $values=$this->quote($values);
         $sql=$this->db->prepare("INSERT INTO `{$this->className}` ($cols) VALUES ($values);");
         $sql->execute();
-        $sql->debugDumpParams();
+        //$sql->debugDumpParams();
     }
     public function update($fields, $construct = null, $values = null)
     {
@@ -83,7 +83,7 @@ class DataBase
             $sql->debugDumpParams();
         } else {
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         }
     }
     public function delete($construct = null, $log = null)
