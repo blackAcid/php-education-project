@@ -64,10 +64,10 @@ class DataBase
             $fields_val=array_values(($fields));
             preg_match('/([\*\+-\/])/', $fields_val[$i],$matches,PREG_OFFSET_CAPTURE);
             if (count($matches)!=null){
-                $fields_res[$i]="'$fields_cols[$i]'=$fields_val[$i]";
+                $fields_res[$i]="$fields_cols[$i]=$fields_val[$i]";
 
             } else {
-                $fields_res[$i]="'$fields_cols[$i]'='$fields_val[$i]'";
+                $fields_res[$i]="$fields_cols[$i]='$fields_val[$i]'";
             }
         }
         $fields_res=implode(",", $fields_res);
