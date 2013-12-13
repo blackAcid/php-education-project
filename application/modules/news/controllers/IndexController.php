@@ -87,15 +87,16 @@ class IndexController
                 NewsModel::updateDislike($id_meme);
             }
             $rating=NewsModel::getLikesDislikes($id_meme);
+            include $file=DIR_MOD.$module."/views/ratingMemes.php";
         }
-        include $file=DIR_MOD.$module."/views/ratingMemes.php";
+
     }
    /* public function likeAction()
     {
         if (!empty($_POST)) {
             $id_meme=$_POST['like'];
             NewsModel::updateLike($id_meme);
-            header("Location:".HTTP_URL_PUB."news/index/index");
+            header("Location:".BASE_URL."news/index/index");
         }
     }
     public function dislikeAction()
@@ -103,7 +104,7 @@ class IndexController
         if (!empty($_POST)) {
             $id_meme=$_POST['dislike'];
             NewsModel::updateDislike($id_meme);
-            header("Location:".HTTP_URL_PUB."news/index/index");
+            header("Location:".BASE_URL."news/index/index");
         }
     }*/
 }

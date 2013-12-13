@@ -15,13 +15,13 @@ $(document).ready(function(){
                 beforeSend: function() {
                     inProgress = true;}
             }).done(function(data){
-                    $(data).insertAfter('#nextMeme:last-child');
+                    $(data).insertAfter('.nextMeme:last-child');
                     inProgress = false;
                     startFrom += 2;
                 });
         }
     });
-    $("button:submit").click(function(event) {
+    $(document).on('click','button',function() {
         var buttonName=$(this).attr('name');
         var buttonValue=$(this).attr('value');
         var divId=$('div .rating').attr('id');
@@ -33,8 +33,9 @@ $(document).ready(function(){
             beforeSend: function() {
                 inProgress = true;}
         }).done(function(data){
-                $('.rating').html(data);
+                $('.rating#'+buttonValue).html(data);
                 inProgress = false;
+
             });
         }
         //alert('hello '+ buttonValue);

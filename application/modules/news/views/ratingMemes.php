@@ -1,4 +1,3 @@
 <?php
-var_dump($rating);
-/*echo "<div class='rating'><span class='dislikes'>-".$rating[$id_meme]['dislikes']."</span>
-<span class='likes'>+".$rating[$id_meme]['likes']."</span></div>";*/
+echo "<div class='rating'><span class='dislikes'>-".$rating[0]['dislikes']."</span>
+<span class='likes'>+".$rating[0]['likes']."</span></div>";

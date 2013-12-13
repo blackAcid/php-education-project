@@ -4,5 +4,5 @@
 </pre>
 
 <script>
-    window.HTTP_URL_PUB = "<?php echo HTTP_URL_PUB ?>";
+    window.BASE_URL = "<?php echo BASE_URL ?>";
 </script>

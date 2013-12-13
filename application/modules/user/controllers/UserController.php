@@ -46,7 +46,7 @@ class UserController
         if ($user!=null){
             $_SESSION['userID']=$user['id'];
         } else {
-            //header("Location:".HTTP_URL_PUB."user/user/registration");
+            //header("Location:".BASE_URL."user/user/registration");
         }
         //$v->assign('userLogIn',UserModel::login());
         try {

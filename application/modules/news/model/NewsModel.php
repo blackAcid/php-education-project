@@ -81,15 +81,15 @@ class NewsModel
         else {
 
         }
-        $selObj2=$insertMemes->selectPrepare();
+        /*$selObj2=$insertMemes->selectPrepare();
         $dislikes=$selObj2->selectColumns(['dislikes'])->where(['memes_id='=>'?'])->fetch([$meme_id]);
-        return $dislikes['dislikes'];
+        return $dislikes['dislikes'];*/
     }
     public static function getLikesDislikes($meme_id)
     {
         $insertMemes=new Memes();
         $selObj2=$insertMemes->selectPrepare();
-        $likes=$selObj2->selectColumns(['likes','dislikes'])->where(['memes_id='=>'?'])->fetchAll([$meme_id]);
+        $likes=$selObj2->selectColumns(['likes','dislikes'])->where(['id='=>'?'])->fetchAll([$meme_id]);
         return $likes;
     }
     public static function getCountPages()

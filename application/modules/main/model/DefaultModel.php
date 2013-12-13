@@ -37,7 +37,8 @@ class DefaultModel
     public static function updateUsers()
     {
         $updateUser=new Users();
-        $updateUser->update(['login'=>'new@mail', 'password'=>'77777'], 'id=?', [3]);
+        $pass='likes/1';
+        $updateUser->update(['login'=>'new@mail', 'password'=>"$pass"], 'id=?', [3]);
     }
     public static function selectUsers()
     {
@@ -86,4 +87,14 @@ class DefaultModel
         echo "<br><pre>";
         var_dump($resultRowSet);
     }*/
+    public static function login()
+    {
+        $email='name1@mail';
+        $password='12345';
+        $selectUser=new Users();
+        $selObj=$selectUser->selectPrepare();
+        $user=$selObj->selectColumns(['id','username'])->where(['email='=>'? and ','password='=>'?'])
+            ->fetch(["$email","$password"]);
+        return $user;
+    }
 }

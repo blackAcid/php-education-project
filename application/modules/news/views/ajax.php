@@ -10,7 +10,7 @@ echo "<script>
 $(document).ready(function(){
     var inProgress = false;
     var startFrom = 2;
-    var urlMemes='".HTTP_URL_PUB."news/index/memes"."';
+    var urlMemes='".BASE_URL."news/index/memes"."';
     $(window).scroll(function() {
     if($(window).scrollTop() + $(window).height() >= $(document).height() - 200 && !inProgress) {
     $.ajax({
