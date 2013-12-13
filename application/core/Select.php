@@ -15,7 +15,7 @@ class Select
     private $join;
     private $cols;
     private $group;
-
+    private $tables;
     public function __construct($table, PDO $db)
     {
         $this->table = $table;
@@ -40,7 +40,7 @@ class Select
         $values = array_values($construct);
         $convert = "";
         for ($i = 0; $i < count($construct); $i++) {
-            if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL') {
+            if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL' && (in_array('.', $values))) {
                 $values[$i] = $this->db->quote($values[$i]);
             }
             $convert .= $keys[$i] . $values[$i] . " ";
@@ -94,7 +94,7 @@ class Select
 
     public function fetchAll($values = null)
     {
-        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` " . $this->join . $this->where . $this->group . $this->order . $this->limit;
+        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` ".$this->tables. $this->join . $this->where . $this->group . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i = 0; $i < count($values); $i++) {
@@ -109,7 +109,7 @@ class Select
 
     public function fetch($values = null)
     {
-        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` " . $this->join . $this->where . $this->order . $this->limit;
+        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` " .$this->tables. $this->join . $this->where . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i = 0; $i < count($values); $i++) {

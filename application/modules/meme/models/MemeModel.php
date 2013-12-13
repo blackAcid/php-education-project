@@ -56,7 +56,8 @@ class MemeModel
             $pic = str_replace('/orig/', '/thumb/', $pics[$i]['base_picture']);
             preg_match('/(?<=\/)\w+(?=\.)/', $pic, $matches);
             $match = $matches[0];
-            $output .= "<img src='" . HTTP_URL_PUB . $pic . "' class='thumb' inputs='" . $pics[$i]['fields'] .
+            $output .= "<img src='" . BASE_URL
+        .str_replace($_SERVER['DOCUMENT_ROOT'],'',DIR_PUBLIC)); . $pic . "' class='thumb' inputs='" . $pics[$i]['fields'] .
                 "' alt='" . $match . "'>";
         }
         return $output;
@@ -89,7 +90,8 @@ class MemeModel
     {
         $textAreas = new TextAreas();
         $selected = $textAreas->selectPrepare();
-        $path = str_replace(HTTP_URL_PUB, '', $path);
+        $path = str_replace(BASE_URL
+        .str_replace($_SERVER['DOCUMENT_ROOT'],'',DIR_PUBLIC));, '', $path);
         $coords = $selected->selectColumns(array('meme_base.id', 'alias', 'start_x', 'start_y', 'end_x', 'end_y', 'color'))
             ->join('LEFT', 'meme_base', 'meme_id', 'id')->where(array('base_picture = ' => "$path"))->fetchAll();
         for ($i = 0; $i < count($text); $i++) {

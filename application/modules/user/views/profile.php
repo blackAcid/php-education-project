@@ -22,7 +22,7 @@
         {
             echo '<div class="meme-zone"><header><a href="/meme/meme/view?id=' . $this->paths_to_my_memes[$i]['id']
                 .'">' . $this->paths_to_my_memes[$i]['name'] . '</a></header><img src="'.
-                HTTP_URL_PUB.$this->paths_to_my_memes[$i]['path'].'" class="meme"><footer>//комменты/лайки</footer></div>';
+                BASE_URL.$this->paths_to_my_memes[$i]['path'].'" class="meme"><footer>//комменты/лайки</footer></div>';
         } ?>
     </div>
 </div>

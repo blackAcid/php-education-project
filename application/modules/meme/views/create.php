@@ -19,4 +19,4 @@
         </div>
     </div>
 </div>
-<img src="<?php echo HTTP_URL_PUB; ?>images/ajax.gif" alt="ajax" id="ajax">
+<img src="<?php echo BASE_URL; ?>images/ajax.gif" alt="ajax" id="ajax">

@@ -11,9 +11,9 @@ class Request
     public function __construct()
     {
        $this->parseURI();
-        /*
-        echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
-        echo "<br>dir=".DIR_PUBLIC;
+
+        //echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
+        /*echo "<br>dir=".DIR_PUBLIC;
         echo "<br>document_root=".$_SERVER['DOCUMENT_ROOT'];
         */
 
@@ -37,10 +37,24 @@ class Request
 
     private function parseURI()
     {
-        $rep=str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR);
-        $routes = explode('/', str_replace($rep, '', $_SERVER['REQUEST_URI']));
+
         //print_r($routes);
-        echo $this->isCssFile();
+        //echo $this->isCssFile();
+        /*if (!empty($routes[1]) && !empty($routes[2])) {*/
+        if(isConfiguredDocRoot())
+        {
+            $routes = explode('/',$_SERVER['REQUEST_URI']);
+        }
+        else
+        {
+            //$rep=str_replace($_SERVER['DOCUMENT_ROOT'], '', DIR_PUBLIC);
+            /*echo "<br>server= ".$_SERVER['DOCUMENT_ROOT'];
+            echo "<br>dir public =".DIR_PUBLIC;
+            echo "<br>regitstry = /".Registry::getValue('rootDirName')."<br>";*/
+            // $routes = explode('/', str_replace($rep, '', $_SERVER['REQUEST_URI']));
+            $routes = explode('/', str_replace("/".Registry::getValue('rootDirName'),'',$_SERVER['REQUEST_URI']));
+        }
+        //print_r($routes);
         if (!empty($routes[1]) && !empty($routes[2])) {
             $this->module=$routes[1];
             $this->controller=$routes[2];
@@ -60,12 +74,9 @@ class Request
                 $this->action = $routes[3];
             }
         }
-    }
+        /* if (!empty($routes[0]) && !empty($routes[1])) {
+             $this->module=$routes[0];
+             $this->controller=$routes[1];*/
 
-    private function isCssFile()
-    {
-        if (end(explode(".", $_SERVER['REQUEST_URI']))=='css') {
-            return 'css';
-        }
     }
 }

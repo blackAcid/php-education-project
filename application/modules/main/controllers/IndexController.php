@@ -15,7 +15,7 @@ class IndexController
         $v->assign('title', 'Home page');
         //$v->assign('users', DefaultModel::selectUsers());
         //$v->assign('sub',DefaultModel::ptinSub());
-        DefaultModel::updateUsers();
+        //DefaultModel::updateUsers();
         try {
             $v->addIntoTemplate();
             $v->display();
