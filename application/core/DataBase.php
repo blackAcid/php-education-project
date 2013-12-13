@@ -63,10 +63,12 @@ class DataBase
         for ($i=0; $i<count($fields); $i++) {
             $fields_cols=array_keys($fields);
             $fields_val=array_values(($fields));
-            if (in_array('+', $fields_val)) {
-                $fields_res[$i]="$fields_cols[$i]='$fields_val[$i]'";
-            } else {
+            preg_match('/([\*\+-\/])/', $fields_val[$i],$matches,PREG_OFFSET_CAPTURE);
+            if (count($matches)!=null){
                 $fields_res[$i]="$fields_cols[$i]=$fields_val[$i]";
+
+            } else {
+                $fields_res[$i]="$fields_cols[$i]='$fields_val[$i]'";
             }
         }
         $fields_res=implode(",", $fields_res);
@@ -81,10 +83,10 @@ class DataBase
                 $sql->bindParam($i+1, $values[$i]);
             }
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         } else {
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         }
     }
     public function delete($construct = null, $log = null)
@@ -98,7 +100,7 @@ class DataBase
             $sql->debugDumpParams();
         } else {
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         }
     }
 }

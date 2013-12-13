@@ -64,8 +64,8 @@ class FrontController
     {
         $module=$request->getModule();
         Registry::setValue($module, 'module');
-        $obj = new Acl('admin');
-        $obj->hasPermission('user','mem','delete');
+        //$obj = new Acl('admin');
+        //$obj->hasPermission('user','mem','delete');
         $controller = ucfirst($request->getController());
         $action=$request->getAction().'Action';
         $controller_file=self::getInstance()->getControllerPath($controller, $module);
