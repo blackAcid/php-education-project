@@ -4,7 +4,7 @@ namespace modules\user\controllers;
 use core\Registry;
 use core\View;
 use \Exception;
-use modules\user\model\UserModel;
+use modules\user\model;
 
 class UserController
 {
@@ -13,6 +13,7 @@ class UserController
         $module=Registry::getValue('module');
         $v = new View($module, 'registration.php');
         $v->assign('title', 'New user');
+
         try {
             $v->addIntoTemplate();
             $v->display();
@@ -21,7 +22,7 @@ class UserController
         }
     }
 
-    /*public function profileAction()
+    public function profileAction()
     {
         $User = new model\User();
         $User->profile($_GET['id']);
@@ -41,25 +42,6 @@ class UserController
         } catch (Exception $e)
         {
             echo $e -> getMessage();
-        }
-    }*/
-    public function loginAction()
-    {
-        $module=Registry::getValue('module');
-        $v = new View($module, 'login.php');
-        $v->assign('title', 'Log In');
-        $user=UserModel::login();
-        if ($user!=null){
-            $_SESSION['userID']=$user['id'];
-        } else {
-            //header("Location:".BASE_URL."user/user/registration");
-        }
-        //$v->assign('userLogIn',UserModel::login());
-        try {
-            $v->addIntoTemplate();
-            $v->display();
-        } catch (Exception $e) {
-            echo $e->getMessage();
         }
     }
 

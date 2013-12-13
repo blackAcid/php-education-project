@@ -63,11 +63,21 @@ div.meme-zone
     text-align: center;
     width: 70%;
     margin:3% 20%;
-    padding: 2%;
+    padding:5px;
     background-color: #ffffff;
     border: 2px solid rgb(85, 66, 158);
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(85, 66, 158,1);
+}
+
+div.meme-zone header
+{
+    border-bottom:1px solid gray;
+    text-align: left;
+}
+div.meme-zone footer
+{
+    border-top:1px solid gray;
 }
 
 div.meme-zone > img

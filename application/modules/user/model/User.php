@@ -27,7 +27,7 @@ class User
         $this->avatar = $user[0]['avatar'];
         $selectMemes = new Memes();
         $select_Memes_Object = $selectMemes->selectPrepare();
-        $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])->selectColumns(['path'])->fetchAll();
+        $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])->selectColumns(['path', 'name', 'id'])->fetchAll();
     }
 
     public function changeProfile($ChangeData, $UserId)

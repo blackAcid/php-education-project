@@ -8,7 +8,6 @@
 namespace modules\news\controllers;
 
 use core\Registry;
-use core\Request;
 use core\View;
 
 use \Exception;
@@ -21,53 +20,13 @@ class IndexController
         $module=Registry::getValue('module');
         $v = new View($module, 'memes.php');
         $v->assign('title', 'News');
-        $startFrom=0;
-        $v->assign('memes', NewsModel::getMemes($startFrom));
-        $request=new Request();
-        $action=$request->getAction();
-        $v->assign('action',$action);
-        try {
-                $v->addIntoTemplate();
-                $v->display();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-    }
-    public function memesAction()
-    {
-        $module=Registry::getValue('module');
-        if (isset($_POST['startFrom'])){
-            $startFrom=$_POST['startFrom'];
-        }
-        else {
-            $startFrom=0;
-        }
-        if (isset($_POST['action'])){
-            $act=$_POST['action'];
-        }
-        if ($act=='index'){
-            $memes=NewsModel::getMemes($startFrom);
+        if (!empty($_GET)) {
+            $page=(int)$_GET['page'];
         } else {
-            $memes=NewsModel::getMemesByRating($startFrom);
+            $page=1;
         }
-
-        include $file=DIR_MOD.$module."/views/printMemes.php";
-
-    }
-    public function ratingAction()
-    {
-       /* if (isset($_POST['startFrom'])){
-            $startFrom=$_POST['startFrom'];
-        } else {*/
-            $startFrom=0;
-        //}
-        $module=Registry::getValue('module');
-        $v = new View($module, 'memes.php');
-        $request=new Request();
-        $action=$request->getAction();
-        $v->assign('action',$action);
-        $v->assign('title', 'News');
-        $v->assign('memes', NewsModel::getMemesByRating($startFrom));
+        $v->assign('memes', NewsModel::getMemes($page));
+        $v->assign('countPages', NewsModel::getCountPages());
         try {
             $v->addIntoTemplate();
             $v->display();
@@ -75,28 +34,31 @@ class IndexController
             echo $e->getMessage();
         }
     }
-    public function updateLikesAction()
+    public function ratingAction()
     {
         $module=Registry::getValue('module');
-        if (!empty($_POST)) {
-           $buttonName=$_POST['buttonName'];
-            $id_meme=$_POST['buttonValue'];
-            if ($buttonName=='like') {
-                NewsModel::updateLike($id_meme);
-            } else if ($buttonName=='dislike') {
-                NewsModel::updateDislike($id_meme);
-            }
-            $rating=NewsModel::getLikesDislikes($id_meme);
-            include $file=DIR_MOD.$module."/views/ratingMemes.php";
+        $v = new View($module, 'memes.php');
+        $v->assign('title', 'News');
+        if (!empty($_GET)) {
+            $page=(int)$_GET['page'];
+        } else {
+            $page=1;
         }
-
+        $v->assign('memes', NewsModel::getMemesByRating());
+        //$v->assign('countPages', NewsModel::getCountPages());
+        try {
+            $v->addIntoTemplate();
+            $v->display();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
-   /* public function likeAction()
+    public function likeAction()
     {
         if (!empty($_POST)) {
             $id_meme=$_POST['like'];
             NewsModel::updateLike($id_meme);
-            header("Location:".BASE_URL."news/index/index");
+            header("Location:".HTTP_URL_PUB."news/index/index");
         }
     }
     public function dislikeAction()
@@ -104,7 +66,14 @@ class IndexController
         if (!empty($_POST)) {
             $id_meme=$_POST['dislike'];
             NewsModel::updateDislike($id_meme);
-            header("Location:".BASE_URL."news/index/index");
+            header("Location:".HTTP_URL_PUB."news/index/index");
         }
-    }*/
+    }
+    public function paginationAction()
+    {
+        if (!empty($_GET)) {
+            $pagesNumber=(int)$_GET['page'];
+            var_dump($pagesNumber);
+        }
+    }
 }
