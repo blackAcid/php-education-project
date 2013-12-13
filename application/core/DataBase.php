@@ -23,7 +23,8 @@ class DataBase
         $dbname=Config::getProperty('Database', 'dbname');
         $user=Config::getProperty('Database', 'user');
         $password=Config::getProperty('Database', 'password');
-        $dsn="$type:dbname=$dbname;host=$host";
+        $charset = Config::getProperty('Database', 'charset');
+        $dsn="$type:dbname=$dbname;host=$host;charset=$charset";
         $this->db = new PDO($dsn, $user, $password);
         return $this->db;
     }
