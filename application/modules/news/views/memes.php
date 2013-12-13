@@ -19,7 +19,7 @@ for ($i=0; $i<count($this->memes); $i++) {
     echo "<div class=\"container\" id='container'>"
         ."<header>".$this->memes[$i]['name']."</header>"
     ."<img alt=\"memes\" src=".DIR_USERS.$this->memes[$i]['path']."\" class=\"img-thumbnail\"/>"
-    ."<div class=\"likes_dislikes\">"
+    ."<div class=\"likes_dislikes\" id='".$this->memes[$i]['id']."'>"
     /*."<form id='likes' action=\"".BASE_URL."news/index/like\" method=post></form>"
         ."<form id='dislikes' action=\"".BASE_URL."news/index/dislike\" method=post></form>"*/
     ."<button type='submit' form='likes' name='like' value=\"".$this->memes[$i]['id']."\">

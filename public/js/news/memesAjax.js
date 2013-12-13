@@ -34,9 +34,11 @@ $(document).ready(function(){
                 inProgress = true;}
         }).done(function(data){
                 $('.rating#'+buttonValue).html(data);
+                $('.likes_dislikes#'+buttonValue).html("<div class='likes_dislikes alert alert-info'>Thank You!<div>");
                 inProgress = false;
 
             });
+
         }
         //alert('hello '+ buttonValue);
         //alert($(this).attr('id'));
