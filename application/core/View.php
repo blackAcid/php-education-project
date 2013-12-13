@@ -53,7 +53,7 @@ class View
         $matches = glob($path_to_js . "*.js");
         if (is_array($matches)) {
             for ($i = 0; $i < count($matches); $i++) {
-                $temp = '<script type="text/javascript" src="' . "/" . $matches[$i] . '"></script>';
+                $temp = '<script type="text/javascript" src="' . HTTP_URL_PUB . $matches[$i] . '"></script>';
                 $links[$i] = $temp;
             }
         }

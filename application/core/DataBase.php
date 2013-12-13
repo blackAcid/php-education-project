@@ -23,7 +23,8 @@ class DataBase
         $dbname=Config::getProperty('Database', 'dbname');
         $user=Config::getProperty('Database', 'user');
         $password=Config::getProperty('Database', 'password');
-        $dsn="$type:dbname=$dbname;host=$host";
+        $charset = Config::getProperty('Database', 'charset');
+        $dsn="$type:dbname=$dbname;host=$host;charset=$charset";
         $this->db = new PDO($dsn, $user, $password);
         return $this->db;
     }
@@ -54,7 +55,7 @@ class DataBase
         $values=$this->quote($values);
         $sql=$this->db->prepare("INSERT INTO `{$this->className}` ($cols) VALUES ($values);");
         $sql->execute();
-        $sql->debugDumpParams();
+        //$sql->debugDumpParams();
     }
     public function update($fields, $construct = null, $values = null)
     {
