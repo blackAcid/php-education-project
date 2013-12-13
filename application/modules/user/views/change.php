@@ -4,7 +4,7 @@
         <ul class="change-data">
             <li>
                 <div class="avatar">
-                    Ваш Аватар: <img src="<?php echo '/images/user_avatars/'.$this->avatar['avatar']; ?>" class="avatar">
+                    Ваш Аватар: <img src="<?php echo '/images/user_avatars/'.$this->avatar; ?>" class="avatar">
                 </div>
                 <div class="change-avatar">
                     Выбрать новый Аватар: <input name="userfile" type="file" />
@@ -12,7 +12,7 @@
             </li>
             <li>
                 <div class="actual-login">
-                    Ваше Имя: <h3><?php echo $this->username['username']; ?></h3>
+                    Ваше Имя: <h3><?php echo $this->username; ?></h3>
                 </div>
                 <div class="change-login">
                     Новое Имя: <input name="name" type="text" class="form-control" placeholder="Имя" />
@@ -20,7 +20,7 @@
             </li>
             <li>
                 <div class="actual-email">
-                    Ваш E-mail: <h3><?php echo $this->email['email']; ?></h3>
+                    Ваш E-mail: <h3><?php echo $this->email; ?></h3>
                 </div>
                 <div class="change-email">
                     Новый E-mail: <input name="email" type="text" class="form-control" placeholder="e-mail" />

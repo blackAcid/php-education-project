@@ -19,11 +19,12 @@ class User
         $this->id = $user_id;
         $selectUser = new Users();
         $select_User_Object = $selectUser->selectPrepare();
-        $this->username = $select_User_Object->where(['id='=>"$this->id"])->selectColumns(['username'])->fetch();
-        $this->email = $select_User_Object->where(['id=' => "$this->id"]) -> selectColumns(['email'])->fetch();
-        $this->date_of_birth = $select_User_Object->where(['id=' => "$this->id"]) -> selectColumns(['date_of_birth'])->fetch();
-        $this->role = $select_User_Object->where(['id=' => "$this->id"]) -> selectColumns(['role'])->fetch();
-        $this->avatar = $select_User_Object->where(['id=' => "$this->id"]) -> selectColumns(['avatar'])->fetch();
+        $user = $select_User_Object->where(['id='=>"$this->id"])->selectColumns(['username, email, date_of_birth, role, avatar'])->fetchAll();
+        $this->username = $user[0]['username'];
+        $this->email = $user[0]['email'];
+        $this->date_of_birth = $user[0]['date_of_birth'];
+        $this->role = $user[0]['role'];
+        $this->avatar = $user[0]['avatar'];
         $selectMemes = new Memes();
         $select_Memes_Object = $selectMemes->selectPrepare();
         $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])->selectColumns(['path'])->fetchAll();

@@ -32,7 +32,7 @@ class MemeController
 
     public function generateAction()
     {
-        //Registry::setValue('11', 'user');
+        Registry::setValue('1', 'user');
         $meme = new models\MemeModel();
         $meme->createMeme($_POST['name'], $_POST['path'], $_POST['text']);
         //$meme->createMeme('собака', HTTP_URL_PUB.'images/memes/base/orig/advice_dog.jpg', array('advice', 'dawg'));
