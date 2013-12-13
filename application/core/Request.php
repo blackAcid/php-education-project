@@ -10,7 +10,7 @@ class Request
     // private $view;
     public function __construct()
     {
-        $this->parseURI();
+       $this->parseURI();
         /*
         echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
         echo "<br>dir=".DIR_PUBLIC;
