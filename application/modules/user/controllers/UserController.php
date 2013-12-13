@@ -26,6 +26,7 @@ class UserController
     {
         $User = new model\User();
         $User->profile($_GET['id']);
+        Registry::setValue($_GET['id'], 'user');
         $module = Registry::getValue('module');
         $ViewUser = new View($module, 'profile.php');
         $MemesNumber = count($User->paths_to_my_memes);

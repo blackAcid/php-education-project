@@ -60,7 +60,6 @@ ul.user-info
 
 div.meme-zone
 {
-    max-height: 500px;
     text-align: center;
     width: 70%;
     margin:3% 20%;
@@ -69,6 +68,12 @@ div.meme-zone
     border: 2px solid rgb(85, 66, 158);
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(85, 66, 158,1);
+}
+
+div.meme-zone > img
+{
+    max-height: 500px;
+    max-width: 500px;
 }
 
 img.meme

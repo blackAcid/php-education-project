@@ -89,9 +89,11 @@ class MemeModel
     {
         $textAreas = new TextAreas();
         $selected = $textAreas->selectPrepare();
+        var_dump(HTTP_URL_PUB);
         $path = str_replace(HTTP_URL_PUB, '', $path);
         $coords = $selected->selectColumns(array('meme_base.id', 'alias', 'start_x', 'start_y', 'end_x', 'end_y', 'color'))
             ->join('LEFT', 'meme_base', 'meme_id', 'id')->where(array('base_picture = ' => "$path"))->fetchAll();
+        var_dump($path);
         for ($i = 0; $i < count($text); $i++) {
             $areas[$i] = array($text[$i], $coords[$i]['start_x'], $coords[$i]['start_y'],
                 $coords[$i]['end_x'], $coords[$i]['end_y'],);

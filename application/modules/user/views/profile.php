@@ -11,7 +11,7 @@
             </ul>
 
             <ul class="navigation">
-                <li><a href="meme/meme/create"><button type="button" class="btn btn-default">Создать Мем</button></a></li>
+                <li><a href="/meme/meme/create"><button type="button" class="btn btn-default">Создать Мем</button></a></li>
                 <li><a href="user/friends/index"><button type="button" class="btn btn-default">Друзья</button></a></li>
                 <li><a href="news/index/index"><button type="button" class="btn btn-default">Новости</button></a></li>
                 <li><a href="#"><button type="button" class="btn btn-default">Подписки</button></a></li>
@@ -21,7 +21,7 @@
     <div class="profile-content col-md-9">
         <?php for($i = 0; $this->MemesNumber > $i; $i++)
         {
-            echo '<div class="meme-zone"><img src="'.$this->paths_to_my_memes[$i]['path'].'" class="meme"></div>';
+            echo '<div class="meme-zone"><img src="'.HTTP_URL_PUB.$this->paths_to_my_memes[$i]['path'].'" class="meme"></div>';
         } ?>
     </div>
 </div>
