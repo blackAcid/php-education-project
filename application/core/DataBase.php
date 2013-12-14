@@ -81,10 +81,10 @@ class DataBase
                 $sql->bindParam($i+1, $values[$i]);
             }
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         } else {
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         }
     }
     public function delete($construct = null, $log = null)
@@ -95,10 +95,10 @@ class DataBase
                 $sql->bindParam($i+1, $log[$i]);
             }
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         } else {
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         }
     }
 }

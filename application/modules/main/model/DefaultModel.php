@@ -93,8 +93,8 @@ class DefaultModel
         $password='12345';
         $selectUser=new Users();
         $selObj=$selectUser->selectPrepare();
-        $user=$selObj->selectColumns(['id','username'])->where(['email='=>'? and ','password='=>'?'])
-            ->fetch(["$email","$password"]);
+        $user=$selObj->selectColumns(['id', 'username'])->where(['email='=>'? and ', 'password='=>'?'])
+            ->fetch(["$email", "$password"]);
         return $user;
     }
 }

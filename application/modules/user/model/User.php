@@ -19,7 +19,8 @@ class User
         $this->id = $user_id;
         $selectUser = new Users();
         $select_User_Object = $selectUser->selectPrepare();
-        $user = $select_User_Object->where(['id='=>"$this->id"])->selectColumns(['username, email, date_of_birth, role, avatar'])->fetchAll();
+        $user = $select_User_Object->where(['id='=>"$this->id"])
+            ->selectColumns(['username, email, date_of_birth, role, avatar'])->fetchAll();
         $this->username = $user[0]['username'];
         $this->email = $user[0]['email'];
         $this->date_of_birth = $user[0]['date_of_birth'];
@@ -27,32 +28,28 @@ class User
         $this->avatar = $user[0]['avatar'];
         $selectMemes = new Memes();
         $select_Memes_Object = $selectMemes->selectPrepare();
-        $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])->selectColumns(['path', 'name', 'id'])->fetchAll();
+        $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])
+            ->selectColumns(['path', 'name', 'id'])->fetchAll();
     }
 
     public function changeProfile($ChangeData, $UserId)
     {
-        if(!empty($ChangeData['name']))
-        {
+        if (!empty($ChangeData['name'])) {
             $UpdateUser = new Users();
-            $UpdateUser->update(['username'=>$ChangeData['name']],'id='.$UserId);
+            $UpdateUser->update(['username'=>$ChangeData['name']], 'id='.$UserId);
         }
-        if(!empty($ChangeData['email']))
-        {
+        if (!empty($ChangeData['email'])) {
             $UpdateUser = new Users();
-            $UpdateUser->update(['email'=>$ChangeData['email']],'id='.$UserId);
+            $UpdateUser->update(['email'=>$ChangeData['email']], 'id='.$UserId);
         }
-        if(!empty($ChangeData['password']) && !empty($ChangeData['password-repeat']))
-        {
-            if($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat'])
-            {
+        if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
+            if ($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat']) {
                 $password = md5($password);
                 $UpdateUser = new Users();
                 $UpdateUser->update(['password'=>$password], 'id='.$UserId);
             }
         }
-        if(!empty($_FILES['userfile']['size']))
-        {
+        if (!empty($_FILES['userfile']['size'])) {
             $UploadDir = DIR_PUBLIC.'images/user_avatars/';
             $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
             move_uploaded_file($_FILES['userfile']['tmp_name'], $UploadFile);

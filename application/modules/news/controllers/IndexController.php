@@ -25,7 +25,7 @@ class IndexController
         $v->assign('memes', NewsModel::getMemes($startFrom));
         $request=new Request();
         $action=$request->getAction();
-        $v->assign('action',$action);
+        $v->assign('action', $action);
         try {
             $v->addIntoTemplate();
             $v->display();
@@ -36,36 +36,30 @@ class IndexController
     public function memesAction()
     {
         $module=Registry::getValue('module');
-        if (isset($_POST['startFrom'])){
+        if (isset($_POST['startFrom'])) {
             $startFrom=$_POST['startFrom'];
-        }
-        else {
+        } else {
             $startFrom=0;
         }
-        if (isset($_POST['action'])){
+        if (isset($_POST['action'])) {
             $act=$_POST['action'];
         }
-        if ($act=='index'){
+        if ($act=='index') {
             $memes=NewsModel::getMemes($startFrom);
         } else {
             $memes=NewsModel::getMemesByRating($startFrom);
         }
 
         include $file=DIR_MOD.$module."/views/printMemes.php";
-
     }
     public function ratingAction()
     {
-        /* if (isset($_POST['startFrom'])){
-             $startFrom=$_POST['startFrom'];
-         } else {*/
         $startFrom=0;
-        //}
         $module=Registry::getValue('module');
         $v = new View($module, 'memes.php');
         $request=new Request();
         $action=$request->getAction();
-        $v->assign('action',$action);
+        $v->assign('action', $action);
         $v->assign('title', 'News');
         $v->assign('memes', NewsModel::getMemesByRating($startFrom));
         try {
@@ -83,7 +77,7 @@ class IndexController
             $id_meme=$_POST['buttonValue'];
             if ($buttonName=='like') {
                 NewsModel::updateLike($id_meme);
-            } else if ($buttonName=='dislike') {
+            } elseif ($buttonName=='dislike') {
                 NewsModel::updateDislike($id_meme);
             }
             $rating=NewsModel::getLikesDislikes($id_meme);
@@ -91,20 +85,4 @@ class IndexController
         }
 
     }
-    /* public function likeAction()
-     {
-         if (!empty($_POST)) {
-             $id_meme=$_POST['like'];
-             NewsModel::updateLike($id_meme);
-             header("Location:".BASE_URL."news/index/index");
-         }
-     }
-     public function dislikeAction()
-     {
-         if (!empty($_POST)) {
-             $id_meme=$_POST['dislike'];
-             NewsModel::updateDislike($id_meme);
-             header("Location:".BASE_URL."news/index/index");
-         }
-     }*/
 }

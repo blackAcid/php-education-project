@@ -94,7 +94,8 @@ class Select
 
     public function fetchAll($values = null)
     {
-        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` ".$this->tables. $this->join . $this->where . $this->group . $this->order . $this->limit;
+        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` ".$this->tables
+            . $this->join . $this->where . $this->group . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i = 0; $i < count($values); $i++) {
@@ -109,7 +110,8 @@ class Select
 
     public function fetch($values = null)
     {
-        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` " .$this->tables. $this->join . $this->where . $this->order . $this->limit;
+        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` " .$this->tables
+            . $this->join . $this->where . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i = 0; $i < count($values); $i++) {

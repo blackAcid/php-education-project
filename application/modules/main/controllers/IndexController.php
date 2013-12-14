@@ -34,12 +34,12 @@ class IndexController
         $v = new View($module, 'login.php');
         $v->assign('title', 'Log In');
         $user=DefaultModel::login();
-        if ($user!=null){
+        if ($user!=null) {
             $_SESSION['userID']=$user['id'];
         } else {
             //header("Location:".BASE_URL."user/user/registration");
         }
-        $v->assign('userLogIn',DefaultModel::login());
+        $v->assign('userLogIn', DefaultModel::login());
         try {
             $v->addIntoTemplate();
             $v->display();

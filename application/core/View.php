@@ -39,7 +39,8 @@ class View
         $matches = glob($path_to_css . "*.css");
         if (is_array($matches)) {
             for ($i = 0; $i < count($matches); $i++) {
-                $temp = '<link rel="stylesheet" type="text/css" media="screen" href="' .BASE_URL. "" . $matches[$i] . '" />';
+                $temp = '<link rel="stylesheet" type="text/css" media="screen" href="'
+                    .BASE_URL. "" . $matches[$i] . '" />';
                 $links[$i] = $temp;
             }
         }

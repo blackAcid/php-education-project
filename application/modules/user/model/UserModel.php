@@ -7,17 +7,19 @@
  */
 
 namespace modules\user\model;
+
 use core\classTables\Users;
 
-class UserModel {
+class UserModel
+{
     public static function login()
     {
         $email='name1@mail';
         $password='12345';
         $selectUser=new Users();
         $selObj=$selectUser->selectPrepare();
-        $user=$selObj->selectColumns(['id'])->where(['email='=>'? and ','password='=>'?'])
-            ->fetch(["$email","$password"]);
+        $user=$selObj->selectColumns(['id'])->where(['email='=>'? and ', 'password='=>'?'])
+            ->fetch(["$email", "$password"]);
         return $user;
     }
-} 
+}
