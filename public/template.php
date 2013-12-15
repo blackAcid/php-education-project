@@ -7,6 +7,8 @@
     print "\"".HTTP_URL_PUB."css/bootstrap.css\""?>/>
     <link rel="stylesheet" type="text/css" href=<?php
     print "\"".HTTP_URL_PUB."css/main-style.css\"";?>/>
+    <script type="text/javascript" src="<?php echo HTTP_URL_PUB . "js/jquery-1.10.2.min.js" ?>"></script>
+    <script type="text/javascript" src="<?php echo HTTP_URL_PUB . "js/bootstrap.min.js" ?>"></script>
     <?php
       foreach($this->getCssFile() as $value)
       {
