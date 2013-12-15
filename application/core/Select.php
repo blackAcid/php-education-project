@@ -16,6 +16,7 @@ class Select
     private $cols;
     private $group;
     private $tables;
+    private $distinct;
     public function __construct($table, PDO $db)
     {
         $this->table = $table;
@@ -91,10 +92,19 @@ class Select
         $this->join = " " . $flag . " JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
         return $this;
     }
+    public function distinct($flag)
+    {
+        if ($flag=='1') {
+            $this->distinct="DISTINCT ";
+        } else {
+            $this->distinct="";
+        }
+        return $this;
+    }
 
     public function fetchAll($values = null)
     {
-        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` ".$this->tables
+        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` ".$this->tables
             . $this->join . $this->where . $this->group . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
@@ -110,7 +120,7 @@ class Select
 
     public function fetch($values = null)
     {
-        $this->sql = "SELECT " . $this->cols . " FROM `$this->table` " .$this->tables
+        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` " .$this->tables
             . $this->join . $this->where . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
