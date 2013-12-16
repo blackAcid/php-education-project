@@ -23,6 +23,7 @@ class IndexController
         $v->assign('title', 'News');
         $startFrom=0;
         $v->assign('memes', NewsModel::getMemes($startFrom));
+        $v->assign('topUsers',NewsModel::topUsers());
         $request=new Request();
         $action=$request->getAction();
         $v->assign('action', $action);
@@ -57,6 +58,7 @@ class IndexController
         $startFrom=0;
         $module=Registry::getValue('module');
         $v = new View($module, 'memes.php');
+        $v->assign('topUsers',NewsModel::topUsers());
         $request=new Request();
         $action=$request->getAction();
         $v->assign('action', $action);
