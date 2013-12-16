@@ -1,0 +1,8 @@
+.wrapper{
+    margin-top: 20px;
+}
+.search-results{
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-top-color: transparent;
+}

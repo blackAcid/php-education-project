@@ -25,10 +25,12 @@
 <header>
     <nav class="navbar navbar-default col-md-8 col-md-offset-2 row" role="navigation">
         <a class="navbar-brand" href="#"><img alt="palette" src=<?="\"".HTTP_URL_PUB."images/palette.png\"";?>></a>
-        <form class="navbar-form navbar-right" role="search">
-            <div class="form-group">
-                <input type="text" class="form-control input-sm"><span class="glyphicon glyphicon-search"></span>
+        <form id="search-form" class="navbar-form navbar-right form-inline" method="GET" action="<?= HTTP_URL_PUB; ?>search/search/result" role="search">
+            <div class="form-group input-prepend">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <input type="text" name="query" class="form-control input-sm" placeholder="Введите текст...">
             </div>
+            <input type="submit" class="btn btn-default btn-sm" value="Поиск"/>
         </form>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
