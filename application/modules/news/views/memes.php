@@ -72,6 +72,6 @@
    <?php
     }
     ?>
-    <div class='nextMeme'><div>
+    <div class='loading'><div>
 </section>
 </div>

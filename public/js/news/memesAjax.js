@@ -15,7 +15,8 @@ $(document).ready(function(){
                 beforeSend: function() {
                     inProgress = true;}
             }).done(function(data){
-                    $(data).insertAfter('.nextMeme:last-child');
+                    $(".loading").show(2000).hide();
+                    $(data).insertAfter('.loading:last-child');
                     inProgress = false;
                     startFrom += 2;
                 });

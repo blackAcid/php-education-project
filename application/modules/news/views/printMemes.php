@@ -31,4 +31,4 @@ for ($i=0; $i<count($memes); $i++) {
     <?php
 }
 ?>
-<div class='nextMeme'><div>
+<div class='loading'><div>

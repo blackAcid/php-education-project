@@ -141,6 +141,10 @@ section.news .container .likes_dislikes button {
     vertical-align: middle;
     border: #ffffff;
 }
+section.news div.loading {
+    height: 33px;
+    background: url("ajax-loader.gif") center no-repeat;
+}
 section.news .container header{
     color: darkslateblue;
     font-size: 16px;
