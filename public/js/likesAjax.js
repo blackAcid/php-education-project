@@ -33,7 +33,7 @@ $(document).ready(function(){
             beforeSend: function() {
                 inProgress = true;}
         }).done(function(data){
-                $('.rating#'+buttonValue).html(data);
+                $('#'+buttonValue+'.rating').html(data);
                 $('.likes_dislikes#'+buttonValue).html("<div class='likes_dislikes alert alert-info'>Thank You!<div>");
                 inProgress = false;
 

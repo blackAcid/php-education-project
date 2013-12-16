@@ -12,7 +12,6 @@ class IndexController
 {
     public function updateLikesAction()
     {
-        $module=Registry::getValue('module');
         if (!empty($_POST)) {
             $buttonName=$_POST['buttonName'];
             $id_meme=$_POST['buttonValue'];
@@ -22,7 +21,7 @@ class IndexController
                 likesModel::updateDislike($id_meme);
             }
             $rating=likesModel::getLikesDislikes($id_meme);
-            include $file=DIR_MOD.$module."/views/ratingMemes.php";
+            include $file=DIR_MOD."likes/views/ratingMemes.php";
         }
     }
 }
