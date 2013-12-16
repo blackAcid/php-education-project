@@ -30,6 +30,7 @@
                 <div class="change-password">
                     Введите новый пароль: <input name="password" type="password" class="form-control" placeholder="New Password"></br>
                     Повторите пароль: <input name="password-repeat" type="password" class="form-control" placeholder="Repeat Password">
+                    <div class="password-error"><?php if($this->error !== null) echo $this->error; ?></div>
                 </div>
             </li>
             <input type="submit" value="Изменить" class="btn btn-default" name="user" />

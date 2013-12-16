@@ -13,6 +13,7 @@ class User
     public $role;
     public $avatar;
     public $paths_to_my_memes;
+    public $error = null;
 
     public function profile($user_id)
     {
@@ -47,6 +48,9 @@ class User
                 $password = md5($password);
                 $UpdateUser = new Users();
                 $UpdateUser->update(['password'=>$password], 'id='.$UserId);
+            } else
+            {
+                $this->error = 'Неверный пароль, повторите ввод';
             }
         }
         if (!empty($_FILES['userfile']['size'])) {
