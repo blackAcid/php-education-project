@@ -12,8 +12,8 @@
 
             <ul class="navigation">
                 <li><a href="/meme/meme/create"><button type="button" class="btn btn-default">Создать Мем</button></a></li>
-                <li><a href="news/index/index"><button type="button" class="btn btn-default">Новости</button></a></li>
-                <li><a href="#"><button type="button" class="btn btn-default">Подписки</button></a></li>
+                <li><a href="/news/index/index"><button type="button" class="btn btn-default">Новости</button></a></li>
+                <li><a href="/subscriptions/index/index"><button type="button" class="btn btn-default">Подписки</button></a></li>
             </ul>
         </div>
     </div>
