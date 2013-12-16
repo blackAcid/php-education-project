@@ -37,17 +37,17 @@ class User
     {
         if (!empty($ChangeData['name'])) {
             $UpdateUser = new Users();
-            $UpdateUser->update(['username'=>$ChangeData['name']], 'id='.$UserId);
+            $UpdateUser->update(['username'=>$ChangeData['name']], 'id=?', [$UserId]);
         }
         if (!empty($ChangeData['email'])) {
             $UpdateUser = new Users();
-            $UpdateUser->update(['email'=>$ChangeData['email']], 'id='.$UserId);
+            $UpdateUser->update(['email'=>$ChangeData['email']], 'id=?', [$UserId]);
         }
         if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
             if ($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat']) {
                 $password = md5($password);
                 $UpdateUser = new Users();
-                $UpdateUser->update(['password'=>$password], 'id='.$UserId);
+                $UpdateUser->update(['password'=>$password], 'id=?', [$UserId]);
             } else
             {
                 $this->error = 'Неверный пароль, повторите ввод';
