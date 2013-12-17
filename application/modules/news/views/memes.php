@@ -19,7 +19,7 @@
                 <?php if ($n==1) { ?>
                 <tr class="firstUser">
                  <td class="users" colspan="2">
-                     <img alt='users' src=<?=DIR_USERS.$this->topUsers[0]['avatar']."\""?> class='img-thumbnail top-user'/>
+                     <img alt='users' src=<?=BASE_URL."images/user_avatars/".$this->topUsers[0]['avatar']?> class='img-thumbnail top-user'/>
                      <p><?=$this->topUsers[0]['username']?></p>
                 </td>
                 <td></td>
@@ -44,7 +44,7 @@
         ?>
         <div class='container' id='container'>
         <header><?=$this->memes[$i]['name']?></header>
-        <img alt='memes' src=<?=DIR_USERS.$this->memes[$i]['path']."\""?> class='img-thumbnail'/>
+        <img alt='memes' src=<?=BASE_URL.$this->memes[$i]['path']?> class='img-thumbnail'/>
             <div class='likes_dislikes' id='<?=$this->memes[$i]['id']?>'>
             <?php
             if (!empty($_SESSION['userID'])) {

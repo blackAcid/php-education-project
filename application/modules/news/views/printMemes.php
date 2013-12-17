@@ -4,7 +4,7 @@ for ($i=0; $i<count($memes); $i++) {
     ?>
     <div class='container' id='container'>
         <header><?=$memes[$i]['name']?></header>
-        <img alt='memes' src=<?=DIR_USERS.$memes[$i]['path']."\""?> class='img-thumbnail'/>
+        <img alt='memes' src=<?=BASE_URL.$memes[$i]['path']?> class='img-thumbnail'/>
         <div class='likes_dislikes' id='<?=$memes[$i]['id']?>'>
         <?php
         if (!empty($_SESSION['userID'])) {
