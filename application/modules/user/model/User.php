@@ -63,9 +63,12 @@ class User
         }
 
         if (!empty($_FILES['userfile']['size'])) {
+            $tmp_path = $_FILES['userfile']['tmp_name'];
+            $avatar = new Imagick($tmp_path);
+            $avatar->thumbnailimage(250,0,false);
             $UploadDir = DIR_PUBLIC.'images/user_avatars/';
             $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
-            move_uploaded_file($_FILES['userfile']['tmp_name'], $UploadFile);
+            $avatar->writeimage($UploadFile);
             rename($UploadFile, $UploadDir.$UserId.'_user.jpg');
             $this->avatar = $UploadDir.$UserId.'_user.jpg';
         }
