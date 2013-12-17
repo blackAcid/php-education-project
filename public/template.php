@@ -38,6 +38,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="<?=BASE_URL."main/index/index"?>">Главная</a></li>
                 <li><a href="<?=BASE_URL."news/index/index"?>">Новости</a></li>
+                <li><a href="<?=BASE_URL."user/user/profile?id=1"?>">Профиль</a></li>
             </ul>
         </div>
     </nav>

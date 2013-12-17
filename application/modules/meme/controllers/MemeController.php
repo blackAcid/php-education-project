@@ -32,13 +32,11 @@ class MemeController
 
     public function generateAction()
     {
-        Registry::setValue('1', 'user');
+        Registry::setValue('11', 'user');
         $meme = new models\MemeModel();
         $meme->createMeme($_POST['name'], $_POST['path'], $_POST['text']);
         //$meme->createMeme('собака', BASE_URL.'images/memes/base/orig/advice_dog.jpg', array('advice', 'dawg'));
-
         echo json_encode(['id' => $meme->getMemeId()]);
-        die;
     }
 
     public function viewAction()
@@ -56,5 +54,11 @@ class MemeController
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+    }
+
+    public function getImageAction()
+    {
+        $img = new models\MemeModel();
+        echo json_encode($img->getImage($_POST['id']));
     }
 }

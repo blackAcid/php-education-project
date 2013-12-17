@@ -41,7 +41,7 @@ class Select
         $values = array_values($construct);
         $convert = "";
         for ($i = 0; $i < count($construct); $i++) {
-            if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL' && (in_array('.', $values))) {
+            if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL') {
                 $values[$i] = $this->db->quote($values[$i]);
             }
             $convert .= $keys[$i] . $values[$i] . " ";

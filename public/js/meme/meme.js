@@ -1,20 +1,37 @@
 $(document).ready(function () {
 
-    $('.thumb').first().addClass('selected');
-    var path = $('.selected').attr('src');
-    path = path.replace('/thumb/', '/orig/');
-    $('#main img').attr('src', path);
-    setInputs(true);
-
 
     $('.thumb').bind('click', function () {
-        $('.thumb').removeClass('selected');
-        $(this).addClass('selected');
-        var path = $('.selected').attr('src');
-        path = path.replace('/thumb/', '/orig/');
-        $('#main img').attr('src', path);
-        setInputs(true);
+        if(!$(this).hasClass('selected')) {
+            $('.thumb').removeClass('selected');
+            $(this).addClass('selected');
+            var id = $('.selected').data('id');
+            var currentPath = window.location.href;
+            $.post(currentPath.replace('create', 'getImage'), {id: id})
+                .done(function(data) {
+                    $('.textarea').remove();
+                    var res = $.parseJSON(data);
+                    $('#main img').attr('src', '/'+res[0].base_picture);
+                    if (res[0].width > res[0].height) {
+                        var multiplier = res[0].width / $('#main img').width();
+                    } else {
+                        var multiplier = res[0].height / $('#main img').height();
+                    }
+                    setInputs(true);
+                    for(var i = 0; i < res.length; i++) {
+                        var div = $('<div>'+(i+1)+'</div>').addClass('textarea').attr('data-id',(i+1)).width((res[i].end_x - res[i].start_x)/multiplier)
+                            .height((res[i].end_y - res[i].start_y)/multiplier)
+                            .css('left', (res[i].start_x/multiplier) +'px').css('top', (res[i].start_y/multiplier) +'px');
+                        $('#main').append(div);
+                        $('.textarea').css('font-size', (res[i].end_y - res[i].start_y)/multiplier/1.5 +'px');
+
+                    }
+                })
+
+        }
     });
+
+    $('.thumb').first().click();
 
     $('#inputs input').focus(function () {
         if ($(this).hasClass('initial'))
@@ -31,7 +48,7 @@ $(document).ready(function () {
 
     function setInputs(changed) {
         $('#inputs input').not('#name').hide();
-        var inputs = $('.selected').attr('inputs');
+        var inputs = $('.selected').data('inputs');
         if (!$('#name').hasClass('initial') && changed) {
             $('#name').val('Название мема').addClass('initial');
         }
@@ -71,11 +88,8 @@ $(document).ready(function () {
             var current = window.location.href;
             $.post(current.replace('create', 'generate'), {name: name, text: inputsVal, path: path})
                 .done(function(data){
-                   window.location.replace(current.replace('create', 'view?id='+ ($.parseJSON(data)).id))
+                   window.location.replace(current.replace('create', 'view?id='+ ($.parseJSON(data)).id));
                 });
-
-
-
         }
 
     });
