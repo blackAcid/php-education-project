@@ -41,7 +41,7 @@ class SubscriptionsController
         $module = Registry::getValue('module');
         $v = new View($module, 'listSubscriptions.php');
         $obj = new SubscriptionsModel('1');
-        $result = $obj->unsubscribeFromUser();
+        $result = $obj->unsubscribeFromUser($_POST['targetId']);
         $v->assign('listSubscriptions', $result);
         try {
             $v->addIntoTemplate();

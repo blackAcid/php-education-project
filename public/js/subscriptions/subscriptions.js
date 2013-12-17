@@ -8,7 +8,10 @@
             $.ajax({
                 url : 'http://10.11.80.15/php-education-project/public/subscriptions/Subscriptions/unsubscribeFromUser',
                 type : 'POST',
-                data : {'targetId' : $(this).data('id')}
+                data : {'targetId' : $(this).data('id')},
+                success : function(){
+                    location.reload();
+                }
             });
         });
     });

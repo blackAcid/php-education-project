@@ -44,6 +44,7 @@ class SubscriptionsModel
         $this->targetId = $targetId;
         $updateSubscriptions = new Subscription();
         $updateSubscriptions->update(['status' => '0'], 'target_id=? and user_id=?', [$this->targetId, $this->userId]);
+        echo "location.reload();";
     }
 
 }
