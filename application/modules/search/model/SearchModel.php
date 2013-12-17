@@ -19,6 +19,10 @@ class SearchModel
         switch ($this->view) {
             case 'users':
                 $table = new Users();
+                $select = $table->selectPrepare();
+                $this->result = $select->selectColumns(['id', 'username', 'avatar'])->where(
+                    ['`username` LIKE' => '%' . $this->query . '%']
+                )->order('username', 'DESC')->fetchAll(null);
                 break;
             case 'memes':
                 $table = new Memes();
@@ -33,6 +37,10 @@ class SearchModel
                 break;
             default:
                 $table = new Users();
+                $select = $table->selectPrepare();
+                $this->result = $select->selectColumns(['id', 'username', 'avatar'])->where(
+                    ['`username` LIKE' => '%' . $this->query . '%']
+                )->order('username', 'DESC')->fetchAll(null);
                 break;
         }
     }

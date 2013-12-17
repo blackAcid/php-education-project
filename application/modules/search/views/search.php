@@ -14,17 +14,31 @@
         <?php endforeach;?>
         <?php else:?>
         <div class="list-group">
-            <?php foreach($this->data as $row):?>
-            <a href="#" class="list-group-item">
-                <p class="lead"><strong class="label label-info">Мем</strong></p>
-                <div class="pull-left picture">
-                    <?php //todo: Сменить путь изображения ?>
-                    <img class="img-responsive" alt="mem" src="<?php echo $row['path'];?>"/>
-                </div>
-                <h4 class="list-group-item-heading">Название: <?php echo $row['name'];?></h4>
-                <p class="list-group-item-text">Автор: <?php echo $row['username'];?></p>
-            </a>
-            <?php endforeach;?>
+            <?php if($this->view == 'memes'):?>
+                <?php foreach($this->data as $row):?>
+                    <a href="#" class="list-group-item">
+                        <p class="lead"><strong class="label label-info">Мем</strong></p>
+                        <div class="pull-left picture">
+                            <?php //todo: Сменить путь изображения ?>
+                            <img class="img-responsive" alt="mem" src="<?php echo $row['path'];?>"/>
+                        </div>
+                        <h4 class="list-group-item-heading">Название: <?php echo $row['name'];?></h4>
+                        <p class="list-group-item-text">Автор: <?php echo $row['username'];?></p>
+                    </a>
+                <?php endforeach;?>
+            <?php elseif($this->view == 'users'):?>
+                <?php foreach($this->data as $row):?>
+                    <a href="#" class="list-group-item">
+                        <p class="lead"><strong class="label label-info">Пользователь</strong></p>
+                        <div class="pull-left picture">
+                            <?php //todo: Сменить путь изображения ?>
+                            <img class="img-responsive" alt="user" src="<?php echo $row['avatar'];?>"/>
+                        </div>
+                        <h4 class="list-group-item-heading">Имя: <?php echo $row['username'];?></h4>
+                        <p class="list-group-item-text">ID: <?php echo $row['id'];?></p>
+                    </a>
+                <?php endforeach;?>
+            <?php endif;?>
         </div>
         <?php endif;?>
     </div>
