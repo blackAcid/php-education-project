@@ -3,6 +3,7 @@ namespace modules\user\model;
 
 use core\classTables\Users;
 use core\classTables\Memes;
+use core\Config;
 use \Imagick;
 
 class User
@@ -65,7 +66,7 @@ class User
         if (!empty($_FILES['userfile']['size'])) {
             $tmp_path = $_FILES['userfile']['tmp_name'];
             $avatar = new Imagick($tmp_path);
-            $avatar->thumbnailimage(250,0,false);
+            $avatar->thumbnailimage(Config::getProperty('avatar', 'width'),0,false) or die('error');
             $UploadDir = DIR_PUBLIC.'images/user_avatars/';
             $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
             $avatar->writeimage($UploadFile);
