@@ -13,12 +13,13 @@ class IndexController
         $module=Registry::getValue('module');
         $v = new View($module, 'home.php');
         $v->assign('title', 'Home page');
+        DefaultModel::insertUsers();
         $v->assign('users', DefaultModel::selectUsers());
         try {
             $v->addIntoTemplate();
             $v->display();
             //DefaultModel::printDb();
-            //DefaultModel::insertUsers();
+
             //DefaultModel::deleteUsers();
             //DefaultModel::updateUsers();
             DefaultModel::selectUsers();

@@ -1,10 +1,15 @@
 <?php
 namespace core;
-
+use core\classTables\Roles;
+use core\classTables\Users;
  class Validator
 {
     private $errorStack;
     private $input;
+
+     public function  __get($name){
+         return $this->$name;
+     }
 
    public function __construct($input)
     {
@@ -70,6 +75,22 @@ namespace core;
     {
         return $this->errorStack;
     }
+
+     public function isUsernameTaken($error= 'Sorry username is already taken !'){
+         $selectUser=new Users();
+         $selObj=$selectUser->selectPrepare();
+         $resultRowSet=$selObj->selectColumns(['username'])->where(['username='=>$this->input])->fetch(null);
+         if($resultRowSet['username'])
+           return $this->errorStack[]=$error;
+     }
+     public function isEmailTaken($error= 'Sorry email is already taken !'){
+         $selectUser=new Users();
+         $selObj=$selectUser->selectPrepare();
+         $resultRowSet=$selObj->selectColumns(['email'])->where(['email='=>$this->input])->fetch(null);
+         if($resultRowSet['email'])
+             return $this->errorStack[]=$error;
+     }
+
 
 
 }

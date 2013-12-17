@@ -7,6 +7,7 @@ use \Exception;
 use modules\user\model;
 use core\Validator;
 
+
 class UserController
 {
     public function registrationAction()
@@ -14,7 +15,7 @@ class UserController
         $module=Registry::getValue('module');
         $view = new View($module, 'registration.php');
         $view->assign('title', 'New user');
-
+//print_r($_POST);
         if(isset($_POST['username'], $_POST['password_1'], $_POST['password_2'],
            $_POST['email'], $_POST['date_of_birthday']) )
         {
@@ -32,6 +33,7 @@ class UserController
 
             $usernameValid->isEmpty('Заполните поле !');
             $usernameValid->hasFormat('/^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/', 'Поле не валидно!');
+            $usernameValid->isUsernameTaken("Такой логин уже существует !");
             if($usernameValid->isValid()){
 
             }else{
@@ -73,6 +75,7 @@ class UserController
 
             $emailValid->isEmpty('Заполните поле !');
             $emailValid->hasFormat('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/','Неверный email !');
+            $emailValid->isEmailTaken('Это email уже занят !');
             if($emailValid->isValid()){
 
             }else{
@@ -97,10 +100,7 @@ class UserController
                 $view->assign('date_of_birthday_message', $message);
             }
 
-       }
-
-
-
+        }
 
             try {
                 $view->addIntoTemplate();

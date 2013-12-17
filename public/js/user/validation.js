@@ -6,7 +6,7 @@ function BadMethodException(message) {
  *
  * @type {{field_value: string,
  * array: Array,  массив обьектов со свойствами name_of_method, breakOnFailure,
- *
+ * empty: Function, length_between: Function, field_pattern: Function, isMethodExists: Function, add: Function, setValueToArray: Function, run: Function}}
  */
 var Validator = {
     field_value: '',
@@ -20,7 +20,7 @@ var Validator = {
     length_between: function (params) {
         if (this.field_value.length > params.max || this.field_value.length < params.min)
             return "Максимальная длинна поля " + params.max + ", минимальная " + params.min + " !";
-         else return '';
+        else return '';
     },
 
     field_pattern: function (params) {
@@ -118,9 +118,12 @@ $(function () {
             });
 
         var username_message = Validator.run();
-       if (!$.isEmptyObject(username_message)) {
+        if (!$.isEmptyObject(username_message)) {
             data_ok = false;
             show_error_message(username_message, 'username');
+        }
+        else {
+              hide_error_message('username');
         }
 
         var password_1 = $("#password_1").val();
@@ -129,13 +132,16 @@ $(function () {
         Validator.add('length_between', '', {max: 16, min: 8});
         Validator.add('field_pattern', '',
             {pattern:'([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)',
-             message: 'Поле должно содержать по крайней мере 1 символ и 1 цифру !'
+                message: 'Поле должно содержать по крайней мере 1 символ и 1 цифру !'
             });
 
         var password_1_message = Validator.run();
         if (!$.isEmptyObject(password_1_message)) {
             data_ok = false;
             show_error_message(password_1_message, 'password_1');
+        }
+        else {
+               hide_error_message('password_1');
         }
 
         var password_2 = $("#password_2").val();
@@ -151,6 +157,10 @@ $(function () {
             data_ok = false;
             show_error_message(password_2_message, 'password_2');
         }
+        else {
+              hide_error_message('password_2');
+        }
+
 
         var email = $("#email").val();
         Validator.field_value = email;
@@ -164,6 +174,9 @@ $(function () {
         if (!$.isEmptyObject(email_message)) {
             data_ok = false;
             show_error_message(email_message, 'email');
+        }
+        else {
+              hide_error_message('email');
         }
 
         var date_of_birthday = $("#date_of_birthday").val();
@@ -179,18 +192,25 @@ $(function () {
             data_ok = false;
             show_error_message(date_of_birthday_message, 'date_of_birthday');
         }
+        else {
+              hide_error_message('date_of_birthday');
+        }
 
         Validator.add('empty_all_fields','',{
-                      array:[username,password_1,password_2,email,date_of_birthday],
-                      message:"Звездочки (*) обозначают поля, которые нужно заполнить"});
+            array:[username,password_1,password_2,email,date_of_birthday],
+            message:"Звездочки (*) обозначают поля, которые нужно заполнить"});
         var e_mess=Validator.run();
-        if(!$.isEmptyObject(e_mess))
+        if(!$.isEmptyObject(e_mess)){
             show_global_error_message(e_mess);
+        }else{
+              hide_global_error_message();
+        }
 
         if (data_ok) {
+            // hide_global_error_message();
             alert('Everything is OK... so far.')
         }
-        return data_ok; //  отправка данных на сервер
+        return data_ok; // отправка данных на сервер
     });
 });
 
@@ -198,10 +218,12 @@ $(function () {
 function show_error_message(messages, field_name) {
     var message='';
     for(var i in messages){
-       message+=messages[i]+'</br>';
+        message+=messages[i]+'</br>';
     }
     $('#' + field_name + '_message').html(message);
-        $('#' + field_name + '_message_container').show(2000);
+    // if ($('#' + field_name + '_message_container').is(':hidden')) {
+    $('#' + field_name + '_message_container').show(2000);
+    // }
 
 }
 
@@ -211,12 +233,13 @@ function show_global_error_message(messages) {
         message+=messages[i]+'</br>';
     }
     $("#global_error_message").text(message);
-        $('#global_error_message_container').show('medium');
-
+    // if ($('#global_error_message_container').is(':hidden')) {
+    $('#global_error_message_container').show('medium');
+    //}
 }
 
-function hide_error_message(product_name) {
-    $('#' + product_name + '_message_container').hide("slow");
+function hide_error_message(field_name) {
+    $('#' + field_name + '_message_container').hide("slow");
 }
 
 function hide_global_error_message() {
@@ -224,5 +247,4 @@ function hide_global_error_message() {
         $('#global_error_message_container').hide('medium');
     }
 }
-
 
