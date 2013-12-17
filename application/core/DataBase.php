@@ -24,7 +24,7 @@ class DataBase
         $user=Config::getProperty('Database', 'user');
         $password=Config::getProperty('Database', 'password');
         $dsn="$type:dbname=$dbname;host=$host";
-        $this->db = new PDO($dsn, $user, $password);
+        $this->db = new PDO($dsn, $user, $password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET utf8"));
         return $this->db;
     }
     public function selectPrepare()

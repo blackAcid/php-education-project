@@ -1,7 +1,11 @@
 <div class="wrapper">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Публикации</a></li>
-        <li><a href="#">Пользователи</a></li>
+        <li <?php if($this->view == 'memes') { echo 'class="active"';} ?>>
+            <a href="<?php echo $this->memes_tab; ?>">Публикации</a>
+        </li>
+        <li <?php if($this->view == 'users') { echo 'class="active"';} ?>>
+            <a href="<?php echo $this->users_tab; ?>">Пользователи</a>
+        </li>
     </ul>
     <div class="search-results">
         <?php if($this->errors):?>
@@ -12,8 +16,13 @@
         <div class="list-group">
             <?php foreach($this->data as $row):?>
             <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading"><?php echo $row['name'];?></h4>
-                <p class="list-group-item-text"><?php echo $row['path'];?></p>
+                <p class="lead"><strong class="label label-info">Мем</strong></p>
+                <div class="pull-left picture">
+                    <?php //todo: Сменить путь изображения ?>
+                    <img class="img-responsive" alt="mem" src="<?php echo $row['path'];?>"/>
+                </div>
+                <h4 class="list-group-item-heading">Название: <?php echo $row['name'];?></h4>
+                <p class="list-group-item-text">Автор: <?php echo $row['username'];?></p>
             </a>
             <?php endforeach;?>
         </div>

@@ -23,8 +23,13 @@ class SearchModel
             case 'memes':
                 $table = new Memes();
                 $select = $table->selectPrepare();
-                $this->result = $select->selectColumns(['id','name','path','date_create'])
-                    ->from(['memes'])->where(['name LIKE'=>'%со%'])->order('date_create', 'DESC')->fetchAll(null);
+                $this->result = $select->selectColumns(
+                    ['memes.id', 'memes.name', 'memes.path', 'memes.date_create', 'memes.user_id', 'users.username']
+                )->
+                    join('', 'users', 'user_id', 'id')->where(['`name` LIKE' => '%' . $this->query . '%'])->order(
+                        'date_create',
+                        'DESC'
+                    )->fetchAll(null);
                 break;
             default:
                 $table = new Users();

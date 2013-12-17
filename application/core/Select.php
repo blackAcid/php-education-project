@@ -40,8 +40,8 @@ class Select
             if ($values[$i] != '?' && strtoupper($values[$i])!='IS NULL' && (in_array('.', $values))) {
                 $values[$i]=$this->db->quote($values[$i]);
             }
-            if (strstr($keys[$i],"LIKE")) {
-                $convert.=$keys[$i] . " '".$values[$i]."' ";
+            if(strstr($keys[$i],"LIKE")) {
+                $convert.=$keys[$i]. " '" .$values[$i]."' ";
             } else {
                 $convert.=$keys[$i].$values[$i]." ";
             }
@@ -81,7 +81,7 @@ class Select
     }
     public function fetchAll($values = null)
     {
-        $this->sql="SELECT ".$this->cols." FROM ".$this->tables
+        $this->sql="SELECT ".$this->cols." FROM `$this->table`".$this->tables
             .$this->join.$this->where.$this->order.$this->limit;
         $sql=$this->db->prepare($this->sql);
         if (!empty($values)) {
@@ -116,7 +116,7 @@ class Select
             for ($i=0; $i<count($tables); $i++) {
                 $t_old[$i]="`".$tables[$i]."`";
             }
-            $this->tables=implode(",", $t_old);
+            $this->tables=",".implode(",", $t_old);
             return $this;
         }
     }

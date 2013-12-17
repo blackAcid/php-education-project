@@ -28,7 +28,8 @@
         <form id="search-form" class="navbar-form navbar-right form-inline" method="GET" action="<?= HTTP_URL_PUB; ?>search/search/result" role="search">
             <div class="form-group input-prepend">
                     <span class="glyphicon glyphicon-search"></span>
-                    <input type="text" name="query" class="form-control input-sm" placeholder="Введите текст...">
+                    <input type="hidden" name="view" value="memes"/>
+                    <input type="text" name="query" class="form-control input-sm" value="<?php if(isset($_GET['query'])){ echo htmlspecialchars($_GET['query']); }?>" placeholder="Введите текст...">
             </div>
             <input type="submit" class="btn btn-default btn-sm" value="Поиск"/>
         </form>
