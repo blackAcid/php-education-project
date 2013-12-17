@@ -7,6 +7,8 @@
     print "\"".HTTP_URL_PUB."css/bootstrap.css\""?>/>
     <link rel="stylesheet" type="text/css" href=<?php
     print "\"".HTTP_URL_PUB."css/main-style.css\"";?>/>
+    <script type="text/javascript" src="<?php echo HTTP_URL_PUB . "js/jquery-1.10.2.min.js" ?>"></script>
+    <script type="text/javascript" src="<?php echo HTTP_URL_PUB . "js/bootstrap.min.js" ?>"></script>
     <?php
       foreach($this->getCssFile() as $value)
       {
@@ -31,7 +33,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="#">Главная</a></li>
-                <li><a href="#">Новости</a></li>
+                <li><a href="<?=HTTP_URL_PUB."news/index/index"?>">Новости</a></li>
             </ul>
         </div>
     </nav>

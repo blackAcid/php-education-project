@@ -1,3 +1,5 @@
 /.idea/
 /vendor/
 /application/core/config.ini
+/application/core/local.ini
+/application/core/Config.php

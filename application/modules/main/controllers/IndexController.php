@@ -13,7 +13,8 @@ class IndexController
         $module=Registry::getValue('module');
         $v = new View($module, 'home.php');
         $v->assign('title', 'Home page');
-        $v->assign('users', DefaultModel::selectUsers());
+        //$v->assign('users', DefaultModel::selectUsers());
+        $v->assign('sub',DefaultModel::ptinSub());
         try {
             $v->addIntoTemplate();
             $v->display();
