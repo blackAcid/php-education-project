@@ -6,6 +6,7 @@ use core\View;
 use \Exception;
 use modules\user\model;
 use core\Validator;
+use core\classTables\Users;
 
 
 class UserController
@@ -15,7 +16,6 @@ class UserController
         $module=Registry::getValue('module');
         $view = new View($module, 'registration.php');
         $view->assign('title', 'New user');
-//print_r($_POST);
         if(isset($_POST['username'], $_POST['password_1'], $_POST['password_2'],
            $_POST['email'], $_POST['date_of_birthday']) )
         {
@@ -42,7 +42,6 @@ class UserController
                 {
                     $message.=$value."</br>";
                 }
-
                 $view->assign('username_message', $message);
             }
 
@@ -75,7 +74,7 @@ class UserController
 
             $emailValid->isEmpty('Заполните поле !');
             $emailValid->hasFormat('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/','Неверный email !');
-            $emailValid->isEmailTaken('Это email уже занят !');
+            $emailValid->isEmailTaken('Этот email уже занят !');
             if($emailValid->isValid()){
 
             }else{
@@ -98,6 +97,19 @@ class UserController
                     $message.=$value."</br>";
                 }
                 $view->assign('date_of_birthday_message', $message);
+            }
+
+            if(count($usernameValid->errorStack)==0 &&
+               count($password1Valid->errorStack)==0 &&
+               count($password2Valid->errorStack)==0 &&
+               count($emailValid->errorStack)==0 &&
+               count($dateOfBirthdayValid->errorStack)==0)
+            {
+                $insertUser=new Users();
+                $insertUser->insert(['username'=>$username, 'email'=>$email, 'password'=>$password_1,
+                'date_of_birth'=>$date_of_birthday]);
+                $view->assign('global_message', "Вы успешно зарегистрировались !");
+
             }
 
         }

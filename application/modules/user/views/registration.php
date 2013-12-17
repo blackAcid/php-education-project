@@ -1,7 +1,19 @@
+<style type="text/css">
+    #reg_form {
+        font-family: Verdana, sans-serif;
+        font-size: 14px;
+        background-color: #FFFFE0;
+    }
 
+    .message_container {
+        font-weight: bold;
+        color: red;
+    }
+</style>
 <form id="reg_form" method="post" action="/user/user/registration">
     <p id="global_error_message_container" class="message_container">
         <span id="global_error_message"></span>
+        <?php echo $this->global_message ?>
     </p>
 
     <p>

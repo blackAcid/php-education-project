@@ -103,7 +103,7 @@ var Validator = {
 }
 
 $(function () {
-    $("#global_error_message_container").hide();
+   // $("#global_error_message_container").hide();
     $("#username").focus();
 
     $("#reg_form").submit(function () {
@@ -202,9 +202,9 @@ $(function () {
         var e_mess=Validator.run();
         if(!$.isEmptyObject(e_mess)){
             show_global_error_message(e_mess);
-        }else{
-              hide_global_error_message();
-        }
+        }//else{
+           //   hide_global_error_message();
+      //  }
 
         if (data_ok) {
             // hide_global_error_message();
