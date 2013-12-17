@@ -17,7 +17,7 @@ $(document).ready(function(){
                 }
             }).done(function(data){
                     $(data).insertAfter('.loading:last-child');
-                    $(".loading").hide(3000);
+                    $(".loading").hide();
                     inProgress = false;
                     startFrom += 2;
                 });

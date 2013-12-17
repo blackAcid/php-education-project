@@ -41,11 +41,12 @@ class Select
         $values = array_values($construct);
         $convert = "";
         for ($i = 0; $i < count($construct); $i++) {
-            if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL' && (in_array('.', $values))) {
+            preg_match('/([`()])/', $values[$i],$matches,PREG_OFFSET_CAPTURE);
+            preg_match('/(\/)/', $values[$i],$slash,PREG_OFFSET_CAPTURE);
+            if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL' && count($slash)!=null && count($matches)==null) {
                 $values[$i] = $this->db->quote($values[$i]);
             }
             $convert .= $keys[$i] . $values[$i] . " ";
-
         }
         $this->where = "WHERE " . $convert;
         return $this;
