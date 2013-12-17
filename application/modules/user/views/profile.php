@@ -5,8 +5,8 @@
         </div>
         <div class="profile-navigation">
             <ul class="user-info">
-                <li><?php echo $this->username; ?></li>
-                <li><?php echo $this->date_of_birth; ?></li>
+                <li><?php echo htmlspecialchars($this->username); ?></li>
+                <li><?php echo htmlspecialchars($this->date_of_birth); ?></li>
                 <li><a href="change"><button type="button" class="btn btn-default">Редактировать Профиль</button></a></li>
             </ul>
 

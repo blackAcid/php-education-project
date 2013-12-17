@@ -3,6 +3,7 @@ namespace modules\user\model;
 
 use core\classTables\Users;
 use core\classTables\Memes;
+use \Imagick;
 
 class User
 {
@@ -42,7 +43,7 @@ class User
 
         if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
             if ($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat']) {
-                if(preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8, })/', $password))
+                if(preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password))
                 {
                     $password = md5($password);
                     $UpdateUser = new Users();
