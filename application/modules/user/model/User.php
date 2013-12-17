@@ -8,9 +8,11 @@ class User
     public $id;
     public $login;
     public $email;
+    public $password;
     public $date_of_birth;
     public $role;
     public $avatar;
+
 
     public function profile($user_id)
     {

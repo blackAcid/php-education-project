@@ -1,12 +1,12 @@
 <?php
 namespace core;
 
-class Validator
+ class Validator
 {
     private $errorStack;
     private $input;
 
-    public function __construct($input)
+   public function __construct($input)
     {
         $this->input = $input;
     }
@@ -52,8 +52,24 @@ class Validator
         return !count($this->errorStack);
     }
 
+    public function isEmpty($error)
+    {
+        if (empty($this->input))
+            $this->errorStack[] = $error;
+        return $this;
+    }
+
+    public function lengthBetween($max, $min, $error = "Value doesn't belong to segment")
+    {
+        if (strlen($this->input) > $max || strlen($this->input) < $min)
+            $this->errorStack[] = $error;
+            return $this;
+    }
+
     public function getErrors()
     {
         return $this->errorStack;
     }
+
+
 }

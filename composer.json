@@ -1,4 +1,9 @@
 {
+
+  /*  "require": {
+        "KLogger/src": "dev-master"
+    },*/
+
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "squizlabs/php_codesniffer": "1.4.*"
@@ -9,4 +14,20 @@
         }
     }
 
+   /* "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "KLogger/src",
+                "version": "dev-master",
+                "source": {
+                    "url": "git://github.com/katzgrau/KLogger.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+
+            }
+        }
+    ]
+*/
 }

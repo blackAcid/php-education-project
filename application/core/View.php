@@ -70,9 +70,10 @@ class View
         if (isset($this->variables[$name])) {
             $variable = $this->variables[$name];
 
-            if ($this->params['xss_protection']) {
+         /*   if ($this->params['xss_protection']) {
                 $variable = $this->xssProtection($variable);
             }
+         */
             return $variable;
         }
 

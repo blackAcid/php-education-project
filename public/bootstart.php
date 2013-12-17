@@ -7,12 +7,15 @@ define('DIR_APP', ROOT.'/application/');
 define('DIR_MOD', ROOT.'/application/modules/');
 define('DIR_TABLES',DIR_CORE.'classTables/');
 
+//$loader = require_once ROOT.'/vendor/autoload.php';
+
 function __autoload($file){
     $file = str_replace('\\', '/', $file);
     $file = DIR_APP . $file . '.php';
         require_once($file);
-}
 
+}
+require_once(ROOT.'/KLogger.php');
 /**
  * Проверить настроен ли в VirtualHost DOCUMENT_ROOT
  */

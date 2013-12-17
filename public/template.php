@@ -3,6 +3,7 @@
 <head>
     <meta charset=utf-8>
     <title><?php echo $this->title;?></title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <?php
       $rootDirName=core\Registry::getValue("rootDirName");
       if(isConfiguredDocRoot())
@@ -27,8 +28,10 @@
           print $value;
       }
 
+
     ;?>
 </head>
+
 <body>
 <header>
     <nav class="navbar navbar-default col-md-8 col-md-offset-2 row" role="navigation">
