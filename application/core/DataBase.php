@@ -23,7 +23,8 @@ class DataBase
         $dbname=Config::getProperty('Database', 'dbname');
         $user=Config::getProperty('Database', 'user');
         $password=Config::getProperty('Database', 'password');
-        $dsn="$type:dbname=$dbname;host=$host";
+        $charset = Config::getProperty('Database', 'charset');
+        $dsn="$type:dbname=$dbname;host=$host;charset=$charset";
         $this->db = new PDO($dsn, $user, $password);
         return $this->db;
     }
@@ -54,7 +55,7 @@ class DataBase
         $values=$this->quote($values);
         $sql=$this->db->prepare("INSERT INTO `{$this->className}` ($cols) VALUES ($values);");
         $sql->execute();
-        $sql->debugDumpParams();
+        //$sql->debugDumpParams();
     }
     public function update($fields, $construct = null, $values = null)
     {
@@ -62,10 +63,11 @@ class DataBase
         for ($i=0; $i<count($fields); $i++) {
             $fields_cols=array_keys($fields);
             $fields_val=array_values(($fields));
-            if (in_array('+', $fields_val)) {
-                $fields_res[$i]="$fields_cols[$i]='$fields_val[$i]'";
+            preg_match('/([\*\+-\/])/', $fields_val[$i],$matches,PREG_OFFSET_CAPTURE);
+           if (count($matches)!=null){
+             $fields_res[$i]="`$fields_cols[$i]`=$fields_val[$i]";
             } else {
-                $fields_res[$i]="$fields_cols[$i]=$fields_val[$i]";
+               $fields_res[$i]="`$fields_cols[$i]`='$fields_val[$i]'";
             }
         }
         $fields_res=implode(",", $fields_res);
@@ -80,10 +82,10 @@ class DataBase
                 $sql->bindParam($i+1, $values[$i]);
             }
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         } else {
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         }
     }
     public function delete($construct = null, $log = null)
@@ -94,10 +96,10 @@ class DataBase
                 $sql->bindParam($i+1, $log[$i]);
             }
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         } else {
             $sql->execute();
-            $sql->debugDumpParams();
+            //$sql->debugDumpParams();
         }
     }
 }
