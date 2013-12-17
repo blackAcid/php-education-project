@@ -13,10 +13,11 @@ $(document).ready(function(){
                 method: 'POST',
                 data: {'startFrom' : startFrom,'action':action},
                 beforeSend: function() {
-                    inProgress = true;}
+                    inProgress = true;
+                }
             }).done(function(data){
-                    $(".loading").show(2000).hide();
                     $(data).insertAfter('.loading:last-child');
+                    $(".loading").hide(3000);
                     inProgress = false;
                     startFrom += 2;
                 });
