@@ -33,7 +33,17 @@ class SubscriptionsController
 
     public function subscribeFromUserAction()
     {
-
+        $module = Registry::getValue('module');
+        $v = new View($module, 'listSubscriptions.php');
+        $obj = new SubscriptionsModel('1');
+        $result = $obj->subscribeFromUser($_POST['targetId']);
+        $v->assign('listSubscriptions', $result);
+        try {
+            $v->addIntoTemplate();
+            $v->display();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function unsubscribeFromUserAction()
