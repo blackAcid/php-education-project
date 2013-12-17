@@ -3,6 +3,7 @@ namespace modules\user\model;
 
 use core\classTables\Users;
 use core\classTables\Memes;
+use \Imagick;
 
 class User
 {
@@ -13,6 +14,7 @@ class User
     public $role;
     public $avatar;
     public $paths_to_my_memes;
+    public $error = null;
 
     public function profile($user_id)
     {
@@ -29,26 +31,37 @@ class User
         $selectMemes = new Memes();
         $select_Memes_Object = $selectMemes->selectPrepare();
         $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])
-            ->selectColumns(['path', 'name', 'id'])->fetchAll();
+            ->selectColumns(['*'])->fetchAll();
     }
 
     public function changeProfile($ChangeData, $UserId)
     {
         if (!empty($ChangeData['name'])) {
             $UpdateUser = new Users();
-            $UpdateUser->update(['username'=>$ChangeData['name']], 'id='.$UserId);
+            $UpdateUser->update(['username'=>$ChangeData['name']], 'id=?', [$UserId]);
         }
-        if (!empty($ChangeData['email'])) {
-            $UpdateUser = new Users();
-            $UpdateUser->update(['email'=>$ChangeData['email']], 'id='.$UserId);
-        }
+
         if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
             if ($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat']) {
-                $password = md5($password);
-                $UpdateUser = new Users();
-                $UpdateUser->update(['password'=>$password], 'id='.$UserId);
+                if(preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password))
+                {
+                    $password = md5($password);
+                    $UpdateUser = new Users();
+                    $UpdateUser->update(['password'=>$password], 'id=?', [$UserId]);
+                } else
+                {
+                    $this->error = 'Пароль не соответствует условию!';
+                }
+
+            } else
+            {
+                $this->error = 'Неверный пароль, повторите ввод!';
             }
+        } else
+        {
+            $this->error = 'Нужно повторить введенный пароль! Введите пароли снова.';
         }
+
         if (!empty($_FILES['userfile']['size'])) {
             $UploadDir = DIR_PUBLIC.'images/user_avatars/';
             $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);

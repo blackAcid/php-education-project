@@ -50,8 +50,6 @@ class UserController
             $User->profile('1'); //There must be session variable with user id.
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'change.php');
-            $MemesNumber = count($User->paths_to_my_memes);
-            $ViewUser->assign('MemesNumber', $MemesNumber);
             foreach ($User as $property => $value) {
                 $ViewUser->assign($property, $value);
             }

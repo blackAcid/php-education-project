@@ -7,6 +7,12 @@
     print "\"".BASE_URL."css/bootstrap.css\""?>/>
     <link rel="stylesheet" type="text/css" href=<?php
     print "\"".BASE_URL."css/main-style.css\"";?>/>
+    <script type="text/javascript" src=<?php print "\"".BASE_URL."js/jquery-1.10.2.js\"";?>></script>
+    <script type="text/javascript" src=<?php print "\"".BASE_URL."js/likesAjax.js\"";?>></script>
+    <script type="text/javascript">
+        urlMemes='<?=BASE_URL."news/index/memes"?>'
+        urlButtons='<?=BASE_URL."likes/index/updateLikes"?>'
+    </script>
     <?php
       foreach($this->getCssFile() as $value)
       {
