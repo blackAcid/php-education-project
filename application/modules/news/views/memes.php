@@ -2,9 +2,9 @@
 //$action=$this->action;
 ?>
 <script type="text/javascript">
-    urlMemes='<?=BASE_URL."news/index/memes"?>'
+    /*urlMemes='<?=BASE_URL."news/index/memes"?>'*/
     action='<?=$this->action?>'
-    urlButtons='<?=BASE_URL."news/index/updateLikes"?>'
+    /*urlButtons='<?=BASE_URL."news/index/updateLikes"?>'*/
 </script>
     <div class="headers">
         <header class="top_users"></header>

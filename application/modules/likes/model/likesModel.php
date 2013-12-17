@@ -31,7 +31,7 @@ class likesModel
             ->fetch([$userID, $meme_id]);
         if ($getRating==null && $getRating!='1' && !(empty($userID))) {
             $ratings->insert(['memes_id'=>"$meme_id", 'user_id'=>"$userID", 'rating'=>'0']);
-            debug_print_backtrace();
+            //debug_print_backtrace();
             $insertMemes->update(['dislikes'=>'dislikes+1'], 'id=?', ["$meme_id"]);
         }
     }

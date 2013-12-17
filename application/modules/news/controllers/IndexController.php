@@ -71,7 +71,7 @@ class IndexController
             echo $e->getMessage();
         }
     }
-    public function updateLikesAction()
+    /*public function updateLikesAction()
     {
         $module=Registry::getValue('module');
         if (!empty($_POST)) {
@@ -86,5 +86,5 @@ class IndexController
             include $file=DIR_MOD.$module."/views/ratingMemes.php";
         }
 
-    }
+    }*/
 }

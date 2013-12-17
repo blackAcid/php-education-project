@@ -45,7 +45,7 @@ class NewsModel
         $getRating=$selObj->selectColumns(['rating'])->where(['user_id='=>'? and ', 'memes_id='=>'?'])
             ->fetch([$userID, $meme_id]);
     }*/
-    public static function updateLike($meme_id)
+    /*public static function updateLike($meme_id)
     {
         $insertMemes=new Memes();
         $ratings=new Ratings();
@@ -77,7 +77,7 @@ class NewsModel
         $selObj2=$insertMemes->selectPrepare();
         $likes=$selObj2->selectColumns(['likes', 'dislikes'])->where(['id='=>'?'])->fetchAll([$meme_id]);
         return $likes;
-    }
+    }*/
     public static function topUsers()
     {
         $selUsers=new Users();
