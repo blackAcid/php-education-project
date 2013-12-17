@@ -23,12 +23,11 @@ class SubscriptionsModel
 
         $result = $selObjSubscriptions->where(['user_id=' => "$this->userId", ' and status=' => '1'])
             ->selectColumns(['target_id'])->fetchAll(null);
-        count($result);
         for ($i = 0; $i < count($result); $i++) {
             $this->targetId = $result[$i]['target_id'];
             $selectUser = new Users();
             $selObjUser = $selectUser->selectPrepare();
-            $this->dataSubscriptions[$i] = $selObjUser->where(['id=' => "$this->targetId"])->selectColumns(['username', 'avatar', 'date_update'])->fetchAll(null);
+            $this->dataSubscriptions[$i] = $selObjUser->where(['id=' => "$this->targetId"])->selectColumns(['id', 'username', 'avatar', 'date_update'])->fetchAll(null);
         }
         return $this->dataSubscriptions;
     }
