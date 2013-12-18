@@ -90,8 +90,8 @@ class DefaultModel
     }*/
     public static function login()
     {
-        $email='name1@mail';
-        $password='12345';
+        $email='bob@marley.com';
+        $password='312';
         $selectUser=new Users();
         $selObj=$selectUser->selectPrepare();
         $user=$selObj->selectColumns(['id', 'username'])->where(['email='=>'? and ', 'password='=>'?'])

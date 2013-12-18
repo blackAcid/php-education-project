@@ -82,9 +82,10 @@ class NewsModel
     {
         $selUsers=new Users();
         $selObj1=$selUsers->selectPrepare();
-        $users=$selObj1->selectColumns(['username','avatar'])->distinct('1')->join('inner','memes','id','user_id')
-            ->where(['year(memes.`date_create`)='=>'year(now()) and','week(memes.`date_create`)='=>'(week(now(),7)-1)'])
-            ->order('likes','desc')->fetchAll(null);
+        $users=$selObj1->selectColumns(['username', 'avatar'])->distinct('1')->join('inner', 'memes', 'id', 'user_id')
+            ->where(['year(memes.`date_create`)='=>'year(now()) and',
+                'week(memes.`date_create`)='=>'(week(now(),7)-1)'])
+            ->order('likes', 'desc')->fetchAll(null);
         return $users;
     }
 }

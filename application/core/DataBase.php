@@ -2,7 +2,9 @@
 
 namespace core;
 
-use \PDO;
+//use \PDO;
+use core\DataBaseConnection;
+use \PDOException;
 
 class DataBase
 {
@@ -13,10 +15,12 @@ class DataBase
     {
         $class=get_class($this);
         $this->className=$class::$classTable;
-        $this->getDbConfig();
+        //$this->getDbConfig();
+        $dbConnect=DataBaseConnection::getInstance();
+        $this->db=$dbConnect->getDbConfig();
     }
 
-    private function getDbConfig()
+    /*private function getDbConfig()
     {
         $type=Config::getProperty('Database', 'type');
         $host=Config::getProperty('Database', 'host');
@@ -27,7 +31,7 @@ class DataBase
         $dsn="$type:dbname=$dbname;host=$host;charset=$charset";
         $this->db = new PDO($dsn, $user, $password);
         return $this->db;
-    }
+    }*/
     public function selectPrepare()
     {
         return new Select($this->className, $this->db);
@@ -55,7 +59,6 @@ class DataBase
         $values=$this->quote($values);
         $sql=$this->db->prepare("INSERT INTO `{$this->className}` ($cols) VALUES ($values);");
         $sql->execute();
-        //$sql->debugDumpParams();
     }
     public function update($fields, $construct = null, $values = null)
     {
@@ -63,11 +66,11 @@ class DataBase
         for ($i=0; $i<count($fields); $i++) {
             $fields_cols=array_keys($fields);
             $fields_val=array_values(($fields));
-            preg_match('/([\*\+-\/])/', $fields_val[$i],$matches,PREG_OFFSET_CAPTURE);
-           if (count($matches)!=null){
-             $fields_res[$i]="`$fields_cols[$i]`=$fields_val[$i]";
+            preg_match('/([\*\+-\/])/', $fields_val[$i], $matches, PREG_OFFSET_CAPTURE);
+            if (count($matches)!=null) {
+                $fields_res[$i]="`$fields_cols[$i]`=$fields_val[$i]";
             } else {
-               $fields_res[$i]="`$fields_cols[$i]`='$fields_val[$i]'";
+                $fields_res[$i]="`$fields_cols[$i]`='$fields_val[$i]'";
             }
         }
         $fields_res=implode(",", $fields_res);
