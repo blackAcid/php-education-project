@@ -15,7 +15,7 @@ class User
     public $role;
     public $avatar;
     public $paths_to_my_memes;
-    public $error = null;
+    public $user_error = null;
 
     public function profile($user_id)
     {
@@ -44,34 +44,37 @@ class User
 
         if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
             if ($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat']) {
-                if(preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password))
+                if (preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password))
                 {
                     $password = md5($password);
                     $UpdateUser = new Users();
                     $UpdateUser->update(['password'=>$password], 'id=?', [$UserId]);
                 } else
                 {
-                    $this->error = 'Пароль не соответствует условию!';
+                    $this->user_error['password'] = 'Пароль не соответствует условию!';
                 }
 
             } else
             {
-                $this->error = 'Неверный пароль, повторите ввод!';
+                $this->user_error['password'] = 'Неверный пароль, повторите ввод!';
             }
-        } else
-        {
-            $this->error = 'Нужно повторить введенный пароль! Введите пароли снова.';
         }
 
         if (!empty($_FILES['userfile']['size'])) {
-            $tmp_path = $_FILES['userfile']['tmp_name'];
-            $avatar = new Imagick($tmp_path);
-            $avatar->thumbnailimage(Config::getProperty('avatar', 'width'),0,false) or die('error');
-            $UploadDir = DIR_PUBLIC.'images/user_avatars/';
-            $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
-            $avatar->writeimage($UploadFile);
-            rename($UploadFile, $UploadDir.$UserId.'_user.jpg');
-            $this->avatar = $UploadDir.$UserId.'_user.jpg';
+            if ($_FILES['userfile']['size'] <= 200000)
+            {
+                $tmp_path = $_FILES['userfile']['tmp_name'];
+                $avatar = new Imagick($tmp_path);
+                $avatar->thumbnailimage(Config::getProperty('avatar', 'width'),0,false) or die('error in resizing');
+                $UploadDir = DIR_PUBLIC.'images/user_avatars/';
+                $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
+                $avatar->writeimage($UploadFile) or die('error in writing image');
+                rename($UploadFile, $UploadDir.$UserId.'_user.jpg') or die('error in renaming');
+                $this->avatar = $UploadDir.$UserId.'_user.jpg';
+            } else
+            {
+                $this->user_error['avatar'] = 'Слишком большой размер картинки!';
+            }
         }
     }
 }
