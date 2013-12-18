@@ -1,4 +1,5 @@
 <?php
+
 namespace modules\user\model;
 
 use core\classTables\Users;
@@ -44,35 +45,30 @@ class User
 
         if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
             if ($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat']) {
-                if (preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password))
-                {
+                if (preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password)) {
                     $password = md5($password);
                     $UpdateUser = new Users();
                     $UpdateUser->update(['password'=>$password], 'id=?', [$UserId]);
-                } else
-                {
+                } else {
                     $this->user_error['password'] = 'Пароль не соответствует условию!';
                 }
 
-            } else
-            {
+            } else {
                 $this->user_error['password'] = 'Неверный пароль, повторите ввод!';
             }
         }
 
         if (!empty($_FILES['userfile']['size'])) {
-            if ($_FILES['userfile']['size'] <= 200000)
-            {
+            if ($_FILES['userfile']['size'] <= 200000) {
                 $tmp_path = $_FILES['userfile']['tmp_name'];
                 $avatar = new Imagick($tmp_path);
-                $avatar->thumbnailimage(Config::getProperty('avatar', 'width'),0,false) or die('error in resizing');
+                $avatar->thumbnailimage(Config::getProperty('avatar', 'width'), 0, false) or die('error in resizing');
                 $UploadDir = DIR_PUBLIC.'images/user_avatars/';
                 $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
                 $avatar->writeimage($UploadFile) or die('error in writing image');
                 rename($UploadFile, $UploadDir.$UserId.'_user.jpg') or die('error in renaming');
                 $this->avatar = $UploadDir.$UserId.'_user.jpg';
-            } else
-            {
+            } else {
                 $this->user_error['avatar'] = 'Слишком большой размер картинки!';
             }
         }
