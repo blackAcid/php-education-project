@@ -15,6 +15,8 @@ class IndexController
         if (!empty($_POST)) {
             $buttonName=$_POST['buttonName'];
             $id_meme=$_POST['buttonValue'];
+            ob_start();
+            session_start();
             if ($buttonName=='like') {
                 likesModel::updateLike($id_meme);
             } elseif ($buttonName=='dislike') {
@@ -23,5 +25,6 @@ class IndexController
             $rating=likesModel::getLikesDislikes($id_meme);
             include $file=DIR_MOD."likes/views/ratingMemes.php";
         }
+        ob_flush();
     }
 }

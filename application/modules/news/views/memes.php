@@ -1,5 +1,6 @@
 <?php
-/*$action=$this->action;*/
+/*ob_start();
+session_start();*/
 ?>
 <script type="text/javascript">
     /*urlMemes='<?=BASE_URL."news/index/memes"?>'*/
@@ -47,13 +48,14 @@
             <li><a href="<?= BASE_URL . "news/index/rating" ?>">Лучшие</a></li>
         </ul>
         <?php
+        $valUsers=array();
         for($i=1 ; $i<count($this->userRating)+1; $i++) {
             $valUsers[$i]=(int)$this->userRating[$i-1]['memes_id'];
         }
         for ($i = 0; $i < count($this->memes); $i++) {
             $date = strtotime($this->memes[$i]['date_create']);
-            /*var_dump($valUsers);
-            print "<br>".$this->memes[$i]['id'];
+
+            /*print "<br>".$this->memes[$i]['id'];
             if (array_search($this->memes[$i]['id'],$valUsers)) {
                 echo "hello";
             }*/
@@ -64,7 +66,7 @@
 
                 <div class='likes_dislikes' id='<?= $this->memes[$i]['id'] ?>'>
         <?php
-        if (!empty($_SESSION['userID']) && !array_search($this->memes[$i]['id'],$valUsers)) {
+        if (!empty($_SESSION['id']) && !array_search($this->memes[$i]['id'],$valUsers)) {
 
         ?>
 
@@ -95,3 +97,6 @@
             <div>
     </section>
 </div>
+<?php
+//ob_end_flush();
+?>

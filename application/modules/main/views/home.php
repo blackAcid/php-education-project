@@ -2,9 +2,10 @@
 <br><pre>
 
 <?php
-var_dump($this->users);
+//var_dump($this->users);
 ob_start();
 session_start();
+echo "id: ".($_SESSION['id']);
 echo "Добро пожаловать на сайт, ".$_SESSION['username']." !";
 ob_end_flush();
 ?>

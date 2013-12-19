@@ -191,7 +191,6 @@ class UserController
                     $_SESSION['username']=$username;
                     header('Location: '.BASE_URL.'main/index/index');
                     ob_end_flush();
-
                 }
 
             }
