@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href=<?php
     print "\"".BASE_URL."css/main-style.css\"";?>/>
     <script type="text/javascript" src=<?php print "\"".BASE_URL."js/jquery-1.10.2.js\"";?>></script>
+    <script type="text/javascript" src=<?php print "\"".BASE_URL."js/bootstrap.min.js\"";?>></script>
     <script type="text/javascript" src=<?php print "\"".BASE_URL."js/likesAjax.js\"";?>></script>
     <script type="text/javascript">
         urlMemes='<?=BASE_URL."news/index/memes"?>'
@@ -29,7 +30,7 @@
 <header>
     <nav class="navbar navbar-default col-md-8 col-md-offset-2 row" role="navigation">
         <a class="navbar-brand" href="#"><img alt="palette" src=<?="\"".BASE_URL."images/palette.png\"";?>></a>
-        <form id="search-form" class="navbar-form navbar-right form-inline" method="GET" action="<?= HTTP_URL_PUB; ?>search/search/result" role="search">
+        <form id="search-form" class="navbar-form navbar-right form-inline" method="GET" action="<?= BASE_URL; ?>search/search/result" role="search">
             <div class="form-group input-prepend">
                     <span class="glyphicon glyphicon-search"></span>
                     <input type="hidden" name="view" value="memes"/>
