@@ -14,12 +14,17 @@ class User
     public $sub_id;
     public $username;
     public $email;
+    public $password;
     public $date_of_birth;
     public $role;
     public $avatar;
     public $paths_to_my_memes;
     public $user_error = null;
     public $targetId;
+
+    public function __set($name,$value){
+        $this->$name=$value;
+    }
 
     public function profile($user_id)
     {

@@ -1,7 +1,7 @@
 <div class="user-profile row col-md-12">
     <div class="profile-info col-md-3">
         <div class="avatar">
-            <img src="<?php echo '/images/user_avatars/'.$this->avatar; ?>" class="avatar">
+            <img src="<?=BASE_URL.'/images/user_avatars/'.$this->avatar; ?>" class="avatar">
         </div>
         <div class="profile-navigation">
             <ul class="user-info">
@@ -11,9 +11,10 @@
             </ul>
 
             <ul class="navigation">
-                <li><a href="/meme/meme/create"><button type="button" class="btn btn-default">Создать Мем</button></a></li>
-                <li><a href="/news/index/index"><button type="button" class="btn btn-default">Новости</button></a></li>
-                <li><a href="/subscriptions/subscriptions/printsubscriptions"><button type="button" class="btn btn-default">Подписки</button></a></li>
+                <li><a href="<?=BASE_URL."meme/meme/create"?>"><button type="button" class="btn btn-default">Создать Мем</button></a></li>
+                <li><a href="<?=BASE_URL."news/index/index"?>"><button type="button" class="btn btn-default">Новости</button></a></li>
+                <li><a href="<?=BASE_URL."subscriptions/subscriptions/printsubscriptions"?>"><button type="button" class="btn btn-default">Подписки</button></a></li>
+                <li><a href="<?=BASE_URL."user/user/profile?id=11"?>"><button type="button" class="btn btn-default">Bob</button></a></li>
             </ul>
         </div>
     </div>

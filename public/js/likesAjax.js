@@ -2,7 +2,7 @@
 window.alert('url='+urlMemes);*/
 $(document).ready(function(){
     var inProgress = false;
-    var startFrom = 2;
+    var startFrom = 5;
     var urlMemes=window.urlMemes;
     var urlButtons=window.urlButtons;
     var action=window.action;
@@ -13,11 +13,13 @@ $(document).ready(function(){
                 method: 'POST',
                 data: {'startFrom' : startFrom,'action':action},
                 beforeSend: function() {
-                    inProgress = true;}
+                    inProgress = true;
+                }
             }).done(function(data){
-                    $(data).insertAfter('.nextMeme:last-child');
+                    $(data).insertAfter('.loading:last-child');
+                    $(".loading").hide();
                     inProgress = false;
-                    startFrom += 2;
+                    startFrom += 5;
                 });
         }
     });
@@ -34,7 +36,8 @@ $(document).ready(function(){
                 inProgress = true;}
         }).done(function(data){
                 $('#'+buttonValue+'.rating').html(data);
-                $('.likes_dislikes#'+buttonValue).html("<div class='likes_dislikes alert alert-info'>Thank You!<div>");
+                $('.likes_dislikes#'+buttonValue).html("<div class='likes_dislikes alert alert-info'>Thank You!<div>")
+                    .hide(1000);
                 inProgress = false;
 
             });
