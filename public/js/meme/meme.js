@@ -20,7 +20,8 @@ $(document).ready(function () {
                 .then(function (d) {
                     $('.textarea').remove();
                     data = $.parseJSON(d);
-                    $('#main img').attr('src', '/' + data[0].base_picture).data('id', id);
+                    //$('#main img').attr('src', '/' + data[0].base_picture).data('id', id);
+                    $('#main img').attr('src', baseUrl + data[0].base_picture).data('id', id);
                     setInputs(true);
                     $('#create').children().css('visibility', 'visible');
                 })

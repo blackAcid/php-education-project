@@ -44,13 +44,13 @@ class Select
             preg_match('/([`()])/', $values[$i], $matches, PREG_OFFSET_CAPTURE);
             preg_match('/(\/)/', $values[$i], $slash, PREG_OFFSET_CAPTURE);
             if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL'
-                && count($slash)!=null && count($matches)==null) {
+                 && count($matches)==null || count($slash)!=null) {
                 $values[$i] = $this->db->quote($values[$i]);
             }
             $convert .= $keys[$i] . $values[$i] . " ";
 
         }
-        $this->where = "WHERE " . $convert;
+        $this->where = " WHERE " . $convert;
         return $this;
     }
 

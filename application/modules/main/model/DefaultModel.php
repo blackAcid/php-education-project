@@ -119,4 +119,17 @@ class DefaultModel
         $likes=$selObj2->selectColumns(['likes', 'dislikes'])->where(['id='=>'?'])->fetchAll(["2"]);
         return $likes;
     }
+    public static function getUsersY()
+    {
+    $selectUser=new Users();
+    $selObj=$selectUser->selectPrepare();
+    $userName="year()";
+    $resultRowSet=$selObj->selectColumns(['username'])->where(['username='=>$userName])->fetch(null);
+    //echo "<br> USERNAME".$userName;
+    //echo "isUsernameTaken";
+    //var_dump($resultRowSet);
+    /*if($resultRowSet['username'])
+    return $this->errorStack[]=$error;}*/
+        return $resultRowSet;
+    }
 }

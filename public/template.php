@@ -11,6 +11,7 @@
     <script type="text/javascript" src=<?php print "\"".BASE_URL."js/likesAjax.js\"";?>></script>
     <script type="text/javascript" src=<?php print "\"".BASE_URL."js/subscriptions.js\"";?>></script>
     <script type="text/javascript">
+        baseUrl='<?=BASE_URL?>'
         urlMemes='<?=BASE_URL."news/index/memes"?>'
         urlButtons='<?=BASE_URL."likes/index/updateLikes"?>'
     </script>
