@@ -216,17 +216,54 @@ class UserController
     public function profileAction()
     {
         $User = new model\User();
-        $User->profile($_SESSION['user_id']);
+        $User->profile($_GET['id']);
+        Registry::setValue($_GET['id'], 'user');
         $module = Registry::getValue('module');
-        $v = new View($module, 'profile.php');
+        $ViewUser = new View($module, 'profile.php');
+        $MemesNumber = count($User->paths_to_my_memes);
+        $ViewUser->assign('MemesNumber', $MemesNumber);
         foreach ($User as $property => $value) {
-            $v->assign($property, $value);
+            $ViewUser->assign($property, $value);
         }
         try {
-            $v -> addIntoTemplate();
-            $v -> display();
+            $ViewUser -> addIntoTemplate();
+            $ViewUser -> display();
         } catch (Exception $e) {
             echo $e -> getMessage();
+        }
+    }
+
+    public function changeAction()
+    {
+        $User = new model\User();
+        if (isset($_POST['user'])) {
+            $User->changeProfile($_POST, '1'); //There must be session variable with user id.
+            $User->profile('1'); //There must be session variable with user id.
+            $module = Registry::getValue('module');
+            $ViewUser = new View($module, 'change.php');
+            foreach ($User as $property => $value) {
+                $ViewUser->assign($property, $value);
+            }
+            try {
+                $ViewUser -> addIntoTemplate();
+                $ViewUser -> display();
+            } catch (Exception $e) {
+                echo $e -> getMessage();
+            }
+
+        } else {
+            $User->profile('1'); //There must be session variable with user id.
+            $module = Registry::getValue('module');
+            $ViewUser = new View($module, 'change.php');
+            foreach ($User as $property => $value) {
+                $ViewUser->assign($property, $value);
+            }
+            try {
+                $ViewUser -> addIntoTemplate();
+                $ViewUser -> display();
+            } catch (Exception $e) {
+                echo $e -> getMessage();
+            }
         }
     }
 }

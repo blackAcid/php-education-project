@@ -7,10 +7,11 @@ class Request
     private $action="index";
     private $module="main";
     private $params;
-
+    // private $view;
     public function __construct()
     {
         $this->parseURI();
+        //echo "controller=".$this->controller."<br>module=".$this->module."<br>action=".$this->action;
     }
     public function getController()
     {
@@ -29,19 +30,14 @@ class Request
         return $this->params;
     }
 
-
-
     private function parseURI()
     {
-        if(isConfiguredDocRoot())
-        {
-            $routes = explode('/',$_SERVER['REQUEST_URI']);
+        if (isConfiguredDocRoot()) {
+            $routes = explode('/', $_SERVER['REQUEST_URI']);
+        } else {
+            $routes = explode('/', str_replace("/".Registry::getValue('rootDirName'), '', $_SERVER['REQUEST_URI']));
         }
-        else
-        {
-            $routes = explode('/', str_replace(Registry::getValue('rootDirName'),'',$_SERVER['REQUEST_URI']));
-        }
-        // print_r($routes);
+        //print_r($routes);
         if (!empty($routes[1]) && !empty($routes[2])) {
             $this->module=$routes[1];
             $this->controller=$routes[2];
@@ -61,6 +57,5 @@ class Request
                 $this->action = $routes[3];
             }
         }
-
     }
 }
