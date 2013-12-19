@@ -33,7 +33,7 @@ class User
         $selectMemes = new Memes();
         $select_Memes_Object = $selectMemes->selectPrepare();
         $this->paths_to_my_memes = $select_Memes_Object->where(['user_id='=>"$this->id"])
-            ->selectColumns(['*'])->fetchAll();
+            ->selectColumns(['*'])->order('date_create', 'DESC')->fetchAll();
     }
 
     public function changeProfile($ChangeData, $UserId)

@@ -26,21 +26,42 @@ class UserController
     public function profileAction()
     {
         $User = new model\User();
-        $User->profile($_GET['id']);
-        Registry::setValue($_GET['id'], 'user');
-        $module = Registry::getValue('module');
-        $ViewUser = new View($module, 'profile.php');
-        $MemesNumber = count($User->paths_to_my_memes);
-        $ViewUser->assign('MemesNumber', $MemesNumber);
-        foreach ($User as $property => $value) {
-            $ViewUser->assign($property, $value);
+        if($_GET['id'] == 1)
+        {
+            $User->profile($_GET['id']);
+            Registry::setValue($_GET['id'], 'user');
+            $module = Registry::getValue('module');
+            $ViewUser = new View($module, 'profile.php');
+            $MemesNumber = count($User->paths_to_my_memes);
+            $ViewUser->assign('MemesNumber', $MemesNumber);
+            foreach ($User as $property => $value) {
+                $ViewUser->assign($property, $value);
+            }
+            try {
+                $ViewUser -> addIntoTemplate();
+                $ViewUser -> display();
+            } catch (Exception $e) {
+                echo $e -> getMessage();
+            }
+        } else if ($_GET['id'] == 11)
+        {
+            $User->profile($_GET['id']);
+            Registry::setValue($_GET['id'], 'user');
+            $module = Registry::getValue('module');
+            $ViewUser = new View($module, 'profileGuest.php');
+            $MemesNumber = count($User->paths_to_my_memes);
+            $ViewUser->assign('MemesNumber', $MemesNumber);
+            foreach ($User as $property => $value) {
+                $ViewUser->assign($property, $value);
+            }
+            try {
+                $ViewUser -> addIntoTemplate();
+                $ViewUser -> display();
+            } catch (Exception $e) {
+                echo $e -> getMessage();
+            }
         }
-        try {
-            $ViewUser -> addIntoTemplate();
-            $ViewUser -> display();
-        } catch (Exception $e) {
-            echo $e -> getMessage();
-        }
+
     }
 
     public function changeAction()
