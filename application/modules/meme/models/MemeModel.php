@@ -4,6 +4,7 @@ namespace modules\meme\models;
 use core\classTables\MemeBase;
 use core\classTables\TextAreas;
 use core\classTables\Memes;
+use core\classTables\Colors;
 use core\Registry;
 use \Imagick;
 use \ImagickPixel;
@@ -17,8 +18,8 @@ class MemeModel
     private $img;
     private $textAreas;
     private $font;
-    private $fontColor = '#FFF';
-    private $strokeColor = '#000';
+    private $fontColor = 'white';
+    private $strokeColor = 'black';
     private $strokeWidth = 1;
     private $draw;
     private $fontPixel;
@@ -36,7 +37,7 @@ class MemeModel
         return $id['id'];
     }
 
-    //Getting images info from DB
+    //Get images info from DB
     public function getBasePictures()
     {
         $pics = new MemeBase();
@@ -48,7 +49,7 @@ class MemeModel
         $this->inputs = $this->getInputsOutput($queryResult);
     }
 
-    //Getting images HTML output
+    //Get images HTML output
     private function getPicturesOuput($pics)
     {
         $output = '';
@@ -62,7 +63,7 @@ class MemeModel
         return $output;
     }
 
-    //Getting inputs HTML output
+    //Get inputs HTML output
     private function getInputsOutput($pics)
     {
         $output = '';
@@ -85,33 +86,39 @@ class MemeModel
         return $max;
     }
 
-    public function createMeme($name, $path, $text)
+    //Generating meme
+    public function createMeme($name, $id, $text)
     {
         $textAreas = new TextAreas();
         $selected = $textAreas->selectPrepare();
-        $path = str_replace(BASE_URL, '', $path);
-        $coords = $selected->selectColumns(array('meme_base.id', 'alias', 'start_x', 'start_y', 'end_x', 'end_y', 'color'))
-            ->join('LEFT', 'meme_base', 'meme_id', 'id')->where(array('base_picture = ' => $path))->fetchAll();
+        $coords = $selected->selectColumns(array('base_picture', 'alias', 'start_x', 'start_y', 'end_x', 'end_y', 'color'))
+            ->join('LEFT', 'meme_base', 'meme_id', 'id')->where(array('meme_base.id = ' => $id))->fetchAll();
+
+        $colors = new Colors();
+        $selected = $colors->selectPrepare();
+        $colors = $selected->selectColumns(['text', 'stroke'])->where(['id = '=>$coords[0]['color']])->fetchAll();
+
         for ($i = 0; $i < count($text); $i++) {
             $areas[$i] = array($text[$i], $coords[$i]['start_x'], $coords[$i]['start_y'],
                 $coords[$i]['end_x'], $coords[$i]['end_y'],);
         }
-        if ($coords[0]['color'] == 2) {
-            $this->fontColor = '#000';
-            $this->strokeColor = '#FFF';
-        }
 
-        $this->memeBaseId = $coords[0]['id'];
+        $this->fontColor = $colors[0]['text'];
+        $this->strokeColor = $colors[0]['stroke'];
+
+
+        $this->memeBaseId = $id;
         $this->memeAlias = $coords[0]['alias'];
         $this->memeName = $name;
 
 
         $this->font = DIR_PUBLIC . 'fonts/russo.ttf';
 
-        $this->img = new imagick(DIR_PUBLIC . $path);
+        $this->img = new imagick(DIR_PUBLIC . $coords[0]['base_picture']);
         $this->textAreas = $areas;
         $this->getDraw();
         $this->getMeme();
+
     }
 
     private function getDraw()
@@ -167,9 +174,6 @@ class MemeModel
             'meme_base_id' => $this->memeBaseId, 'user_id' => Registry::getValue('user'),
             'date_create' => date('Y-m-d-h-m-s', time()), 'date_update' => date('Y-m-d-h-m-s', time()),
             'likes' => 0, 'dislikes' => 0]);
-
-
-
 
     }
 

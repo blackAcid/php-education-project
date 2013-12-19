@@ -34,8 +34,10 @@ class MemeController
     {
         Registry::setValue('11', 'user');
         $meme = new models\MemeModel();
-        $meme->createMeme($_POST['name'], $_POST['path'], $_POST['text']);
-        //$meme->createMeme('собака', BASE_URL.'images/memes/base/orig/advice_dog.jpg', array('advice', 'dawg'));
+        $meme->createMeme($_POST['name'], $_POST['id'], $_POST['text']);
+
+        //$meme->createMeme('собака', 3, array('advice', 'dawg'));
+
         echo json_encode(['id' => $meme->getMemeId()]);
     }
 

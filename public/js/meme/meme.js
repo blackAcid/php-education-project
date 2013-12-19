@@ -1,32 +1,45 @@
 $(document).ready(function () {
 
+    $('#ajax').bind('ajaxSend',function () {
+        $(this).show();
+    }).bind('ajaxComplete', function () {
+            $(this).hide();
+        })
+
 
     $('.thumb').bind('click', function () {
-        if(!$(this).hasClass('selected')) {
+        if (!$(this).hasClass('selected')) {
+            $('#create').children().css('visibility', 'hidden');
+            $('#ajax').show();
             $('.thumb').removeClass('selected');
             $(this).addClass('selected');
             var id = $('.selected').data('id');
             var currentPath = window.location.href;
+            var data;
             $.post(currentPath.replace('create', 'getImage'), {id: id})
-                .done(function(data) {
+                .then(function (d) {
                     $('.textarea').remove();
-                    var res = $.parseJSON(data);
-                    $('#main img').attr('src', '/'+res[0].base_picture);
-                    if (res[0].width > res[0].height) {
-                        var multiplier = res[0].width / $('#main img').width();
-                    } else {
-                        var multiplier = res[0].height / $('#main img').height();
-                    }
+                    data = $.parseJSON(d);
+                    $('#main img').attr('src', '/' + data[0].base_picture).data('id', id);
                     setInputs(true);
-                    for(var i = 0; i < res.length; i++) {
-                        var div = $('<div>'+(i+1)+'</div>').addClass('textarea').attr('data-id',(i+1)).width((res[i].end_x - res[i].start_x)/multiplier)
-                            .height((res[i].end_y - res[i].start_y)/multiplier)
-                            .css('left', (res[i].start_x/multiplier) +'px').css('top', (res[i].start_y/multiplier) +'px');
-                        $('#main').append(div);
-                        $('.textarea').css('font-size', (res[i].end_y - res[i].start_y)/multiplier/1.5 +'px');
-
-                    }
+                    $('#create').children().css('visibility', 'visible');
                 })
+                .then(function () {
+                    if (data[0].width > data[0].height) {
+                        var multiplier = data[0].width / $('#main img').width();
+                    } else {
+                        var multiplier = data[0].height / $('#main img').height();
+                    }
+                    for (var i = 0; i < data.length; i++) {
+                        var div = $('<div>' + (i + 1) + '</div>').addClass('textarea').data('id', (i + 1)).width((data[i].end_x - data[i].start_x) / multiplier)
+                            .height((data[i].end_y - data[i].start_y) / multiplier)
+                            .css('left', (data[i].start_x / multiplier) + 'px').css('top', (data[i].start_y / multiplier) + 'px');
+                        $('#main').append(div);
+                        $('.textarea').css('font-size', (data[i].end_y - data[i].start_y) / multiplier / 1.5 + 'px');
+                        $('#ajax').hide();
+                    }
+                });
+
 
         }
     });
@@ -63,7 +76,7 @@ $(document).ready(function () {
     $('input[type*="button"]').bind('click', function () {
         var inputs = $('#inputs input').not('#name');
         var inputsVal = new Array();
-        var path = $('#main img').attr('src');
+        var id = $('#main img').data('id');
         var name = $.trim($('#name').val());
 
         for (var i = 0; i < inputs.length; i++) {
@@ -86,12 +99,12 @@ $(document).ready(function () {
             $('body').append(div);
             $('#ajax').show();
             var current = window.location.href;
-            $.post(current.replace('create', 'generate'), {name: name, text: inputsVal, path: path})
-                .done(function(data){
-                   window.location.replace(current.replace('create', 'view?id='+ ($.parseJSON(data)).id));
+            $.post(current.replace('create', 'generate'), {name: name, text: inputsVal, id: id})
+                .done(function (data) {
+                    window.location.replace(current.replace('create', 'view?id=' + ($.parseJSON(data)).id));
                 });
-        }
 
+        }
     });
 
 
