@@ -49,7 +49,7 @@ class DefaultModel
         //возвращает ассициативный массив, содержащий все строки:
         //3 записи с полями login и password, отсортированные по полю role
         //$resultRowSet=$selObj->limit(3,null)->order('role','ASC')->select(['login','password'])->fetchAll(null);
-        $resultRowSet=$selObj->selectColumns(['id', 'login', 'email'])->where(['id>'=>'0'])->fetchAll(null);
+        //$resultRowSet=$selObj->selectColumns(['id', 'login', 'email'])->where(['id>'=>'0'])->fetchAll(null);
         /* example 2 */
         //возвращает 1 запись в виде массива: с полями login и password,
         //отсортированными по полю role
@@ -74,11 +74,11 @@ class DefaultModel
         var_dump($resultRowSet2);*/
 
         /* example 4 joins */
-        /*$resultRowSet2=$selObj->where(['roles.id '=>'IS NULL'])->Join('left', 'roles', 'role', 'id')
-            ->select(['*'])->fetchAll(null);
-        echo "<br><pre>";
+        $resultRowSet2=$selObj->where(['roles.id '=>'IS NULL'])->Join('left', 'roles', 'role', 'id')
+            ->selectColumns(['*'])->fetchAll(null);
+        /*echo "<br><pre>";
         var_dump($resultRowSet2);*/
-        return $resultRowSet;
+        return $resultRowSet2;
     }
     /* public static function selectRoles()
     {
