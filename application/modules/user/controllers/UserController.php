@@ -31,6 +31,13 @@ class UserController
             $emailValid=new Validator($email);
             $dateOfBirthdayValid=new Validator($date_of_birthday);
 
+            $user=new model\User();
+            $user->login=$username;
+            $user->password=$password_1;
+            $user->email=$email;
+            $user->date_of_birth=$date_of_birthday;
+            $userDAO=new model\UserDAO();
+
             $usernameValid->isEmpty('Заполните поле !');
             $usernameValid->hasFormat('/^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/', 'Поле не валидно!');
             $usernameValid->isUsernameTaken("Такой логин уже существует !");
@@ -99,15 +106,23 @@ class UserController
                 $view->assign('date_of_birthday_message', $message);
             }
 
+            $insertUser=new Users();
+            $insertUser->insert(['username'=>$username, 'email'=>$email, 'password'=>$password_1,
+                'date_of_birth'=>$date_of_birthday]);
+            $view->assign('global_message', "Вы успешно зарегистрировались !");
+
             if(count($usernameValid->errorStack)==0 &&
                count($password1Valid->errorStack)==0 &&
                count($password2Valid->errorStack)==0 &&
                count($emailValid->errorStack)==0 &&
                count($dateOfBirthdayValid->errorStack)==0)
             {
-                $insertUser=new Users();
+               /* $insertUser=new Users();
                 $insertUser->insert(['username'=>$username, 'email'=>$email, 'password'=>$password_1,
                 'date_of_birth'=>$date_of_birthday]);
+                $view->assign('global_message', "Вы успешно зарегистрировались !");
+               */
+                $userDAO->insert($user);
                 $view->assign('global_message', "Вы успешно зарегистрировались !");
             }
 
@@ -133,6 +148,11 @@ class UserController
 
             $usernameValid=new Validator($username);
             $password1Valid=new Validator($password_1);
+
+            $user=new model\User();
+            $user->login=$username;
+            $user->password=$password_1;
+            $userDAO=new model\UserDAO();
 
             $usernameValid->isEmpty('Заполните поле !');
             $usernameValid->hasFormat('/^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/', 'Поле не валидно!');
@@ -164,10 +184,7 @@ class UserController
             if(count($usernameValid->errorStack)==0 &&
                count($password1Valid->errorStack)==0)
             {
-                $user=new model\User();
-                $user->login=$username;
-                $user->password=$password_1;
-                $userDAO=new model\UserDAO();
+
                 if(count($userDAO->isUserExists($user))==0)
                 {
                     $view->assign('global_message', "Вы еще не зарегистрированы !");

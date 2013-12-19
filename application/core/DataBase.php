@@ -11,8 +11,8 @@ class DataBase
     private $where;
     public function __construct()
     {
-       // $class=get_class($this);
-       // $this->className=$class::$classTable;
+        $class=get_class($this);
+        $this->className=$class::$classTable;
         $this->getDbConfig();
     }
 
