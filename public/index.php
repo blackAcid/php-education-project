@@ -4,6 +4,8 @@ require_once 'bootstart.php';
 
 use core\Request;
 use core\FrontController;
+use core\Acl;
+
 try
 {
     $req=new Request();
@@ -13,5 +15,3 @@ catch (Exception $e)
 {
     die($e->getMessage());
 }
-
-
