@@ -9,6 +9,8 @@ define('DIR_MOD', DIR.'/application/modules/');
 define('DIR_TABLES',DIR_CORE.'classTables/');
 define('BASE_URL', "http://".$_SERVER['SERVER_NAME']
     .str_replace($_SERVER['DOCUMENT_ROOT'],'',DIR_PUBLIC));
+define('HTTP_URL_PUB', "http://".$_SERVER['SERVER_NAME']
+    .str_replace($_SERVER['DOCUMENT_ROOT'],'',DIR_PUBLIC));
 define('DIR_TEMP_USERS',DIR.'/temp/users/user_id/');
 
 define('DIR_USERS',"\"http://".$_SERVER['SERVER_NAME']

@@ -13,10 +13,13 @@ class IndexController
         $module=Registry::getValue('module');
         $v = new View($module, 'home.php');
         $v->assign('title', 'Home page');
-        $v->assign('users', DefaultModel::test());
+        //$v->assign('users', DefaultModel::test());
+        $v->assign('users', DefaultModel::getUsersY());
         //$v->assign('sub',DefaultModel::ptinSub());
         //DefaultModel::updateUsers();
         //DefaultModel::testSelect();
+        //$users=DefaultModel::getUsersY();
+        //var_dump($users);
         try {
             $v->addIntoTemplate();
             $v->display();
@@ -25,6 +28,7 @@ class IndexController
             //DefaultModel::deleteUsers();
             //DefaultModel::updateUsers();
             //DefaultModel::selectUsers();
+
         } catch (Exception $e) {
             echo $e->getMessage();
         }
