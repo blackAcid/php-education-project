@@ -11,6 +11,7 @@ use \Imagick;
 class User
 {
     public $id;
+    public $sub_id;
     public $username;
     public $email;
     public $date_of_birth;
@@ -76,12 +77,13 @@ class User
         }
     }
 
-    function isSubscribed($targetId) //method for check subscriptions.
+    function isSubscribed($targetId)
     {
+        $this->sub_id = $_SESSION['user_id'];
         $this->targetId = $targetId;
         $selectSubscriptions = new Subscription();
         $selObjSubscriptions = $selectSubscriptions->selectPrepare();
-        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->id",])->selectColumns(['status'])->fetch(null);
+        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->sub_id",])->selectColumns(['status'])->fetch(null);
         if (!empty($subExist)) {
             return (bool)$subExist['status'];
         }

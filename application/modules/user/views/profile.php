@@ -14,7 +14,6 @@
                 <li><a href="/meme/meme/create"><button type="button" class="btn btn-default">Создать Мем</button></a></li>
                 <li><a href="/news/index/index"><button type="button" class="btn btn-default">Новости</button></a></li>
                 <li><a href="/subscriptions/subscriptions/printsubscriptions"><button type="button" class="btn btn-default">Подписки</button></a></li>
-                <li><a href="/user/user/profile?id=11"><button type="button" class="btn btn-default">Bob</button></a></li>
             </ul>
         </div>
     </div>

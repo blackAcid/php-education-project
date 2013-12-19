@@ -1,6 +1,7 @@
 <?php
 use core\Registry as Registry;
 session_start();
+$_SESSION['user_id'] = 1;
 define('DIR', str_replace('\\','/',dirname(__DIR__)));
 define('DIR_PUBLIC',DIR.'/public/');
 define('DIR_CORE', DIR.'/application/core/');
