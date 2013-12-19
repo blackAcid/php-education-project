@@ -13,10 +13,11 @@ class IndexController
     public function updateLikesAction()
     {
         if (!empty($_POST)) {
-            $buttonName=$_POST['buttonName'];
-            $id_meme=$_POST['buttonValue'];
             ob_start();
             session_start();
+            $buttonName=$_POST['buttonName'];
+            $id_meme=$_POST['buttonValue'];
+
             if ($buttonName=='like') {
                 likesModel::updateLike($id_meme);
             } elseif ($buttonName=='dislike') {
