@@ -54,7 +54,7 @@ class User
         if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
             if ($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat']) {
                 if (preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password)) {
-                    $password = md5($password);
+                    /*$password = md5($password);*/
                     $UpdateUser = new Users();
                     $UpdateUser->update(['password'=>$password], 'id=?', [$UserId]);
                 } else {
@@ -84,7 +84,7 @@ class User
 
     function isSubscribed($targetId)
     {
-        $this->sub_id = $_SESSION['user_id'];
+        $this->sub_id = $_SESSION['id'];
         $this->targetId = $targetId;
         $selectSubscriptions = new Subscription();
         $selObjSubscriptions = $selectSubscriptions->selectPrepare();

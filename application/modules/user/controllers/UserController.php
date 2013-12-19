@@ -132,6 +132,8 @@ class UserController
     }
 
     public function  signinAction(){
+        session_start();
+        unset($_SESSION['id']);
         $module = Registry::getValue('module');
         $view = new View($module, 'signin.php');
         $view->assign('title','Вход');
@@ -187,7 +189,7 @@ class UserController
                     ob_start();
                     session_start();
                     $id=$userDAO->getUserId($user);
-                    $_SESSION['id']=$id;
+                    $_SESSION['id']=$id['id'];
                     $_SESSION['username']=$username;
                     header('Location: '.BASE_URL.'main/index/index');
                     ob_end_flush();
@@ -212,8 +214,10 @@ class UserController
 
     public function profileAction()
     {
+        ob_start();
+        session_start();
         $User = new model\User();
-        if(isset($_GET['id']) && $_GET['id'] != $_SESSION['user_id'])
+        if(isset($_GET['id']) && $_GET['id'] != $_SESSION['id'])
         {
             $User->profile($_GET['id']);
             Registry::setValue($_GET['id'], 'user');
@@ -230,12 +234,13 @@ class UserController
             }
         } else
         {
-            $User->profile($_SESSION['user_id']);
+            $User->profile($_SESSION['id']);
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'profile.php');
         }
         $MemesNumber = count($User->paths_to_my_memes);
         $ViewUser->assign('MemesNumber', $MemesNumber);
+        ob_end_flush();
         foreach ($User as $property => $value) {
             $ViewUser->assign($property, $value);
         }
@@ -249,12 +254,15 @@ class UserController
 
     public function changeAction()
     {
+        ob_start();
+        session_start();
         $User = new model\User();
         if (isset($_POST['user'])) {
-            $User->changeProfile($_POST, $_SESSION['user_id']);
-            $User->profile($_SESSION['user_id']);
+            $User->changeProfile($_POST, $_SESSION['id']);
+            $User->profile($_SESSION['id']);
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'change.php');
+            ob_end_flush();
             foreach ($User as $property => $value) {
                 $ViewUser->assign($property, $value);
             }
@@ -266,9 +274,10 @@ class UserController
             }
 
         } else {
-            $User->profile($_SESSION['user_id']);
+            $User->profile($_SESSION['id']);
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'change.php');
+            ob_end_flush();
             foreach ($User as $property => $value) {
                 $ViewUser->assign($property, $value);
             }

@@ -11,7 +11,7 @@ class UserDAO
     public function getUserId(User $user){
         $selUsers=new Users();
         $selObj=$selUsers->selectPrepare();
-        $result=$selObj->selectColumns(['id'])->where(['username='=>"?",'and password='=>"?"])->fetchAll([$user->username,$user->password]);
+        $result=$selObj->selectColumns(['id'])->where(['username='=>"?",'and password='=>"?"])->fetch([$user->username,$user->password]);
         return $result;
     }
 
