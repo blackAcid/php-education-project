@@ -13,6 +13,9 @@ class User
     public $role;
     public $avatar;
 
+    public function __set($name,$value){
+        $this->$name=$value;
+    }
 
     public function profile($user_id)
     {

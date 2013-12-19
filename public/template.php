@@ -4,20 +4,14 @@
     <meta charset=utf-8>
     <title><?php echo $this->title;?></title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <?php
-      $rootDirName=core\Registry::getValue("rootDirName");
-      if(isConfiguredDocRoot())
-    {
-       echo '<link rel="stylesheet" type="text/css" href="http://php-project/css/bootstrap.css"/>';
-       echo '<link rel="stylesheet" type="text/css" href="http://php-project/css/main-style.css"/>';
-    }
-    else
-    {
-        echo '<link rel="stylesheet" type="text/css" href="http://php-project/'."$rootDirName".'/css/bootstrap.css"/>';
-        echo '<link rel="stylesheet" type="text/css" href="http://php-project/'."$rootDirName".'/css/main-style.css"/>';
-    }
-    ?>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <?php
       foreach($this->getCssFile() as $value)
       {
@@ -48,9 +42,16 @@
             </ul>
         </div>
     </nav>
+
+
 </header>
 
+
 <section class="content row col-md-8 col-md-offset-2">
+    <p>
+        <a href="/user/user/signin">Вход</a>
+        <a href="/user/user/registration">Регистрация</a>
+    </p>
     <?php if($this->addIntoTemplate()) require_once($this->include_file);?>
 </section>
 <footer class="col-md-8 col-md-offset-2 row">

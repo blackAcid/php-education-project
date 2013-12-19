@@ -10,9 +10,14 @@ class DataBase
     private $className;
     public function __construct()
     {
-        $class=get_class($this);
-        $this->className=$class::$classTable;
+       // $class=get_class($this);
+       // $this->className=$class::$classTable;
         $this->getDbConfig();
+    }
+
+    public function __get($name)
+    {
+        return $this->$name;
     }
 
     private function getDbConfig()
@@ -23,7 +28,12 @@ class DataBase
         $user=Config::getProperty('Database', 'user');
         $password=Config::getProperty('Database', 'password');
         $dsn="$type:dbname=$dbname;host=$host";
-        $this->db = new PDO($dsn, $user, $password);
+        try{
+            $this->db = new PDO($dsn, $user, $password);
+        }catch(\Exception $e){
+            throw new \Exception("Can't connect to Database !");
+        }
+
         return $this->db;
     }
     public function selectPrepare()

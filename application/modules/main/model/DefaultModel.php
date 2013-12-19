@@ -39,7 +39,7 @@ class DefaultModel
         //возвращает ассициативный массив, содержащий все строки:
         //3 записи с полями login и password, отсортированные по полю role
         //$resultRowSet=$selObj->limit(3,null)->order('role','ASC')->select(['login','password'])->fetchAll(null);
-        $resultRowSet=$selObj->selectColumns(['id', 'username', 'email'])->fetchAll(null);
+        $resultRowSet=$selObj->selectColumns(['id', 'username', 'email','password'])->fetchAll(null);
         /* example 2 */
         //возвращает 1 запись в виде массива: с полями login и password,
             //отсортированными по полю role
