@@ -4,6 +4,7 @@ namespace modules\user\model;
 
 use core\classTables\Users;
 use core\classTables\Memes;
+use core\classTables\Subscription;
 use core\Config;
 use \Imagick;
 
@@ -17,6 +18,7 @@ class User
     public $avatar;
     public $paths_to_my_memes;
     public $user_error = null;
+    public $targetId;
 
     public function profile($user_id)
     {
@@ -72,5 +74,17 @@ class User
                 $this->user_error['avatar'] = 'Слишком большой размер картинки!';
             }
         }
+    }
+
+    function isSubscribed($targetId) //method for check subscriptions.
+    {
+        $this->targetId = $targetId;
+        $selectSubscriptions = new Subscription();
+        $selObjSubscriptions = $selectSubscriptions->selectPrepare();
+        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->id",])->selectColumns(['status'])->fetch(null);
+        if (!empty($subExist)) {
+            return (bool)$subExist['status'];
+        }
+        return false;
     }
 }

@@ -6,7 +6,7 @@
         $('.unsub').on('click', function (e) {
             e.preventDefault();
             $.ajax({
-                url: '/php-education-project/public/subscriptions/subscriptions/unsubscribefromuser',
+                url: '/subscriptions/subscriptions/unsubscribefromuser',
                 type: 'POST',
                 data: {'targetId': $(this).data('unsubid')},
                 success: function () {
@@ -21,7 +21,7 @@
         $('.sub').on('click', function (e) {
             e.preventDefault();
             $.ajax({
-                url: '/php-education-project/public/subscriptions/subscriptions/subscribefromuser',
+                url: '/subscriptions/subscriptions/subscribefromuser',
                 type: 'POST',
                 data: {'targetId': $(this).data('subid')},
                 success: function () {
