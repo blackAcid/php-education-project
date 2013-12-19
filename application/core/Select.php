@@ -48,7 +48,6 @@ class Select
                 $values[$i] = $this->db->quote($values[$i]);
             }
             $convert .= $keys[$i] . $values[$i] . " ";
-
         }
         $this->where = " WHERE " . $convert;
         return $this;

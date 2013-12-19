@@ -24,7 +24,7 @@ class IndexController
             $v->addIntoTemplate();
             $v->display();
             //DefaultModel::printDb();
-            //DefaultModel::insertUsers();
+
             //DefaultModel::deleteUsers();
             //DefaultModel::updateUsers();
             //DefaultModel::selectUsers();

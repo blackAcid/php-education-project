@@ -35,10 +35,7 @@ class MemeController
         Registry::setValue('11', 'user');
         $meme = new models\MemeModel();
         $meme->createMeme($_POST['name'], $_POST['id'], $_POST['text']);
-
         //$meme->createMeme('собака', 3, array('advice', 'dawg'));
-
-        echo json_encode(['id' => $meme->getMemeId()]);
     }
 
     public function viewAction()
