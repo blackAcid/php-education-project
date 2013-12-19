@@ -79,16 +79,18 @@ use core\classTables\Users;
      public function isUsernameTaken($error= 'Sorry username is already taken !'){
          $selectUser=new Users();
          $selObj=$selectUser->selectPrepare();
-         $resultRowSet=$selObj->selectColumns(['username'])->where(['username='=>$this->input])->fetch(null);
+         $resultRowSet=$selObj->selectColumns(['username'])->where(['username='=>"?"])->fetch([$this->input]);
          if($resultRowSet['username'])
-           return $this->errorStack[]=$error;
+            $this->errorStack[]=$error;
+         return $this;
      }
      public function isEmailTaken($error= 'Sorry email is already taken !'){
          $selectUser=new Users();
          $selObj=$selectUser->selectPrepare();
-         $resultRowSet=$selObj->selectColumns(['email'])->where(['email='=>$this->input])->fetch(null);
+         $resultRowSet=$selObj->selectColumns(['email'])->where(['email ='=>"?"])->fetch([$this->input]);
          if($resultRowSet['email'])
-             return $this->errorStack[]=$error;
+              $this->errorStack[]=$error;
+         return $this;
      }
 
 

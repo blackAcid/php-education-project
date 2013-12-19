@@ -7,33 +7,25 @@ use \PDO;
 
 class UserDAO
 {
-    private $dbConnect;
 
-   public function __construct(){
-       $database=new DataBase();
-       $this->dbConnect=$database->db;
-   }
-
-
-
-    public function isUserExists(User $user){
-       /* $sql = 'SELECT username FROM users WHERE username = :username AND password = :password';
-        $sth = $this->dbConnect->prepare($sql, array(PDO::FETCH_ASSOC));
-        $sth->execute(array(':username' => $user->login, ':password' => $user->password));
-        $result = $sth->fetchAll();
-        return $result;*/
-        $selectUser=new Users();
-        $selObj=$selectUser->selectPrepare();
-        $resultRowSet=$selObj->where(['username '=>$user->login,'and password='=>$user->password])
-            ->select(['username'])->fetchAll();
-        print_r($resultRowSet);
-        return $resultRowSet;
+    public function getUserId(User $user){
+        $selUsers=new Users();
+        $selObj=$selUsers->selectPrepare();
+        $result=$selObj->selectColumns(['id'])->where(['username='=>"?",'and password='=>"?"])->fetchAll([$user->username,$user->password]);
+        return $result;
     }
 
     public function insert(User $user){
+        echo "INSERT   ".$user->username." ".$user->email;
         $insertUser=new Users();
-        $insertUser->insert(['username'=>$user->login, 'email'=>$user->email, 'password'=>$user->password,
+        $insertUser->insert(['username'=>$user->username, 'email'=>$user->email, 'password'=>$user->password,
             'date_of_birth'=>$user->date_of_birth]);
+    }
+    public function allUsers(){
+        $selUsers=new Users();
+        $selObj=$selUsers->selectPrepare();
+        $result=$selObj->selectColumns(['username','password','date_of_birth','email'])->fetchAll(null);
+        return $result;
     }
 
 

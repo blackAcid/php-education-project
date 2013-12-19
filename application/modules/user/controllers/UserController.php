@@ -32,7 +32,7 @@ class UserController
             $dateOfBirthdayValid=new Validator($date_of_birthday);
 
             $user=new model\User();
-            $user->login=$username;
+            $user->username=$username;
             $user->password=$password_1;
             $user->email=$email;
             $user->date_of_birth=$date_of_birthday;
@@ -105,11 +105,7 @@ class UserController
                 }
                 $view->assign('date_of_birthday_message', $message);
             }
-
-            $insertUser=new Users();
-            $insertUser->insert(['username'=>$username, 'email'=>$email, 'password'=>$password_1,
-                'date_of_birth'=>$date_of_birthday]);
-            $view->assign('global_message', "Вы успешно зарегистрировались !");
+          //  print_r($userDAO->allUsers());
 
             if(count($usernameValid->errorStack)==0 &&
                count($password1Valid->errorStack)==0 &&
@@ -117,13 +113,9 @@ class UserController
                count($emailValid->errorStack)==0 &&
                count($dateOfBirthdayValid->errorStack)==0)
             {
-               /* $insertUser=new Users();
-                $insertUser->insert(['username'=>$username, 'email'=>$email, 'password'=>$password_1,
-                'date_of_birth'=>$date_of_birthday]);
-                $view->assign('global_message', "Вы успешно зарегистрировались !");
-               */
                 $userDAO->insert($user);
                 $view->assign('global_message', "Вы успешно зарегистрировались !");
+
             }
 
         }
@@ -150,7 +142,7 @@ class UserController
             $password1Valid=new Validator($password_1);
 
             $user=new model\User();
-            $user->login=$username;
+            $user->username=$username;
             $user->password=$password_1;
             $userDAO=new model\UserDAO();
 
@@ -181,20 +173,21 @@ class UserController
                 $view->assign('password_1_message', $message);
             }
 
-            if(count($usernameValid->errorStack)==0 &&
-               count($password1Valid->errorStack)==0)
+            if(count($usernameValid->errorStack)==0 && count($password1Valid->errorStack)==0)
             {
-
-                if(count($userDAO->isUserExists($user))==0)
+                if(count($userDAO->getUserId($user))==0)
                 {
                     $view->assign('global_message', "Вы еще не зарегистрированы !");
                 }else
                 {
                     ob_start();
                     session_start();
+                    $id=$userDAO->getUserId($user);
+                    $_SESSION['id']=$id;
                     $_SESSION['username']=$username;
                     header('Location: /main/index/index');
                     ob_end_flush();
+
                 }
 
             }
@@ -237,8 +230,8 @@ class UserController
     {
         $User = new model\User();
         if (isset($_POST['user'])) {
-            $User->changeProfile($_POST, '1'); //There must be session variable with user id.
-            $User->profile('1'); //There must be session variable with user id.
+            $User->changeProfile($_POST, $_SESSION['id']); //There must be session variable with user id.
+            $User->profile($_SESSION['id']); //There must be session variable with user id.
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'change.php');
             foreach ($User as $property => $value) {
@@ -252,7 +245,7 @@ class UserController
             }
 
         } else {
-            $User->profile('1'); //There must be session variable with user id.
+            $User->profile($_SESSION['id']); //There must be session variable with user id.
             $module = Registry::getValue('module');
             $ViewUser = new View($module, 'change.php');
             foreach ($User as $property => $value) {
