@@ -38,7 +38,7 @@ class DataBaseConnection
     }
     public function getDbConfig()
     {
-       //$type=Config::getProperty('Database', 'type');
+        //$type=Config::getProperty('Database', 'type');
         /*$host=Config::getProperty('Database', 'host');
         $dbname=Config::getProperty('Database', 'dbname');
         $user=Config::getProperty('Database', 'user');

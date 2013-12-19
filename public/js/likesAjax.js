@@ -2,7 +2,7 @@
 window.alert('url='+urlMemes);*/
 $(document).ready(function(){
     var inProgress = false;
-    var startFrom = 2;
+    var startFrom = 6;
     var urlMemes=window.urlMemes;
     var urlButtons=window.urlButtons;
     var action=window.action;
@@ -17,9 +17,9 @@ $(document).ready(function(){
                 }
             }).done(function(data){
                     $(data).insertAfter('.loading:last-child');
-                    $(".loading").hide(3000);
+                    $(".loading").hide();
                     inProgress = false;
-                    startFrom += 2;
+                    startFrom += 5;
                 });
         }
     });
