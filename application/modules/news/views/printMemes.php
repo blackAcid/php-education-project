@@ -1,5 +1,5 @@
 <?php
-for($i=1 ; $i<count($userRating)+1; $i++) {
+for ($i=1; $i<count($userRating)+1; $i++) {
     $valUsers[$i]=$userRating[$i-1]['memes_id'];
 }
 for ($i=0; $i<count($memes); $i++) {
@@ -10,7 +10,7 @@ for ($i=0; $i<count($memes); $i++) {
         <img alt='memes' src=<?=BASE_URL.$memes[$i]['path']?> class='img-thumbnail'/>
         <div class='likes_dislikes' id='<?=$memes[$i]['id']?>'>
     <?php
-    if (!empty($_SESSION['userID']) && !array_search($memes[$i]['id'],$valUsers)) { ?>
+    if (!empty($_SESSION['userID']) && !array_search($memes[$i]['id'], $valUsers)) { ?>
             <button type='submit' form='likes' name='like' value='<?=$memes[$i]['id']?>'>
                 <img alt='like' src='<?=BASE_URL."css/news/like1.jpg"?>' height='20'/>
             </button>

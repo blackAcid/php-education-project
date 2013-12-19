@@ -47,7 +47,7 @@
             <li><a href="<?= BASE_URL . "news/index/rating" ?>">Лучшие</a></li>
         </ul>
         <?php
-        for($i=1 ; $i<count($this->userRating)+1; $i++) {
+        for ($i=1; $i<count($this->userRating)+1; $i++) {
             $valUsers[$i]=(int)$this->userRating[$i-1]['memes_id'];
         }
         for ($i = 0; $i < count($this->memes); $i++) {
@@ -64,8 +64,7 @@
 
                 <div class='likes_dislikes' id='<?= $this->memes[$i]['id'] ?>'>
         <?php
-        if (!empty($_SESSION['userID']) && !array_search($this->memes[$i]['id'],$valUsers)) {
-
+    if (!empty($_SESSION['userID']) && !array_search($this->memes[$i]['id'], $valUsers)) {
         ?>
 
                         <button type='submit' form='likes' name='like' value='<?= $this->memes[$i]['id'] ?>'>
