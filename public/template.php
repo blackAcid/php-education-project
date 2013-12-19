@@ -9,6 +9,7 @@
     print "\"".BASE_URL."css/main-style.css\"";?>/>
     <script type="text/javascript" src=<?php print "\"".BASE_URL."js/jquery-1.10.2.js\"";?>></script>
     <script type="text/javascript" src=<?php print "\"".BASE_URL."js/likesAjax.js\"";?>></script>
+    <script type="text/javascript" src=<?php print "\"".BASE_URL."js/subscriptions.js\"";?>></script>
     <script type="text/javascript">
         urlMemes='<?=BASE_URL."news/index/memes"?>'
         urlButtons='<?=BASE_URL."likes/index/updateLikes"?>'
@@ -38,6 +39,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="<?=BASE_URL."main/index/index"?>">Главная</a></li>
                 <li><a href="<?=BASE_URL."news/index/index"?>">Новости</a></li>
+                <li><a href="<?=BASE_URL."user/user/profile?id=1"?>">Профиль</a></li>
             </ul>
         </div>
     </nav>

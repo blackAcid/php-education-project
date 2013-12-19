@@ -4,8 +4,7 @@
     </div>
     <div id="create">
         <div class="row">
-            <div class="col-md-8" id="main">
-                <span class="aligner"></span>
+            <div  id="main">
                 <img src="#" alt="selected">
 
             </div>
@@ -15,7 +14,7 @@
             </div>
         </div>
         <div class="col-md-12" id="submit">
-            <input type="button" value="Создать мем">
+            <input type="button" value="Создать мем" class="btn-default btn">
         </div>
     </div>
 </div>
