@@ -40,11 +40,18 @@ class NewsModel
     public static function userRating()
     {
         $ratings=new Ratings();
-        $userID=$_SESSION['userID'];
-        $selObj=$ratings->selectPrepare();
+        if (!empty($_SESSION['userID'])) {
+            $userID=$_SESSION['userID'];
+            $selObj=$ratings->selectPrepare();
+            $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>'?'])
+                ->fetchAll([$userID]);
+            return $getRating;
+        }
+        else return;
+        /*$selObj=$ratings->selectPrepare();
         $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>'?'])
             ->fetchAll([$userID]);
-        return $getRating;
+        return $getRating;*/
     }
     /*public static function updateLike($meme_id)
     {
