@@ -21,16 +21,18 @@ for ($i=0; $i<count($memes); $i++) {
     <?php
     } ?>
         </div>
-        <div class='row-fluid'><div class='date'>Опубликовано <?=date('j.m.y', $date)?> в
-                <?=date('H:i')?> by <?=$memes[$i]['username']?>
+        <div class='row-fluid'>
+            <div class='date'>Опубликовано <?= date('j.m.y', $date) ?> в
+                <?= date('H:i') ?> by <?= $memes[$i]['username'] ?>
             </div>
-            <div class='rating' id='<?=$memes[$i]['id']?>'>
-                <span class='dislikes'>-<?=$memes[$i]['dislikes']?></span>
-                <span class='likes'>+<?=$memes[$i]['likes']?></span>
+            <div class='rating' id='<?= $memes[$i]['id'] ?>'>
+                <span class='dislikes'>-<?= $memes[$i]['dislikes'] ?></span>
+                <span class='likes'>+<?= $memes[$i]['likes'] ?></span>
             </div>
         </div>
     </div>
-    <?php
+<?php
 }
 ?>
-<div class='loading'><div>
+<div class='loading'>
+    <div>

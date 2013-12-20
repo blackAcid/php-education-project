@@ -5,6 +5,7 @@ use core\classTables\MemeBase;
 use core\classTables\TextAreas;
 use core\classTables\Memes;
 use core\classTables\Colors;
+use core\classTables\MemesComments;
 use core\Registry;
 use \Imagick;
 use \ImagickPixel;
@@ -96,7 +97,7 @@ class MemeModel
 
         $colors = new Colors();
         $selected = $colors->selectPrepare();
-        $colors = $selected->selectColumns(['text', 'stroke'])->where(['id = '=>$coords[0]['color']])->fetchAll();
+        $colors = $selected->selectColumns(['text', 'stroke'])->where(['id = ' => $coords[0]['color']])->fetchAll();
 
         for ($i = 0; $i < count($text); $i++) {
             $areas[$i] = array($text[$i], $coords[$i]['start_x'], $coords[$i]['start_y'],
@@ -224,9 +225,10 @@ class MemeModel
     {
         $meme = new Memes();
         $meme = $meme->selectPrepare();
-        $meme = $meme->selectColumns(['path'])->where(['id = ' => $id])->fetch();
+        $meme = $meme->selectColumns(['path', 'likes', 'dislikes', 'id'])->where(['id = ' => $id])->fetch();
 
-        return str_replace(DIR, '', $meme['path']);
+        //return str_replace(DIR, '', $meme['path']);
+        return $meme;
 
     }
 
@@ -237,5 +239,33 @@ class MemeModel
         $img = $img->selectColumns(array('base_picture', 'width', 'height', 'start_x', 'start_y', 'end_x', 'end_y'))
             ->join('LEFT', 'text_areas', 'id', 'meme_id')->where(array('meme_base.id = ' => $id))->fetchAll();
         return $img;
+    }
+
+    public function getComments($id)
+    {
+        $com = new MemesComments();
+        $com = $com->selectPrepare();
+        $com = $com->selectColumns(['memes_comments.id as cid', 'username', 'users.id as uid', 'comment', 'memes_comments.date_create'])
+            ->where(['meme_id =' => $id])->join('LEFT', 'users', 'user_id', 'id')
+            ->order('memes_comments.id', 'DESC')->fetchAll();
+
+        return $this->getCommentsOutput($com);
+    }
+
+    private function getCommentsOutput($comments)
+    {
+        if (count($comments) > 0) {
+            $output = "<div id='comments'>";
+            for ($i = 0; $i < count($comments); $i++) {
+                $output .= "<div class='comment'>
+                    <article>" . $comments[$i]['comment'] . "</article>
+                    <footer>" . date('H:i F jS', strtotime($comments[$i]['date_create'])) . " by <a href='/user/user/profile?id="
+                    . $comments[$i]['uid'] . "'>" . $comments[$i]['username']
+                    . "</a></footer></div>";
+            }
+            return $output . "</div>";
+        } else {
+            return "<div class='comments'><div id='no_com'>Комментариев пока нет :(</div></div>";
+        }
     }
 }

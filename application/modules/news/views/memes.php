@@ -1,3 +1,6 @@
+<?php
+/*$action=$this->action;*/
+?>
 <script type="text/javascript">
     /*urlMemes='<?=BASE_URL."news/index/memes"?>'*/
     action = '<?=$this->action?>'
@@ -11,10 +14,10 @@
     <aside class="top_users">
         <header class="top">Top 10</header>
         <table>
-    <?php
-    for ($n = 1; $n < count($this->topUsers) + 1; $n++) {
-    if ($n == 1) {
-        ?>
+            <?php
+            for ($n = 1; $n < count($this->topUsers) + 1; $n++) {
+                if ($n == 1) {
+                    ?>
                     <tr class="firstUser">
                     <td class="users" colspan="2">
                         <img alt='users' src=<?=
@@ -23,19 +26,19 @@
                         <p><?= $this->topUsers[0]['username'] ?></p>
                     </td>
                     <td></td>
-    <?php
-    } else {
-        ?>
+                <?php
+                } else {
+                    ?>
                     <tr class="main">
                     <td class="numeration"><?= $n ?>.</td>
                     <td class="users"><?= $this->topUsers[$n - 1]['username'] ?>
                     </td>
-    <?php
-    }
-        ?>
+                <?php
+                }
+                ?>
                 </tr>
-    <?php
-    } ?>
+            <?php
+            } ?>
         </table>
     </aside>
     <section class="news" id="news">
@@ -50,6 +53,11 @@
         }
         for ($i = 0; $i < count($this->memes); $i++) {
             $date = strtotime($this->memes[$i]['date_create']);
+            /*var_dump($valUsers);
+            print "<br>".$this->memes[$i]['id'];
+            if (array_search($this->memes[$i]['id'],$valUsers)) {
+                echo "hello";
+            }*/
             ?>
             <div class='container' id='container'>
                 <header><?= $this->memes[$i]['name'] ?></header>
@@ -87,6 +95,3 @@
             <div>
     </section>
 </div>
-<?php
-//ob_end_flush();
-?>
