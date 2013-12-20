@@ -1,6 +1,6 @@
 <div class="user-change col-md-12">
     <form enctype="multipart/form-data" action="change" method="POST">
-        <input type="hidden" name="MAX_FILE_SIZE" value="200000" />
+        <input type="hidden" name="MAX_FILE_SIZE" value="500000" />
         <ul class="change-data">
             <li>
                 <div class="avatar">
@@ -10,6 +10,7 @@
                     Выбрать новый Аватар: <input name="userfile" type="file" />
                 </div>
             </li>
+            <div class="avatar-error"><?php if(isset($this->user_error['avatar'])) echo $this->user_error['avatar']; ?></div>
             <li>
                 <div class="actual-login">
                     Ваше Имя: <h3><?php echo $this->username; ?></h3>
@@ -25,7 +26,7 @@
                     </div>
                     Введите новый пароль: <input name="password" type="password" class="form-control password-input" placeholder="New Password"></br>
                     Повторите пароль: <input name="password-repeat" type="password" class="form-control" placeholder="Repeat Password">
-                    <div class="password-error"><?php if($this->error !== null) echo $this->error; ?></div>
+                    <div class="password-error"><?php if($this->user_error['password'] !== null) echo $this->user_error['password']; ?></div>
                 </div>
             </li>
             <input type="submit" value="Изменить" class="btn btn-default" name="user" />

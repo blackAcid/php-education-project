@@ -2,7 +2,7 @@
 window.alert('url='+urlMemes);*/
 $(document).ready(function(){
     var inProgress = false;
-    var startFrom = 6;
+    var startFrom = 5;
     var urlMemes=window.urlMemes;
     var urlButtons=window.urlButtons;
     var action=window.action;

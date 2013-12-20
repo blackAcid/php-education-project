@@ -1,6 +1,3 @@
-<?php
-/*$action=$this->action;*/
-?>
 <script type="text/javascript">
     /*urlMemes='<?=BASE_URL."news/index/memes"?>'*/
     action = '<?=$this->action?>'
@@ -46,17 +43,13 @@
             <li><a href="<?= BASE_URL . "news/index/index" ?>">Последние</a></li>
             <li><a href="<?= BASE_URL . "news/index/rating" ?>">Лучшие</a></li>
         </ul>
-        <?php
-        for ($i=1; $i<count($this->userRating)+1; $i++) {
+    <?php
+        $valUsers=array();
+        for($i=1 ; $i<count($this->userRating)+1; $i++) {
             $valUsers[$i]=(int)$this->userRating[$i-1]['memes_id'];
         }
         for ($i = 0; $i < count($this->memes); $i++) {
             $date = strtotime($this->memes[$i]['date_create']);
-            /*var_dump($valUsers);
-            print "<br>".$this->memes[$i]['id'];
-            if (array_search($this->memes[$i]['id'],$valUsers)) {
-                echo "hello";
-            }*/
             ?>
             <div class='container' id='container'>
                 <header><?= $this->memes[$i]['name'] ?></header>
@@ -64,7 +57,7 @@
 
                 <div class='likes_dislikes' id='<?= $this->memes[$i]['id'] ?>'>
         <?php
-    if (!empty($_SESSION['userID']) && !array_search($this->memes[$i]['id'], $valUsers)) {
+        if (!empty($_SESSION['id']) && !array_search($this->memes[$i]['id'],$valUsers)) {
         ?>
 
                         <button type='submit' form='likes' name='like' value='<?= $this->memes[$i]['id'] ?>'>
@@ -94,3 +87,6 @@
             <div>
     </section>
 </div>
+<?php
+//ob_end_flush();
+?>

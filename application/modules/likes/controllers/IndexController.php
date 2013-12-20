@@ -13,8 +13,11 @@ class IndexController
     public function updateLikesAction()
     {
         if (!empty($_POST)) {
+            ob_start();
+            session_start();
             $buttonName=$_POST['buttonName'];
             $id_meme=$_POST['buttonValue'];
+
             if ($buttonName=='like') {
                 likesModel::updateLike($id_meme);
             } elseif ($buttonName=='dislike') {
@@ -23,5 +26,6 @@ class IndexController
             $rating=likesModel::getLikesDislikes($id_meme);
             include $file=DIR_MOD."likes/views/ratingMemes.php";
         }
+        ob_flush();
     }
 }
