@@ -190,7 +190,7 @@ class UserController
                     $id=$userDAO->getUserId($user);
                     $_SESSION['id']=$id['id'];
                     $_SESSION['username']=$username;
-                    header('Location: '.BASE_URL.'main/index/index');
+                    header('Location: '.BASE_URL.'user/user/profile?id='.$_SESSION['id']);
                     ob_end_flush();
 
                 }

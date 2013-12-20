@@ -12,7 +12,7 @@ class likesModel
     {
         $insertMemes=new Memes();
         $ratings=new Ratings();
-        $userID=$_SESSION['userID'];
+        $userID=$_SESSION['id'];
         $selObj=$ratings->selectPrepare();
         $getRating=$selObj->selectColumns(['rating'])->where(['user_id='=>'? and ', 'memes_id='=>'?'])
             ->fetch([$userID, $meme_id]);
@@ -25,7 +25,7 @@ class likesModel
     {
         $ratings=new Ratings();
         $insertMemes=new Memes();
-        $userID=$_SESSION['userID'];
+        $userID=$_SESSION['id'];
         $selObj=$ratings->selectPrepare();
         $getRating=$selObj->selectColumns(['rating'])->where(['user_id='=>'? and ', 'memes_id='=>'?'])
             ->fetch([$userID, $meme_id]);
