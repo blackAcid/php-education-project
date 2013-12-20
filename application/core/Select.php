@@ -124,6 +124,19 @@ class Select
         return $result;
     }
 
+    public function query($query, $args)
+    {
+        $sql = $this->db->prepare($query);
+        if (!empty($args)) {
+            for ($i = 0; $i < count($args); $i++) {
+                $sql->bindParam($i + 1, $args[$i]);
+            }
+        }
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public function fetch($values = null)
     {
         $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` " .$this->tables

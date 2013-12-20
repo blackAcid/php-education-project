@@ -16,24 +16,23 @@ class SearchController
             $v = new View($module, 'search.php');
             $model = new \stdClass();
             $view = isset($_GET['view']) ? $_GET['view'] : 'memes';
-            //todo: Проверка строки запроса
             if (!isset($_GET['query']) || empty($_GET['query'])) {
                 $errors[] = "Введите поисковый запрос!";
             } else {
-                if(isset($_GET['view']) && !empty($_GET['view'])) {
-                    $model = new SearchModel($_GET['query'] , $_GET['view']);
+                if (isset($_GET['view']) && !empty($_GET['view'])) {
+                    $model = new SearchModel($_GET['query'], $_GET['view']);
                 } else {
-                    $model = new SearchModel($_GET['query'] , 'users');
+                    $model = new SearchModel($_GET['query'], 'users');
                 }
             }
-            if(!$errors) {
+            if (!$errors) {
                 $model->search();
             }
-            $v->assign('view',$view);
-            $v->assign('memes_tab',$this->getSearchUrl('memes'));
-            $v->assign('users_tab',$this->getSearchUrl('users'));
-            $v->assign('errors',$errors);
-            $v->assign('data',$model->result);
+            $v->assign('view', $view);
+            $v->assign('memes_tab', $this->getSearchUrl('memes'));
+            $v->assign('users_tab', $this->getSearchUrl('users'));
+            $v->assign('errors', $errors);
+            $v->assign('data', $model->result);
             $v->assign('title', 'Search');
             $v->addIntoTemplate();
             $v->display();
@@ -45,7 +44,7 @@ class SearchController
     public function getSearchUrl($table)
     {
         $url = '';
-        switch($table) {
+        switch ($table) {
             case 'users':
                 $url = "result?view={$table}&query=" . htmlspecialchars($_GET['query']);
                 break;
