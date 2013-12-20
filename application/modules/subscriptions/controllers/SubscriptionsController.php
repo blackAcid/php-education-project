@@ -20,7 +20,7 @@ class SubscriptionsController
     {
         $module = Registry::getValue('module');
         $v = new View($module, 'listSubscriptions.php');
-        $obj = new SubscriptionsModel('1');
+        $obj = new SubscriptionsModel($_SESSION['id']);
         $result = $obj->showSubscriptions();
         $v->assign('listSubscriptions', $result);
         try {
@@ -35,7 +35,7 @@ class SubscriptionsController
     {
         $module = Registry::getValue('module');
         $v = new View($module, 'listSubscriptions.php');
-        $obj = new SubscriptionsModel('1');
+        $obj = new SubscriptionsModel($_SESSION['id']);
         $result = $obj->subscribeFromUser($_POST['targetId']);
         $v->assign('listSubscriptions', $result);
         try {
@@ -50,7 +50,7 @@ class SubscriptionsController
     {
         $module = Registry::getValue('module');
         $v = new View($module, 'listSubscriptions.php');
-        $obj = new SubscriptionsModel('1');
+        $obj = new SubscriptionsModel($_SESSION['id']);
         $result = $obj->unsubscribeFromUser($_POST['targetId']);
         $v->assign('listSubscriptions', $result);
         try {

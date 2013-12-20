@@ -48,7 +48,12 @@ class Select
                  && count($matches)==null /*&& count($slash)!=null*/) {
                 $values[$i] = $this->db->quote($values[$i]);
             }
-            $convert .= $keys[$i] . $values[$i] . " ";
+            if(strstr($keys[$i],"LIKE")) {
+                $convert.=$keys[$i]. " '" .$values[$i]."' ";
+            } else {
+                $convert.=$keys[$i].$values[$i]." ";
+            }
+
         }
         $this->where = " WHERE " . $convert;
         return $this;
@@ -118,6 +123,19 @@ class Select
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         //$sql->debugDumpParams();
+        return $result;
+    }
+
+    public function query($query, $args)
+    {
+        $sql = $this->db->prepare($query);
+        if (!empty($args)) {
+            for ($i = 0; $i < count($args); $i++) {
+                $sql->bindParam($i + 1, $args[$i]);
+            }
+        }
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
