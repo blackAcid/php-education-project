@@ -26,8 +26,6 @@ class IndexController
         $v->assign('memes', NewsModel::getMemes($startFrom));
         $v->assign('topUsers', NewsModel::topUsers());
         $v->assign('userRating', NewsModel::userRating());
-        $sub=new SubscriptionsController();
-        $v->assign('sub', $sub->printSubscriptionsAction());
         $request = new Request();
         $action = $request->getAction();
         $v->assign('action', $action);

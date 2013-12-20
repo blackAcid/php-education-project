@@ -35,7 +35,7 @@ class NewsModel
         $selObj = $selectMemes->selectPrepare();
         $result = $selObj
             ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
-            ->from(['users'])->where(['memes.user_id=' => 'users.id'])->order('likes', 'DESC')
+            ->from(['users'])->where(['memes.user_id=' => 'users.`id`'])->order('likes', 'DESC')
             ->limit($startFrom, 5)->fetchAll(null);
         return $result;
     }
