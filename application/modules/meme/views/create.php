@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="col-md-12" id="submit">
-            <input type="button" value="Создать мем" class="btn-default btn">
+            <input id="gocreate" type="button" value="Создать мем" class="btn-default btn">
         </div>
     </div>
 </div>

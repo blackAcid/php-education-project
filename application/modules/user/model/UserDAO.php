@@ -22,7 +22,7 @@ class UserDAO
         echo "INSERT   " . $user->username . " " . $user->email;
         $insertUser = new Users();
         $insertUser->insert(['username' => $user->username, 'email' => $user->email, 'password' => $user->password,
-            'date_of_birth' => $user->date_of_birth]);
+            'date_of_birth' => $user->date_of_birth, 'avatar' => 'defaultUser.jpg']);
     }
 
     public function allUsers()

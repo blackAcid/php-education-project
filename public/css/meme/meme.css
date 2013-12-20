@@ -163,3 +163,7 @@ input.initial {
     margin : 0 !important;
     border : none !important;
 }
+
+textarea {
+    resize: none;
+}
