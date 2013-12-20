@@ -40,17 +40,21 @@
             <ul class="nav navbar-nav">
                 <li><a href="<?=BASE_URL."main/index/index"?>">Главная</a></li>
                 <li><a href="<?=BASE_URL."news/index/index"?>">Новости</a></li>
-                <li><a href="<?=BASE_URL."user/user/profile?id=1"?>">Профиль</a></li>
+                <?php if(!isset($_SESSION['id']))
+                {
+                    echo "<li><a href='".BASE_URL."user/user/signin'>Вход</a></li><li><a href='".BASE_URL."user/user/registration'>Регистрация</a></li>";
+                } else {
+                    echo "
+                    <li><a href='".BASE_URL."user/user/profile?id=".$_SESSION['id']."'>Профиль</a></li>
+                    <li><a href='".BASE_URL."user/user/signin'>Выход</a></li>
+                    ";
+                }?>
             </ul>
         </div>
     </nav>
 </header>
 
 <section class="content row col-md-8 col-md-offset-2">
-    <p>
-        <a href="<?=BASE_URL."user/user/signin"?>">Вход</a>
-        <a href="<?=BASE_URL."user/user/registration"?>">Регистрация</a>
-    </p>
     <?php if($this->addIntoTemplate()) require_once($this->include_file);?>
 </section>
 <footer class="col-md-8 col-md-offset-2 row">

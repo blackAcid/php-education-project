@@ -11,6 +11,7 @@ use \Imagick;
 class User
 {
     public $id;
+    public $sub_id;
     public $username;
     public $email;
     public $password;
@@ -53,7 +54,7 @@ class User
         if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
             if ($password = $ChangeData['password'] == $password_repeat = $ChangeData['password-repeat']) {
                 if (preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password)) {
-                    $password = md5($password);
+                    /*$password = md5($password);*/
                     $UpdateUser = new Users();
                     $UpdateUser->update(['password'=>$password], 'id=?', [$UserId]);
                 } else {
@@ -81,12 +82,13 @@ class User
         }
     }
 
-    function isSubscribed($targetId) //method for check subscriptions.
+    function isSubscribed($targetId)
     {
+        $this->sub_id = $_SESSION['id'];
         $this->targetId = $targetId;
         $selectSubscriptions = new Subscription();
         $selObjSubscriptions = $selectSubscriptions->selectPrepare();
-        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->id",])->selectColumns(['status'])->fetch(null);
+        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->sub_id",])->selectColumns(['status'])->fetch(null);
         if (!empty($subExist)) {
             return (bool)$subExist['status'];
         }

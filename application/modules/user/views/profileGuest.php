@@ -9,7 +9,7 @@
                 <li><?php echo htmlspecialchars($this->date_of_birth); ?></li>
             </ul>
 <ul class="navigation">
-    <li><button data-subid="<?php echo $this->id; ?>" type="button" class="btn btn-default btn-lg sub">Подпиcаться</button></li>
+    <li><button data-subid="<?php echo $this->id; ?>" type="button" class="btn btn-default btn-lg <?php echo $this->buttonClass; ?>"><?php echo $this->buttonValue; ?></button></li>
 </ul>
         </div>
 </div>
