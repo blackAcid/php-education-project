@@ -39,8 +39,8 @@
         </form>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="<?= BASE_URL . "main/index/index" ?>">Главная</a></li>
-                <li><a href="<?= BASE_URL . "news/index/index" ?>">Новости</a></li>
+                <!--<li><a href="<?= BASE_URL . "main/index/index" ?>">Главная</a></li>-->
+                <li><a href="<?= BASE_URL . "news/index/index" ?>">Главная</a></li>
                 <?php if (!isset($_SESSION['id'])) {
                     echo "<li><a href='" . BASE_URL . "user/user/signin'>Вход</a></li><li><a href='" . BASE_URL . "user/user/registration'>Регистрация</a></li>";
                 } else {

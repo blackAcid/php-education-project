@@ -97,7 +97,11 @@ class Select
     public function join($flag, $table2, $col1, $col2)
     {
         $flag = strtoupper($flag);
+        if (!empty($this->join)) {
+            $this->join .= " " . $flag . " JOIN `$table2` ON $col1=$col2 ";
+        } else {
         $this->join = " " . $flag . " JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
+    }
         return $this;
     }
     public function distinct($flag)

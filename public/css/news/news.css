@@ -1,5 +1,5 @@
 body {
-    background: url("1457300.jpg") fixed;
+    /*background: url("1457300.jpg") fixed;*/
 }
 
 div.news_content {
@@ -61,7 +61,9 @@ aside.top_users {
     border-radius: 10px;
     opacity: 0.9;
     position: relative;
-    color: #ffffff;
+    /*color: #ffffff;*/
+    color: #bce8f1;
+    text-shadow: #ffff00;
     font-size: 16px;
     font-family: "Comic Sans MS";
     padding-bottom: 5px;
@@ -71,6 +73,8 @@ aside.top_users {
 aside.top_users table {
     text-align: center;
     width: 100%;
+    color: #bce8f1;
+    text-shadow: 1px 1px 2px black, 0 0 1em #c7254e;
 }
 
 td.numeration1, td.numeration {

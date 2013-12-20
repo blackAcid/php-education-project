@@ -45,6 +45,13 @@
         <ul class="nav nav-tabs">
             <li><a href="<?= BASE_URL . "news/index/index" ?>">Последние</a></li>
             <li><a href="<?= BASE_URL . "news/index/rating" ?>">Лучшие</a></li>
+            <?php
+            if (!empty ($_SESSION['id'])) {
+            ?>
+            <li><a href="<?= BASE_URL . "news/index/subs" ?>">Подписки</a></li>
+            <?php
+            }
+            ?>
         </ul>
         <?php
         for ($i = 1; $i < count($this->userRating) + 1; $i++) {

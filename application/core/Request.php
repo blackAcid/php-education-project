@@ -5,7 +5,7 @@ class Request
 {
     private $controller = "index";
     private $action = "index";
-    private $module = "main";
+    private $module = "news";
     private $params;
 
     // private $view;

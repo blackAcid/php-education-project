@@ -10,6 +10,7 @@ namespace modules\news\model;
 use core\classTables\Ratings;
 use core\classTables\Roles;
 use core\classTables\Memes;
+use core\classTables\Subscription;
 use core\classTables\Users;
 use modules\user\model\User;
 
@@ -21,7 +22,6 @@ class NewsModel
     {
         $selectMemes = new Memes();
         $selObj = $selectMemes->selectPrepare();
-
         $result = $selObj
             ->selectColumns(['user_id', 'username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
             ->from(['users'])->where(['memes.`user_id`=' => 'users.`id`'])->order('memes.`date_create`', 'DESC')
@@ -54,6 +54,19 @@ class NewsModel
         $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>'?'])
             ->fetchAll([$userID]);
         return $getRating;*/
+    }
+    public static function userSubs($startFrom)
+    {
+        $selectSubs = new Subscription();
+        $selObj = $selectSubs->selectPrepare();
+        $result = $selObj
+            ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
+        ->join('inner','memes','target_id','user_id')->join('inner','users','users.`id`','memes.`user_id`')
+           ->where(['subscription.`user_id`=' => $_SESSION['id']])->order('memes.`date_create`', 'DESC')
+            ->limit($startFrom, 5)
+            ->fetchAll(null);
+                    //->limit($startFrom, 5)
+        return $result;
     }
 
     /*public static function updateLike($meme_id)

@@ -51,8 +51,11 @@ class IndexController
         }
         if ($act == 'index') {
             $memes = NewsModel::getMemes($startFrom);
-        } else {
+        } elseif ($act == 'rating'){
             $memes = NewsModel::getMemesByRating($startFrom);
+        }
+        else {
+            $memes = NewsModel::userSubs($startFrom);
         }
         //echo "<br start from=>".$startFrom;
         include $file = DIR_MOD . $module . "/views/printMemes.php";
@@ -70,6 +73,25 @@ class IndexController
         $v->assign('action', $action);
         $v->assign('title', 'News');
         $v->assign('memes', NewsModel::getMemesByRating($startFrom));
+        try {
+            $v->addIntoTemplate();
+            $v->display();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    public function subsAction()
+    {
+        $startFrom = 0;
+        $module = Registry::getValue('module');
+        $v = new View($module, 'memes.php');
+        $v->assign('title', 'News');
+        $v->assign('topUsers', NewsModel::topUsers());
+        $v->assign('userRating', NewsModel::userRating());
+        $request = new Request();
+        $action = $request->getAction();
+        $v->assign('action', $action);
+        $v->assign('memes',NewsModel::userSubs($startFrom));
         try {
             $v->addIntoTemplate();
             $v->display();
