@@ -27,26 +27,28 @@ class NewsModel
             ->limit($startFrom, 5)->fetchAll(null);
         return $result;
     }
-
     public static function getMemesByRating($startFrom)
     {
         $selectMemes = new Memes();
         $selObj = $selectMemes->selectPrepare();
         $result = $selObj
             ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
-            ->from(['users'])->where(['memes.user_id=' => 'users.id'])->order('likes', 'DESC')
+            ->from(['users'])->where(['memes.user_id='=>'users.`id`'])->order('likes', 'DESC')
             ->limit($startFrom, 5)->fetchAll(null);
         return $result;
     }
 
     public static function userRating()
     {
-        $ratings = new Ratings();
-        if (!empty($_SESSION['userID'])) {
-            $userID = $_SESSION['userID'];
-            $selObj = $ratings->selectPrepare();
-            $getRating = $selObj->selectColumns(['memes_id'])->where(['user_id=' => '?'])
-                ->fetchAll([$userID]);
+        $ratings=new Ratings();
+        //ob_start();
+        //session_start();
+        if (!empty($_SESSION['id'])) {
+            $userID=$_SESSION['id'];
+            $selObj=$ratings->selectPrepare();
+            $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>"$userID"])
+                ->fetchAll(null);
+            ob_end_flush();
             return $getRating;
         } else return;
         /*$selObj=$ratings->selectPrepare();
@@ -54,7 +56,6 @@ class NewsModel
             ->fetchAll([$userID]);
         return $getRating;*/
     }
-
     /*public static function updateLike($meme_id)
     {
         $insertMemes=new Memes();

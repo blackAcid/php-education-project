@@ -43,10 +43,9 @@ class Select
         $convert = "";
         for ($i = 0; $i < count($construct); $i++) {
             preg_match('/([`()])/', $values[$i], $matches, PREG_OFFSET_CAPTURE);
-            preg_match('/(\/)/', $values[$i], $slash, PREG_OFFSET_CAPTURE);
+            //preg_match('/(\/)/', $values[$i], $slash, PREG_OFFSET_CAPTURE);
             if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL'
-                && count($matches) == null || count($slash) != null
-            ) {
+                 && count($matches)==null /*&& count($slash)!=null*/) {
                 $values[$i] = $this->db->quote($values[$i]);
             }
             $convert .= $keys[$i] . $values[$i] . " ";
@@ -96,13 +95,12 @@ class Select
         $this->join = " " . $flag . " JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
         return $this;
     }
-
     public function distinct($flag)
     {
-        if ($flag == '1') {
-            $this->distinct = "DISTINCT ";
+        if ($flag=='1') {
+            $this->distinct="DISTINCT ";
         } else {
-            $this->distinct = "";
+            $this->distinct="";
         }
         return $this;
     }

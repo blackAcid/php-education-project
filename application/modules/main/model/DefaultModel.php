@@ -10,46 +10,41 @@ class DefaultModel
 {
     public static function printDb()
     {
-        $roles = new Roles();
-        $sel = $roles->selectPrepare();
-        $result = $sel->select(['*'])->fetchAll(null);
+        $roles=new Roles();
+        $sel=$roles->selectPrepare();
+        $result=$sel->select(['*'])->fetchAll(null);
         echo "<br><pre>";
         var_dump($result);
     }
-
     public static function ptinSub()
     {
-        $sub = new Subscription();
-        $selObj = $sub->selectPrepare();
-        $result = $selObj->selectColumns(['*'])->fetchAll(null);
+        $sub=new Subscription();
+        $selObj=$sub->selectPrepare();
+        $result=$selObj->selectColumns(['*'])->fetchAll(null);
         return $result;
     }
-
     public static function insertUsers()
     {
-        $insertUser = new Users();
-        $insertUser->insert(['login' => 'user@mail.ru', 'email' => 'user@mail.ru', 'password' => '354546']);
+        $insertUser=new Users();
+        $insertUser->insert(['login'=>'user@mail.ru', 'email'=>'user@mail.ru', 'password'=>'354546']);
     }
-
     public static function deleteUsers()
     {
-        $deleteUser = new Users();
+        $deleteUser=new Users();
         //$deleteUser->delete('login=?',['user@mail.ru']);
         //$deleteUser->delete("login='name5'",null);
         $deleteUser->delete('login=? or id>?', ['name4', 2]);
     }
-
     public static function updateUsers()
     {
-        $updateUser = new Users();
-        $pass = 'likes/1';
-        $updateUser->update(['login' => 'new@mail', 'password' => "$pass"], 'id=?', [3]);
+        $updateUser=new Users();
+        $pass='likes/1';
+        $updateUser->update(['login'=>'new@mail', 'password'=>"$pass"], 'id=?', [3]);
     }
-
     public static function selectUsers()
     {
-        $selectUser = new Users();
-        $selObj = $selectUser->selectPrepare(); //для создания объекта класса Select
+        $selectUser=new Users();
+        $selObj=$selectUser->selectPrepare(); //для создания объекта класса Select
         /* example 1 */
         //возвращает ассициативный массив, содержащий все строки:
         //3 записи с полями login и password, отсортированные по полю role
@@ -79,13 +74,12 @@ class DefaultModel
         var_dump($resultRowSet2);*/
 
         /* example 4 joins */
-        $resultRowSet2 = $selObj->where(['roles.id ' => 'IS NULL'])->Join('left', 'roles', 'role', 'id')
+        $resultRowSet2=$selObj->where(['roles.id '=>'IS NULL'])->Join('left', 'roles', 'role', 'id')
             ->selectColumns(['*'])->fetchAll(null);
         /*echo "<br><pre>";
         var_dump($resultRowSet2);*/
         return $resultRowSet2;
     }
-
     /* public static function selectRoles()
     {
         $selRoles=new Roles();
@@ -96,51 +90,46 @@ class DefaultModel
     }*/
     public static function login()
     {
-        $email = 'bob@marley.com';
-        $password = '312';
-        $selectUser = new Users();
-        $selObj = $selectUser->selectPrepare();
-        $user = $selObj->selectColumns(['id', 'username'])->where(['email=' => '? and ', 'password=' => '?'])
+        $email='bob@marley.com';
+        $password='312';
+        $selectUser=new Users();
+        $selObj=$selectUser->selectPrepare();
+        $user=$selObj->selectColumns(['id', 'username'])->where(['email='=>'? and ', 'password='=>'?'])
             ->fetch(["$email", "$password"]);
         return $user;
     }
-
     public static function test()
     {
-        $selUsers = new Users();
-        $selObj1 = $selUsers->selectPrepare();
-        $result = $selObj1->selectColumns(['username', 'avatar'])->distinct('1')->join('inner', 'memes', 'id', 'user_id')
-            ->where(['year(memes.`date_create`)=' => 'year(now()) and', 'week(memes.`date_create`)=' => '(week(now(),7)-1)'])
-            ->order('likes', 'desc')->fetchAll(null);
-
+       $selUsers=new Users();
+        $selObj1=$selUsers->selectPrepare();
+        $result=$selObj1->selectColumns(['username','avatar'])->distinct('1')->join('inner','memes','id','user_id')
+            ->where(['year(memes.`date_create`)='=>'year(now()) and','week(memes.`date_create`)='=>'(week(now(),7)-1)'])
+            ->order('likes','desc')->fetchAll(null);
         return $result;
     }
-
     public static function testUpdate()
     {
-        $ins = new Memes();
-        $ins->update(['dislikes' => 'dislikes+1'], 'id=?', ["2"]);
+        $ins=new Memes();
+        $ins->update(['dislikes'=>'dislikes+1'], 'id=?', ["2"]);
     }
-
     public static function testSelect()
     {
-        $insertMemes = new Memes();
-        $selObj2 = $insertMemes->selectPrepare();
-        $likes = $selObj2->selectColumns(['likes', 'dislikes'])->where(['id=' => '?'])->fetchAll(["2"]);
+        $insertMemes=new Memes();
+        $selObj2=$insertMemes->selectPrepare();
+        $likes=$selObj2->selectColumns(['likes', 'dislikes'])->where(['id='=>'?'])->fetchAll(["2"]);
         return $likes;
     }
-
     public static function getUsersY()
     {
-        $selectUser = new Users();
-        $selObj = $selectUser->selectPrepare();
-        $userName = "aaa";
-        $resultRowSet = $selObj->selectColumns(['username'])->where(['username=' => $userName])->fetch(null);
-        //echo "<br> USERNAME".$userName;
-        //echo "isUsernameTaken";
-        //var_dump($resultRowSet);
-        /*if($resultRowSet['username'])
-        return $this->errorStack[]=$error;}*/
+    $selectUser=new Users();
+    $selObj=$selectUser->selectPrepare();
+    $userName="aaa";
+    $resultRowSet=$selObj->selectColumns(['username'])->where(['username='=>$userName])->fetch(null);
+    //echo "<br> USERNAME".$userName;
+    //echo "isUsernameTaken";
+    //var_dump($resultRowSet);
+    /*if($resultRowSet['username'])
+    return $this->errorStack[]=$error;}*/
         return $resultRowSet;
     }
 }
