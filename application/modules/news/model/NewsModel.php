@@ -21,34 +21,33 @@ class NewsModel
     {
         $selectMemes = new Memes();
         $selObj = $selectMemes->selectPrepare();
+
         $result = $selObj
-            ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
+            ->selectColumns(['user_id', 'username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
             ->from(['users'])->where(['memes.`user_id`=' => 'users.`id`'])->order('memes.`date_create`', 'DESC')
             ->limit($startFrom, 5)->fetchAll(null);
         return $result;
     }
+
     public static function getMemesByRating($startFrom)
     {
         $selectMemes = new Memes();
         $selObj = $selectMemes->selectPrepare();
         $result = $selObj
             ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
-            ->from(['users'])->where(['memes.user_id='=>'users.`id`'])->order('likes', 'DESC')
+            ->from(['users'])->where(['memes.user_id=' => 'users.id'])->order('likes', 'DESC')
             ->limit($startFrom, 5)->fetchAll(null);
         return $result;
     }
 
     public static function userRating()
     {
-        $ratings=new Ratings();
-        //ob_start();
-        //session_start();
-        if (!empty($_SESSION['id'])) {
-            $userID=$_SESSION['id'];
-            $selObj=$ratings->selectPrepare();
-            $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>"$userID"])
-                ->fetchAll(null);
-            ob_end_flush();
+        $ratings = new Ratings();
+        if (!empty($_SESSION['userID'])) {
+            $userID = $_SESSION['userID'];
+            $selObj = $ratings->selectPrepare();
+            $getRating = $selObj->selectColumns(['memes_id'])->where(['user_id=' => '?'])
+                ->fetchAll([$userID]);
             return $getRating;
         } else return;
         /*$selObj=$ratings->selectPrepare();
@@ -56,6 +55,7 @@ class NewsModel
             ->fetchAll([$userID]);
         return $getRating;*/
     }
+
     /*public static function updateLike($meme_id)
     {
         $insertMemes=new Memes();

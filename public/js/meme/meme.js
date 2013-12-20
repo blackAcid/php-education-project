@@ -17,31 +17,31 @@ $(document).ready(function () {
             var currentPath = window.location.href;
             var data;
             $.post(currentPath.replace('create', 'getImage'), {id: id})
-                .then(function (d) {
-                    $('.textarea').remove();
+                .done(function (d) {
+
                     data = $.parseJSON(d);
-                    //$('#main img').attr('src', '/' + data[0].base_picture).data('id', id);
                     $('#main img').attr('src', baseUrl + data[0].base_picture).data('id', id);
+                    $('#main img').load(
+                        function () {
+                            $('.textarea').remove();
+                            if (data[0].width > data[0].height) {
+                                var multiplier = data[0].width / $('#main img').width();
+                            } else {
+                                var multiplier = data[0].height / $('#main img').height();
+                            }
+                            for (var i = 0; i < data.length; i++) {
+                                var div = $('<div>' + (i + 1) + '</div>').addClass('textarea').data('id', (i + 1)).width((data[i].end_x - data[i].start_x) / multiplier)
+                                    .height((data[i].end_y - data[i].start_y) / multiplier)
+                                    .css('left', (data[i].start_x / multiplier) + 'px').css('top', (data[i].start_y / multiplier) + 'px');
+                                $('#main').append(div);
+                                $('.textarea').css('font-size', (data[i].end_y - data[i].start_y) / multiplier / 1.5 + 'px');
+                                $('#ajax').hide();
+                            }
+                        }
+                    );
                     setInputs(true);
                     $('#create').children().css('visibility', 'visible');
                 })
-                .then(function () {
-                    if (data[0].width > data[0].height) {
-                        var multiplier = data[0].width / $('#main img').width();
-                    } else {
-                        var multiplier = data[0].height / $('#main img').height();
-                    }
-                    for (var i = 0; i < data.length; i++) {
-                        var div = $('<div>' + (i + 1) + '</div>').addClass('textarea').data('id', (i + 1)).width((data[i].end_x - data[i].start_x) / multiplier)
-                            .height((data[i].end_y - data[i].start_y) / multiplier)
-                            .css('left', (data[i].start_x / multiplier) + 'px').css('top', (data[i].start_y / multiplier) + 'px');
-                        $('#main').append(div);
-                        $('.textarea').css('font-size', (data[i].end_y - data[i].start_y) / multiplier / 1.5 + 'px');
-                        $('#ajax').hide();
-                    }
-                });
-
-
         }
     });
 
@@ -74,7 +74,7 @@ $(document).ready(function () {
         }
     };
 
-    $('input[type*="button"]').bind('click', function () {
+    $('#gocreate').bind('click', function () {
         var inputs = $('#inputs input').not('#name');
         var inputsVal = new Array();
         var id = $('#main img').data('id');
@@ -107,6 +107,14 @@ $(document).ready(function () {
 
         }
     });
+    $('#gocomment').bind('click', function () {
+        var text = $('#new_comment').val();
+        $(this).unbind('click');
+        $.post('/meme/meme/addComment', {comment: text, meme_id: $('#meme img').data('id')})
+            .done(function () {
+                location.reload();
+            });
+    })
 
 
 });

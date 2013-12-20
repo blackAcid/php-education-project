@@ -32,7 +32,6 @@ class MemeController
 
     public function generateAction()
     {
-        Registry::setValue($_SESSION['id'], 'user');
         $meme = new models\MemeModel();
         $meme->createMeme($_POST['name'], $_POST['id'], $_POST['text']);
         echo json_encode(['id' => $meme->getMemeId()]);
@@ -61,5 +60,11 @@ class MemeController
     {
         $img = new models\MemeModel();
         echo json_encode($img->getImage($_POST['id']));
+    }
+
+    public function addCommentAction()
+    {
+        $comment = new models\MemeModel();
+        $comment->addComment($_SESSION['id'], $_POST['comment'], $_POST['meme_id']);
     }
 }

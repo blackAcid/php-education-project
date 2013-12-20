@@ -159,7 +159,7 @@ class MemeModel
 
     private function saveMeme()
     {
-        $dir = DIR_PUBLIC . 'images/memes/user_memes/' . Registry::getValue('user') . '/';
+        $dir = DIR_PUBLIC . 'images/memes/user_memes/' . $_SESSION['id'] . '/';
 
         $this->fileName = $dir . $this->memeAlias . '_' . time() . '.jpg';
 
@@ -172,7 +172,7 @@ class MemeModel
 
         $memes = new Memes();
         $memes->insert(['name' => $this->memeName, 'path' => str_replace(DIR_PUBLIC, '', $this->fileName),
-            'meme_base_id' => $this->memeBaseId, 'user_id' => Registry::getValue('user'),
+            'meme_base_id' => $this->memeBaseId, 'user_id' => $_SESSION['id'],
             'date_create' => date('Y-m-d-h-m-s', time()), 'date_update' => date('Y-m-d-h-m-s', time()),
             'likes' => 0, 'dislikes' => 0]);
 
@@ -226,8 +226,6 @@ class MemeModel
         $meme = new Memes();
         $meme = $meme->selectPrepare();
         $meme = $meme->selectColumns(['path', 'likes', 'dislikes', 'id'])->where(['id = ' => $id])->fetch();
-
-        //return str_replace(DIR, '', $meme['path']);
         return $meme;
 
     }
@@ -267,5 +265,13 @@ class MemeModel
         } else {
             return "<div class='comments'><div id='no_com'>Комментариев пока нет :(</div></div>";
         }
+    }
+
+    public function addComment($userId, $text, $memeId)
+    {
+        $comment = new MemesComments();
+        $comment->insert(['meme_id' => $memeId, 'user_id' => $userId,
+            'comment' => htmlspecialchars($text), 'user_id' => $_SESSION['id'],
+            'date_create' => date('Y-m-d-h-m-s', time()), 'date_update' => date('Y-m-d-h-m-s', time()), 'active' => '1']);
     }
 }
