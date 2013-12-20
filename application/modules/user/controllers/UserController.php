@@ -132,7 +132,6 @@ class UserController
     }
 
     public function  signinAction(){
-        session_start();
         unset($_SESSION['id']);
         $module = Registry::getValue('module');
         $view = new View($module, 'signin.php');
@@ -214,8 +213,6 @@ class UserController
 
     public function profileAction()
     {
-        ob_start();
-        session_start();
         $User = new model\User();
         if(isset($_GET['id']) && $_GET['id'] != $_SESSION['id'])
         {
@@ -240,7 +237,6 @@ class UserController
         }
         $MemesNumber = count($User->paths_to_my_memes);
         $ViewUser->assign('MemesNumber', $MemesNumber);
-        ob_end_flush();
         foreach ($User as $property => $value) {
             $ViewUser->assign($property, $value);
         }
@@ -254,8 +250,6 @@ class UserController
 
     public function changeAction()
     {
-        ob_start();
-        session_start();
         $User = new model\User();
         if (isset($_POST['user'])) {
             $User->changeProfile($_POST, $_SESSION['id']);
