@@ -16,6 +16,7 @@
                         <span id="global_error_message"></span>
                         <?php echo $this->global_message ?>
                     </p>
+
                     <form id="reg_form" method="POST" action="/user/user/registration" accept-charset="UTF-8">
                         <div class="row">
                             <div class="form-group col-xs-10">
@@ -85,5 +86,5 @@
             </div>
         </div>
     </div>
- </div></div>
+</div></div>
 </div>

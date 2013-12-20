@@ -4,7 +4,7 @@
     </div>
     <div id="create">
         <div class="row">
-            <div  id="main">
+            <div id="main">
                 <img src="#" alt="selected">
 
             </div>

@@ -22,8 +22,9 @@ class User
     public $user_error = null;
     public $targetId;
 
-    public function __set($name,$value){
-        $this->$name=$value;
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
     }
 
     public function profile($user_id)
@@ -31,7 +32,7 @@ class User
         $this->id = $user_id;
         $selectUser = new Users();
         $select_User_Object = $selectUser->selectPrepare();
-        $user = $select_User_Object->where(['id='=>"$this->id"])
+        $user = $select_User_Object->where(['id=' => "$this->id"])
             ->selectColumns(['username, email, date_of_birth, role, avatar'])->fetchAll();
         $this->username = $user[0]['username'];
         $this->email = $user[0]['email'];
@@ -48,7 +49,7 @@ class User
     {
         if (!empty($ChangeData['name'])) {
             $UpdateUser = new Users();
-            $UpdateUser->update(['username'=>$ChangeData['name']], 'id=?', [$UserId]);
+            $UpdateUser->update(['username' => $ChangeData['name']], 'id=?', [$UserId]);
         }
 
         if (!empty($ChangeData['password']) && !empty($ChangeData['password-repeat'])) {
@@ -56,7 +57,7 @@ class User
                 if (preg_match('/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})/', $password)) {
                     /*$password = md5($password);*/
                     $UpdateUser = new Users();
-                    $UpdateUser->update(['password'=>$password], 'id=?', [$UserId]);
+                    $UpdateUser->update(['password' => $password], 'id=?', [$UserId]);
                 } else {
                     $this->user_error['password'] = 'Пароль не соответствует условию!';
                 }
@@ -71,11 +72,11 @@ class User
                 $tmp_path = $_FILES['userfile']['tmp_name'];
                 $avatar = new Imagick($tmp_path);
                 $avatar->thumbnailimage(Config::getProperty('avatar', 'width'), 0, false) or die('error in resizing');
-                $UploadDir = DIR_PUBLIC.'images/user_avatars/';
+                $UploadDir = DIR_PUBLIC . 'images/user_avatars/';
                 $UploadFile = $UploadDir . basename($_FILES['userfile']['name']);
                 $avatar->writeimage($UploadFile) or die('error in writing image');
-                rename($UploadFile, $UploadDir.$UserId.'_user.jpg') or die('error in renaming');
-                $this->avatar = $UploadDir.$UserId.'_user.jpg';
+                rename($UploadFile, $UploadDir . $UserId . '_user.jpg') or die('error in renaming');
+                $this->avatar = $UploadDir . $UserId . '_user.jpg';
             } else {
                 $this->user_error['avatar'] = 'Слишком большой размер картинки!';
             }

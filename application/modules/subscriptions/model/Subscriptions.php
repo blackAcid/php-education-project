@@ -18,16 +18,17 @@ class Subscriptions
     {
         $this->userId = $userId;
     }
+
     public function showSubscriptions()
     {
         $selectSubscriptions = new Subscriptions();
         $selObjSubscriptions = $selectSubscriptions->selectPrepare();
-        $this->targetId = $selObjSubscriptions->where(['user_id=' => "$this->userId",'and status='=>'1'])
+        $this->targetId = $selObjSubscriptions->where(['user_id=' => "$this->userId", 'and status=' => '1'])
             ->selectColumns(['target_id'])->fetch(null);
 
         $selectUser = new Users();
         $selObjUser = $selectUser->selectPrepare();
-        $this->userName = $selObjUser->where(['id='=>"$this->targetId"])->selectColumns(['userName'])->fetch(null);
+        $this->userName = $selObjUser->where(['id=' => "$this->targetId"])->selectColumns(['userName'])->fetch(null);
         $this->avatar = $selObjUser->where(['id=' => "$this->targetId"])->selectColumns(['avatar'])->fetch(null);
     }
 }

@@ -20,6 +20,7 @@ class DataBaseConnection
     private $user;
     private $password;
     private $charset;
+
     private function __construct()
     {
         $this->getDbType();
@@ -29,13 +30,15 @@ class DataBaseConnection
         $this->getDbPassword();
         $this->getDbCharset();
     }
+
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            self::$instance=new DataBaseConnection();
+            self::$instance = new DataBaseConnection();
         }
         return self::$instance;
     }
+
     public function getDbConfig()
     {
         //$type=Config::getProperty('Database', 'type');
@@ -44,35 +47,41 @@ class DataBaseConnection
         $user=Config::getProperty('Database', 'user');
         $password=Config::getProperty('Database', 'password');
         $charset = Config::getProperty('Database', 'charset');*/
-        $dsn="$this->type:dbname=$this->dbname;host=$this->host;charset=$this->charset";
+        $dsn = "$this->type:dbname=$this->dbname;host=$this->host;charset=$this->charset";
         $db = new PDO($dsn, $this->user, $this->password);
         return $db;
     }
+
     public function getDbType()
     {
-        $this->type=Config::getProperty('Database', 'type');
+        $this->type = Config::getProperty('Database', 'type');
         return $this->type;
     }
+
     public function getDbHost()
     {
-        $this->host=Config::getProperty('Database', 'host');
+        $this->host = Config::getProperty('Database', 'host');
         return $this->host;
     }
+
     public function getDbName()
     {
-        $this->dbname=Config::getProperty('Database', 'dbname');
+        $this->dbname = Config::getProperty('Database', 'dbname');
         return $this->dbname;
     }
+
     public function getDbUser()
     {
-        $this->user=Config::getProperty('Database', 'user');
+        $this->user = Config::getProperty('Database', 'user');
         return $this->user;
     }
+
     public function getDbPassword()
     {
-        $this->password=Config::getProperty('Database', 'password');
+        $this->password = Config::getProperty('Database', 'password');
         return $this->password;
     }
+
     public function getDbCharset()
     {
         $this->charset = Config::getProperty('Database', 'charset');

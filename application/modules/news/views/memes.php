@@ -14,10 +14,10 @@
     <aside class="top_users">
         <header class="top">Top 10</header>
         <table>
-    <?php
-    for ($n = 1; $n < count($this->topUsers) + 1; $n++) {
-    if ($n == 1) {
-        ?>
+            <?php
+            for ($n = 1; $n < count($this->topUsers) + 1; $n++) {
+                if ($n == 1) {
+                    ?>
                     <tr class="firstUser">
                     <td class="users" colspan="2">
                         <img alt='users' src=<?=
@@ -26,19 +26,19 @@
                         <p><?= $this->topUsers[0]['username'] ?></p>
                     </td>
                     <td></td>
-    <?php
-    } else {
-        ?>
+                <?php
+                } else {
+                    ?>
                     <tr class="main">
                     <td class="numeration"><?= $n ?>.</td>
                     <td class="users"><?= $this->topUsers[$n - 1]['username'] ?>
                     </td>
-    <?php
-    }
-        ?>
+                <?php
+                }
+                ?>
                 </tr>
-    <?php
-    } ?>
+            <?php
+            } ?>
         </table>
     </aside>
     <section class="news" id="news">
@@ -47,8 +47,8 @@
             <li><a href="<?= BASE_URL . "news/index/rating" ?>">Лучшие</a></li>
         </ul>
         <?php
-        for($i=1 ; $i<count($this->userRating)+1; $i++) {
-            $valUsers[$i]=(int)$this->userRating[$i-1]['memes_id'];
+        for ($i = 1; $i < count($this->userRating) + 1; $i++) {
+            $valUsers[$i] = (int)$this->userRating[$i - 1]['memes_id'];
         }
         for ($i = 0; $i < count($this->memes); $i++) {
             $date = strtotime($this->memes[$i]['date_create']);
@@ -63,10 +63,10 @@
                 <img alt='memes' src=<?= BASE_URL . $this->memes[$i]['path'] ?> class='img-thumbnail'/>
 
                 <div class='likes_dislikes' id='<?= $this->memes[$i]['id'] ?>'>
-        <?php
-        if (!empty($_SESSION['userID']) && !array_search($this->memes[$i]['id'],$valUsers)) {
+                    <?php
+                    if (!empty($_SESSION['userID']) && !array_search($this->memes[$i]['id'], $valUsers)) {
 
-        ?>
+                        ?>
 
                         <button type='submit' form='likes' name='like' value='<?= $this->memes[$i]['id'] ?>'>
                             <img alt='like' src='<?= BASE_URL . "css/news/like1.jpg" ?>' height='20'/>
@@ -74,9 +74,9 @@
                         <button type='submit' form='dislikes' name='dislike' value='<?= $this->memes[$i]['id'] ?>'>
                             <img alt='dislike' src='<?= BASE_URL . "css/news/dislike1.jpg" ?>' height='20'/>
                         </button>
-    <?php
-    }
-            ?>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class='row-fluid'>
                     <div class='date'>Опубликовано <?= date('j.m.y', $date) ?> в
@@ -88,9 +88,9 @@
                     </div>
                 </div>
             </div>
-    <?php
+        <?php
         }
-    ?>
+        ?>
         <div class='loading'>
             <div>
     </section>

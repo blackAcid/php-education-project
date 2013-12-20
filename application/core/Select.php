@@ -17,6 +17,7 @@ class Select
     private $group;
     private $tables;
     private $distinct;
+
     public function __construct($table, PDO $db)
     {
         $this->table = $table;
@@ -44,7 +45,8 @@ class Select
             preg_match('/([`()])/', $values[$i], $matches, PREG_OFFSET_CAPTURE);
             preg_match('/(\/)/', $values[$i], $slash, PREG_OFFSET_CAPTURE);
             if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL'
-                 && count($matches)==null || count($slash)!=null) {
+                && count($matches) == null || count($slash) != null
+            ) {
                 $values[$i] = $this->db->quote($values[$i]);
             }
             $convert .= $keys[$i] . $values[$i] . " ";
@@ -94,19 +96,20 @@ class Select
         $this->join = " " . $flag . " JOIN `$table2` ON {$this->table}.`$col1`=$table2.`$col2` ";
         return $this;
     }
+
     public function distinct($flag)
     {
-        if ($flag=='1') {
-            $this->distinct="DISTINCT ";
+        if ($flag == '1') {
+            $this->distinct = "DISTINCT ";
         } else {
-            $this->distinct="";
+            $this->distinct = "";
         }
         return $this;
     }
 
     public function fetchAll($values = null)
     {
-        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` ".$this->tables
+        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` " . $this->tables
             . $this->join . $this->where . $this->group . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
@@ -122,7 +125,7 @@ class Select
 
     public function fetch($values = null)
     {
-        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` " .$this->tables
+        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` " . $this->tables
             . $this->join . $this->where . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
@@ -138,12 +141,12 @@ class Select
 
     public function from($tables = null)
     {
-        $t_old=array();
-        if ($tables!=null) {
-            for ($i=0; $i<count($tables); $i++) {
-                $t_old[$i]="`".$tables[$i]."`";
+        $t_old = array();
+        if ($tables != null) {
+            for ($i = 0; $i < count($tables); $i++) {
+                $t_old[$i] = "`" . $tables[$i] . "`";
             }
-            $this->tables=",".implode(",", $t_old);
+            $this->tables = "," . implode(",", $t_old);
             return $this;
         }
     }

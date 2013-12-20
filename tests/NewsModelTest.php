@@ -7,12 +7,12 @@
  */
 use modules\news\model\NewsModel;
 
-require_once ("/var/www/php-education-project/public/bootstart.php");
+require_once("/var/www/php-education-project/public/bootstart.php");
 class NewsModelTest extends PHPUnit_Framework_TestCase
 {
     public function testGetMemes()
     {
-        $result=\modules\news\model\NewsModel::getMemes(2);
+        $result = \modules\news\model\NewsModel::getMemes(2);
         $this->assertNotNull($result);
         //$this->assertType('array',NewsModel::getMemes(2));
     }

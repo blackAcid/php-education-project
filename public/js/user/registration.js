@@ -9,7 +9,7 @@ $(function () {
         Validator.field_value = username;
         Validator.add('empty', 'true');
         Validator.add('field_pattern', '',
-            {pattern:'^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$',
+            {pattern: '^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$',
                 message: 'Поле не валидно!'
             });
 
@@ -27,7 +27,7 @@ $(function () {
         Validator.add('empty', 'true');
         Validator.add('length_between', '', {max: 16, min: 8});
         Validator.add('field_pattern', '',
-            {pattern:'([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)',
+            {pattern: '([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)',
                 message: 'Поле должно содержать по крайней мере 1 символ и 1 цифру !'
             });
 
@@ -44,7 +44,7 @@ $(function () {
         Validator.field_value = password_2;
         Validator.add('empty', 'true');
         Validator.add('equals', '',
-            {value_1:password_1, value_2:password_2,
+            {value_1: password_1, value_2: password_2,
                 message: 'Пароли не совпадают !'
             });
 
@@ -62,7 +62,7 @@ $(function () {
         Validator.field_value = email;
         Validator.add('empty', 'true');
         Validator.add('field_pattern', '',
-            {pattern:/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+            {pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
                 message: 'Неверный email !'
             });
 
@@ -79,7 +79,7 @@ $(function () {
         Validator.field_value = date_of_birthday;
         Validator.add('empty', 'true');
         Validator.add('field_pattern', '',
-            {pattern:/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+            {pattern: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
                 message: 'Дата не соответствует шаблону !'
             });
 
@@ -92,11 +92,11 @@ $(function () {
             hide_error_message('date_of_birthday');
         }
 
-        Validator.add('empty_all_fields','',{
-            array:[username,password_1,password_2,email,date_of_birthday],
-            message:"Звездочки (*) обозначают поля, которые нужно заполнить"});
-        var e_mess=Validator.run();
-        if(!$.isEmptyObject(e_mess)){
+        Validator.add('empty_all_fields', '', {
+            array: [username, password_1, password_2, email, date_of_birthday],
+            message: "Звездочки (*) обозначают поля, которые нужно заполнить"});
+        var e_mess = Validator.run();
+        if (!$.isEmptyObject(e_mess)) {
             show_global_error_message(e_mess);
         }
         return data_ok; // отправка данных на сервер
