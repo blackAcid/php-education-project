@@ -29,18 +29,17 @@ var Validator = {
             return params.message;
         else return '';
     },
-    equals: function (params){
-        if(params.value_1 != params.value_2)
+    equals: function (params) {
+        if (params.value_1 != params.value_2)
             return params.message;
         else return '';
     },
-    empty_all_fields: function(params){
-        var message='';
-        for(var i in params.array)
-        {
-            message+=params.array[i];
+    empty_all_fields: function (params) {
+        var message = '';
+        for (var i in params.array) {
+            message += params.array[i];
         }
-        if(message=='')
+        if (message == '')
             return params.message;
         else return '';
     },
@@ -79,10 +78,10 @@ var Validator = {
                     console.log("Message: " + error_message);
                     if (error_message != '') {
                         if (validation_method.chain == 'true') {
-                            stack_of_messages[validation_method.name]=error_message;
+                            stack_of_messages[validation_method.name] = error_message;
                             return stack_of_messages;
                         } else {
-                            stack_of_messages[validation_method.name]=error_message;
+                            stack_of_messages[validation_method.name] = error_message;
                         }
                     }
 
@@ -103,11 +102,10 @@ var Validator = {
 }
 
 
-
 function show_error_message(messages, field_name) {
-    var message='';
-    for(var i in messages){
-        message+=messages[i]+'</br>';
+    var message = '';
+    for (var i in messages) {
+        message += messages[i] + '</br>';
     }
     $('#' + field_name + '_message').html(message);
     // if ($('#' + field_name + '_message_container').is(':hidden')) {
@@ -117,9 +115,9 @@ function show_error_message(messages, field_name) {
 }
 
 function show_global_error_message(messages) {
-    var message='';
-    for(var i in messages){
-        message+=messages[i]+'</br>';
+    var message = '';
+    for (var i in messages) {
+        message += messages[i] + '</br>';
     }
     $("#global_error_message").text(message);
     // if ($('#global_error_message_container').is(':hidden')) {

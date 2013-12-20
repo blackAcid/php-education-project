@@ -4,6 +4,8 @@ namespace modules\meme\models;
 use core\classTables\MemeBase;
 use core\classTables\TextAreas;
 use core\classTables\Memes;
+use core\classTables\Colors;
+use core\classTables\MemesComments;
 use core\Registry;
 use \Imagick;
 use \ImagickPixel;
@@ -17,8 +19,8 @@ class MemeModel
     private $img;
     private $textAreas;
     private $font;
-    private $fontColor = '#FFF';
-    private $strokeColor = '#000';
+    private $fontColor = 'white';
+    private $strokeColor = 'black';
     private $strokeWidth = 1;
     private $draw;
     private $fontPixel;
@@ -36,19 +38,19 @@ class MemeModel
         return $id['id'];
     }
 
-    //Getting images info from DB
+    //Get images info from DB
     public function getBasePictures()
     {
         $pics = new MemeBase();
         $selected = $pics->selectPrepare();
-        $queryResult = $selected->selectColumns(array('base_picture',
+        $queryResult = $selected->selectColumns(array('meme_base.id as id', 'base_picture',
             'COUNT(text_areas.id) as fields'))->join('LEFT', 'text_areas', 'id', 'meme_id')
             ->group('base_picture')->fetchAll();
         $this->pictures = $this->getPicturesOuput($queryResult);
         $this->inputs = $this->getInputsOutput($queryResult);
     }
 
-    //Getting images HTML output
+    //Get images HTML output
     private function getPicturesOuput($pics)
     {
         $output = '';
@@ -56,13 +58,13 @@ class MemeModel
             $pic = str_replace('/orig/', '/thumb/', $pics[$i]['base_picture']);
             preg_match('/(?<=\/)\w+(?=\.)/', $pic, $matches);
             $match = $matches[0];
-            $output .= "<img src='" . BASE_URL . $pic . "' class='thumb' inputs='" . $pics[$i]['fields'] .
-                "' alt='" . $match . "'>";
+            $output .= "<img src='" . BASE_URL . $pic . "' class='thumb' data-inputs='" . $pics[$i]['fields'] .
+                "' data-id='" . $pics[$i]['id'] . "'alt='" . $match . "'>";
         }
         return $output;
     }
 
-    //Getting inputs HTML output
+    //Get inputs HTML output
     private function getInputsOutput($pics)
     {
         $output = '';
@@ -85,33 +87,39 @@ class MemeModel
         return $max;
     }
 
-    public function createMeme($name, $path, $text)
+    //Generating meme
+    public function createMeme($name, $id, $text)
     {
         $textAreas = new TextAreas();
         $selected = $textAreas->selectPrepare();
-        $path = str_replace(BASE_URL, '', $path);
-        $coords = $selected->selectColumns(array('meme_base.id', 'alias', 'start_x', 'start_y', 'end_x', 'end_y', 'color'))
-            ->join('LEFT', 'meme_base', 'meme_id', 'id')->where(array('base_picture = ' => "$path"))->fetchAll();
+        $coords = $selected->selectColumns(array('base_picture', 'alias', 'start_x', 'start_y', 'end_x', 'end_y', 'color'))
+            ->join('LEFT', 'meme_base', 'meme_id', 'id')->where(array('meme_base.id = ' => $id))->fetchAll();
+
+        $colors = new Colors();
+        $selected = $colors->selectPrepare();
+        $colors = $selected->selectColumns(['text', 'stroke'])->where(['id = ' => $coords[0]['color']])->fetchAll();
+
         for ($i = 0; $i < count($text); $i++) {
             $areas[$i] = array($text[$i], $coords[$i]['start_x'], $coords[$i]['start_y'],
                 $coords[$i]['end_x'], $coords[$i]['end_y'],);
         }
-        if ($coords[0]['color'] == 2) {
-            $this->fontColor = '#000';
-            $this->strokeColor = '#FFF';
-        }
 
-        $this->memeBaseId = $coords[0]['id'];
+        $this->fontColor = $colors[0]['text'];
+        $this->strokeColor = $colors[0]['stroke'];
+
+
+        $this->memeBaseId = $id;
         $this->memeAlias = $coords[0]['alias'];
         $this->memeName = $name;
 
 
         $this->font = DIR_PUBLIC . 'fonts/russo.ttf';
 
-        $this->img = new imagick(DIR_PUBLIC . $path);
+        $this->img = new imagick(DIR_PUBLIC . $coords[0]['base_picture']);
         $this->textAreas = $areas;
         $this->getDraw();
         $this->getMeme();
+
     }
 
     private function getDraw()
@@ -168,9 +176,6 @@ class MemeModel
             'date_create' => date('Y-m-d-h-m-s', time()), 'date_update' => date('Y-m-d-h-m-s', time()),
             'likes' => 0, 'dislikes' => 0]);
 
-
-
-
     }
 
     private function getYShift($textHeight, $area)
@@ -220,9 +225,47 @@ class MemeModel
     {
         $meme = new Memes();
         $meme = $meme->selectPrepare();
-        $meme = $meme->selectColumns(['path'])->where(['id = ' => $id])->fetch();
+        $meme = $meme->selectColumns(['path', 'likes', 'dislikes', 'id'])->where(['id = ' => $id])->fetch();
 
-        return str_replace(DIR, '', $meme['path']);
+        //return str_replace(DIR, '', $meme['path']);
+        return $meme;
 
+    }
+
+    public function getImage($id)
+    {
+        $img = new MemeBase();
+        $img = $img->selectPrepare();
+        $img = $img->selectColumns(array('base_picture', 'width', 'height', 'start_x', 'start_y', 'end_x', 'end_y'))
+            ->join('LEFT', 'text_areas', 'id', 'meme_id')->where(array('meme_base.id = ' => $id))->fetchAll();
+        return $img;
+    }
+
+    public function getComments($id)
+    {
+        $com = new MemesComments();
+        $com = $com->selectPrepare();
+        $com = $com->selectColumns(['memes_comments.id as cid', 'username', 'users.id as uid', 'comment', 'memes_comments.date_create'])
+            ->where(['meme_id =' => $id])->join('LEFT', 'users', 'user_id', 'id')
+            ->order('memes_comments.id', 'DESC')->fetchAll();
+
+        return $this->getCommentsOutput($com);
+    }
+
+    private function getCommentsOutput($comments)
+    {
+        if (count($comments) > 0) {
+            $output = "<div id='comments'>";
+            for ($i = 0; $i < count($comments); $i++) {
+                $output .= "<div class='comment'>
+                    <article>" . $comments[$i]['comment'] . "</article>
+                    <footer>" . date('H:i F jS', strtotime($comments[$i]['date_create'])) . " by <a href='/user/user/profile?id="
+                    . $comments[$i]['uid'] . "'>" . $comments[$i]['username']
+                    . "</a></footer></div>";
+            }
+            return $output . "</div>";
+        } else {
+            return "<div class='comments'><div id='no_com'>Комментариев пока нет :(</div></div>";
+        }
     }
 }

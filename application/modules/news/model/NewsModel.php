@@ -16,23 +16,24 @@ use modules\user\model\User;
 class NewsModel
 {
     static private $memesOnPage;
+
     public static function getMemes($startFrom)
     {
-        $selectMemes=new Memes();
-        $selObj=$selectMemes->selectPrepare();
-        $result=$selObj
+        $selectMemes = new Memes();
+        $selObj = $selectMemes->selectPrepare();
+        $result = $selObj
             ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
-            ->from(['users'])->where(['memes.user_id='=>'users.id'])->order('memes.date_create', 'DESC')
+            ->from(['users'])->where(['memes.`user_id`=' => 'users.`id`'])->order('memes.`date_create`', 'DESC')
             ->limit($startFrom, 5)->fetchAll(null);
         return $result;
     }
     public static function getMemesByRating($startFrom)
     {
-        $selectMemes=new Memes();
-        $selObj=$selectMemes->selectPrepare();
-        $result=$selObj
+        $selectMemes = new Memes();
+        $selObj = $selectMemes->selectPrepare();
+        $result = $selObj
             ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
-            ->from(['users'])->where(['memes.user_id='=>'users.id'])->order('likes', 'DESC')
+            ->from(['users'])->where(['memes.user_id='=>'users.`id`'])->order('likes', 'DESC')
             ->limit($startFrom, 5)->fetchAll(null);
         return $result;
     }
@@ -40,14 +41,16 @@ class NewsModel
     public static function userRating()
     {
         $ratings=new Ratings();
-        if (!empty($_SESSION['userID'])) {
-            $userID=$_SESSION['userID'];
+        //ob_start();
+        //session_start();
+        if (!empty($_SESSION['id'])) {
+            $userID=$_SESSION['id'];
             $selObj=$ratings->selectPrepare();
-            $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>'?'])
-                ->fetchAll([$userID]);
+            $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>"$userID"])
+                ->fetchAll(null);
+            ob_end_flush();
             return $getRating;
-        }
-        else return;
+        } else return;
         /*$selObj=$ratings->selectPrepare();
         $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>'?'])
             ->fetchAll([$userID]);
@@ -88,11 +91,11 @@ class NewsModel
     }*/
     public static function topUsers()
     {
-        $selUsers=new Users();
-        $selObj1=$selUsers->selectPrepare();
-        $users=$selObj1->selectColumns(['username', 'avatar'])->distinct('1')->join('inner', 'memes', 'id', 'user_id')
-            ->where(['year(memes.`date_create`)='=>'year(now()) and',
-                'week(memes.`date_create`)='=>'(week(now(),7)-1)'])
+        $selUsers = new Users();
+        $selObj1 = $selUsers->selectPrepare();
+        $users = $selObj1->selectColumns(['username', 'avatar'])->distinct('1')->join('inner', 'memes', 'id', 'user_id')
+            ->where(['year(memes.`date_create`)=' => 'year(now()) and',
+                'week(memes.`date_create`)=' => '(week(now(),7)-1)'])
             ->order('likes', 'desc')->fetchAll(null);
         return $users;
     }

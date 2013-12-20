@@ -105,7 +105,6 @@ class DefaultModel
         $result=$selObj1->selectColumns(['username','avatar'])->distinct('1')->join('inner','memes','id','user_id')
             ->where(['year(memes.`date_create`)='=>'year(now()) and','week(memes.`date_create`)='=>'(week(now(),7)-1)'])
             ->order('likes','desc')->fetchAll(null);
-
         return $result;
     }
     public static function testUpdate()
@@ -119,5 +118,18 @@ class DefaultModel
         $selObj2=$insertMemes->selectPrepare();
         $likes=$selObj2->selectColumns(['likes', 'dislikes'])->where(['id='=>'?'])->fetchAll(["2"]);
         return $likes;
+    }
+    public static function getUsersY()
+    {
+    $selectUser=new Users();
+    $selObj=$selectUser->selectPrepare();
+    $userName="aaa";
+    $resultRowSet=$selObj->selectColumns(['username'])->where(['username='=>$userName])->fetch(null);
+    //echo "<br> USERNAME".$userName;
+    //echo "isUsernameTaken";
+    //var_dump($resultRowSet);
+    /*if($resultRowSet['username'])
+    return $this->errorStack[]=$error;}*/
+        return $resultRowSet;
     }
 }

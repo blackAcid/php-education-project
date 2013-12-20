@@ -9,7 +9,7 @@ $(function () {
         Validator.field_value = username;
         Validator.add('empty', 'true');
         Validator.add('field_pattern', '',
-            {pattern:'^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$',
+            {pattern: '^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$',
                 message: 'Поле не валидно!'
             });
 
@@ -27,7 +27,7 @@ $(function () {
         Validator.add('empty', 'true');
         Validator.add('length_between', '', {max: 16, min: 8});
         Validator.add('field_pattern', '',
-            {pattern:'([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)',
+            {pattern: '([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)',
                 message: 'Поле должно содержать по крайней мере 1 символ и 1 цифру !'
             });
 
@@ -39,11 +39,11 @@ $(function () {
         else {
             hide_error_message('password_1');
         }
-        Validator.add('empty_all_fields','',{
-            array:[username,password_1],
-            message:"Звездочки (*) обозначают поля, которые нужно заполнить"});
-        var e_mess=Validator.run();
-        if(!$.isEmptyObject(e_mess)){
+        Validator.add('empty_all_fields', '', {
+            array: [username, password_1],
+            message: "Звездочки (*) обозначают поля, которые нужно заполнить"});
+        var e_mess = Validator.run();
+        if (!$.isEmptyObject(e_mess)) {
             show_global_error_message(e_mess);
         }
         return data_ok; // отправка данных на сервер

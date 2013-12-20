@@ -24,7 +24,7 @@ class IndexController
         $startFrom=0;
         $v->assign('memes', NewsModel::getMemes($startFrom));
         $v->assign('topUsers', NewsModel::topUsers());
-        $v->assign('userRating',NewsModel::userRating());
+        $v->assign('userRating', NewsModel::userRating());
         $request=new Request();
         $action=$request->getAction();
         $v->assign('action', $action);
@@ -37,8 +37,8 @@ class IndexController
     }
     public function memesAction()
     {
-        $module=Registry::getValue('module');
-        $userRating=NewsModel::userRating();
+        $module = Registry::getValue('module');
+        $userRating = NewsModel::userRating();
         if (isset($_POST['startFrom'])) {
             $startFrom=$_POST['startFrom'];
         } else {
@@ -53,17 +53,17 @@ class IndexController
             $memes=NewsModel::getMemesByRating($startFrom);
         }
         //echo "<br start from=>".$startFrom;
-        include $file=DIR_MOD.$module."/views/printMemes.php";
+        include $file = DIR_MOD . $module . "/views/printMemes.php";
     }
     public function ratingAction()
     {
-        $startFrom=0;
-        $module=Registry::getValue('module');
+        $startFrom = 0;
+        $module = Registry::getValue('module');
         $v = new View($module, 'memes.php');
         $v->assign('topUsers', NewsModel::topUsers());
-        $v->assign('userRating',NewsModel::userRating());
-        $request=new Request();
-        $action=$request->getAction();
+        $v->assign('userRating', NewsModel::userRating());
+        $request = new Request();
+        $action = $request->getAction();
         $v->assign('action', $action);
         $v->assign('title', 'News');
         $v->assign('memes', NewsModel::getMemesByRating($startFrom));

@@ -13,14 +13,17 @@ use core\FrontController;
 class FrontControllerTest extends PHPUnit_Framework_TestCase
 {
     protected $fixture;
+
     protected function setUp()
     {
-        $this->fixture=FrontController::getInstance();
+        $this->fixture = FrontController::getInstance();
     }
+
     protected function tearDown()
     {
-        $this->fixture=null;
+        $this->fixture = null;
     }
+
     public function testGetInstance()
     {
         $this->assertInstanceOf('core\FrontController', $this->fixture);
@@ -45,11 +48,13 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
         }
         $this->fail('Not raise an exception');
     }
+
     public function testGetControllerPathException()
     {
         $this->setExpectedException('Exception');
         $this->fixture->getControllerPath('user', 'mod');
     }
+
     /**
      * @expectedException Exception
      */
@@ -57,14 +62,15 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
     {
         $this->fixture->getControllerPath('user', 'mod');
     }
+
     public function providerGetControllerPath()
     {
         return array(
-           array('Index','main', DIR_MOD.'main/controllers/IndexController.php'),
-           array('Index','news',DIR_MOD.'news/controllers/IndexController.php'),
-           array('Index','likes',DIR_MOD.'likes/controllers/IndexController.php'),
-           array('Meme','meme',DIR_MOD.'meme/controllers/MemeController.php'),
-           array('User','user',DIR_MOD.'user/controllers/UserController.php')
+            array('Index', 'main', DIR_MOD . 'main/controllers/IndexController.php'),
+            array('Index', 'news', DIR_MOD . 'news/controllers/IndexController.php'),
+            array('Index', 'likes', DIR_MOD . 'likes/controllers/IndexController.php'),
+            array('Meme', 'meme', DIR_MOD . 'meme/controllers/MemeController.php'),
+            array('User', 'user', DIR_MOD . 'user/controllers/UserController.php')
         );
     }
 }

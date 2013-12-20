@@ -1,128 +1,110 @@
 
-div.user-profile
-{
-    font-family: tahoma,arial,verdana,sans-serif,Lucida Sans;
+div.user-profile {
+    font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
     font-size: 18px;
 }
 
-img.avatar
-{
-   margin-top: 10px;
-   width: 250px;
-   height: 250px;
+img.avatar {
+    margin-top: 10px;
 }
 
-div.avatar
-{
+div.avatar {
     text-align: center;
 }
 
-div.profile-navigation ul
-{
+div.profile-navigation ul {
     clear: both;
 }
-div.profile-navigation li
-{
+
+div.profile-navigation li {
     list-style: none;
     padding: 7px;
 }
 
-div.profile-navigation li > a > button
-{
+div.profile-navigation li > a > button {
     width: 85%;
 }
 
-div.profile-navigation li > a
-{
+div.profile-navigation li > a {
     color: #000000;
 }
 
-div.profile-navigation li a:hover
-{
+div.profile-navigation li a:hover {
     text-decoration: none;
 }
 
-div.profile-content
-{
+div.profile-content {
     border-left: 1px solid #c0c0c0;
     text-align: center;
 }
 
-div.profile-info > img
-{
+div.profile-info > img {
     margin-top: 10px;
 }
 
-ul.user-info
-{
+ul.user-info {
     border-bottom: 1px solid #c0c0c0;
 }
 
-div.meme-zone
-{
+div.meme-zone {
     text-align: center;
     width: 70%;
-    margin:3% 20%;
-    padding:5px;
+    margin: 3% 20%;
+    padding: 5px;
     background-color: #ffffff;
     border: 2px solid rgb(85, 66, 158);
     border-radius: 15px;
-    box-shadow: 0 0 10px rgba(85, 66, 158,1);
+    box-shadow: 0 0 10px rgba(85, 66, 158, 1);
 }
 
-div.meme-zone header
-{
-    border-bottom:1px solid gray;
+div.meme-zone header {
+    border-bottom: 1px solid #563d7c;
     text-align: left;
 }
-div.meme-zone footer
-{
-    border-top:1px solid gray;
+
+div.meme-zone footer {
+    border-top: 1px solid gray;
 }
 
-div.meme-zone > img
-{
+div.meme-zone > img {
     max-height: 500px;
     max-width: 500px;
 }
 
-img.meme
-{
+img.meme {
     margin: 10px;
 }
 
-div.user-change
-{
+div.user-change {
     width: 30%;
 }
 
-input.form-control:focus
-{
+input.form-control:focus {
     border-color: #9724d2;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(189, 77, 247, 0.6);
 }
 
-ul.change-data
-{
+ul.change-data {
     list-style: none;
     margin-top: 15px;
 }
 
-ul.change-data li
-{
+ul.change-data li {
     margin-bottom: 15px;
     padding-top: 15px;
 }
 
-div.meme-zone > div.likes_dislikes button
-{
+div.meme-zone > div.likes_dislikes button {
     background-color: #ffffff;
     vertical-align: middle;
     border: #ffffff;
 }
 
-div.password-condition
-{
+div.meme-zone a:hover {
+    text-decoration: none;
+}
+
+div.password-condition {
     border: 1px solid #c0c0c0;
     border-radius: 3px;
     background-color: #dcdcd9;

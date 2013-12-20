@@ -17,6 +17,7 @@ class Select
     private $group;
     private $tables;
     private $distinct;
+
     public function __construct($table, PDO $db)
     {
         $this->table = $table;
@@ -41,9 +42,10 @@ class Select
         $values = array_values($construct);
         $convert = "";
         for ($i = 0; $i < count($construct); $i++) {
-            preg_match('/([`()])/', $values[$i],$matches,PREG_OFFSET_CAPTURE);
-            preg_match('/(\/)/', $values[$i],$slash,PREG_OFFSET_CAPTURE);
-            if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL' && count($slash)!=null && count($matches)==null) {
+            preg_match('/([`()])/', $values[$i], $matches, PREG_OFFSET_CAPTURE);
+            //preg_match('/(\/)/', $values[$i], $slash, PREG_OFFSET_CAPTURE);
+            if ($values[$i] != '?' && strtoupper($values[$i]) != 'IS NULL'
+                 && count($matches)==null /*&& count($slash)!=null*/) {
                 $values[$i] = $this->db->quote($values[$i]);
             }
             if(strstr($keys[$i],"LIKE")) {
@@ -53,7 +55,7 @@ class Select
             }
 
         }
-        $this->where = "WHERE " . $convert;
+        $this->where = " WHERE " . $convert;
         return $this;
     }
 
@@ -110,7 +112,7 @@ class Select
 
     public function fetchAll($values = null)
     {
-        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` ".$this->tables
+        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` " . $this->tables
             . $this->join . $this->where . $this->group . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
@@ -139,7 +141,7 @@ class Select
 
     public function fetch($values = null)
     {
-        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` " .$this->tables
+        $this->sql = "SELECT " . $this->distinct . $this->cols . " FROM `$this->table` " . $this->tables
             . $this->join . $this->where . $this->order . $this->limit;
         $sql = $this->db->prepare($this->sql);
         if (!empty($values)) {
@@ -155,12 +157,12 @@ class Select
 
     public function from($tables = null)
     {
-        $t_old=array();
-        if ($tables!=null) {
-            for ($i=0; $i<count($tables); $i++) {
-                $t_old[$i]="`".$tables[$i]."`";
+        $t_old = array();
+        if ($tables != null) {
+            for ($i = 0; $i < count($tables); $i++) {
+                $t_old[$i] = "`" . $tables[$i] . "`";
             }
-            $this->tables=",".implode(",", $t_old);
+            $this->tables = "," . implode(",", $t_old);
             return $this;
         }
     }
