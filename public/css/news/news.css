@@ -1,5 +1,5 @@
 body {
-    /*background: url("1457300.jpg") fixed;*/
+    background: url("1457300.jpg") fixed;
 }
 
 div.news_content {
@@ -138,7 +138,9 @@ section.news {
     opacity: 0.9;
     position: relative;
 }
-
+section.news .nav li.active a{
+    background: #563d7c;
+}
 section.news .container {
     text-align: center;
     width: auto;

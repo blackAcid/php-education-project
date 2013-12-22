@@ -2,9 +2,7 @@
 /*$action=$this->action;*/
 ?>
 <script type="text/javascript">
-    /*urlMemes='<?=BASE_URL."news/index/memes"?>'*/
     action = '<?=$this->action?>'
-    /*urlButtons='<?=BASE_URL."news/index/updateLikes"?>'*/
 </script>
 <div class="headers">
     <header class="top_users"></header>
@@ -42,13 +40,13 @@
         </table>
     </aside>
     <section class="news" id="news">
-        <ul class="nav nav-tabs">
-            <li><a href="<?= BASE_URL . "news/index/index" ?>">Последние</a></li>
-            <li><a href="<?= BASE_URL . "news/index/rating" ?>">Лучшие</a></li>
+        <ul class="nav nav-tabs nav-pills">
+            <li id="index"><a href="<?= BASE_URL . "news/index/index" ?>">Последние</a></li>
+            <li id="rating"><a href="<?= BASE_URL . "news/index/rating" ?>">Лучшие</a></li>
             <?php
             if (!empty ($_SESSION['id'])) {
             ?>
-            <li><a href="<?= BASE_URL . "news/index/subs" ?>">Подписки</a></li>
+            <li id="subs"><a href="<?= BASE_URL . "news/index/subs" ?>">Подписки</a></li>
             <?php
             }
             ?>

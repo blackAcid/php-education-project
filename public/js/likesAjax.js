@@ -38,7 +38,8 @@ $(document).ready(function () {
             }).done(function (data) {
                     $('#' + buttonValue + '.rating').html(data);
                     $('.likes_dislikes#' + buttonValue).html("<div class='likes_dislikes alert alert-info'>Thank You!<div>")
-                        .hide(1000);
+                        .slideToggle(1000);
+                       // .hide(1000);
                     inProgress = false;
 
                 });
