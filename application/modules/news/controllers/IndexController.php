@@ -51,10 +51,9 @@ class IndexController
         }
         if ($act == 'index') {
             $memes = NewsModel::getMemes($startFrom);
-        } elseif ($act == 'rating'){
+        } elseif ($act == 'rating') {
             $memes = NewsModel::getMemesByRating($startFrom);
-        }
-        else {
+        } else {
             $memes = NewsModel::userSubs($startFrom);
         }
         //echo "<br start from=>".$startFrom;
@@ -91,7 +90,7 @@ class IndexController
         $request = new Request();
         $action = $request->getAction();
         $v->assign('action', $action);
-        $v->assign('memes',NewsModel::userSubs($startFrom));
+        $v->assign('memes', NewsModel::userSubs($startFrom));
         try {
             $v->addIntoTemplate();
             $v->display();

@@ -16,23 +16,9 @@ class DataBase
     {
         $class = get_class($this);
         $this->className = $class::$classTable;
-        //$this->getDbConfig();
         $dbConnect = DataBaseConnection::getInstance();
         $this->db = $dbConnect->getDbConfig();
     }
-
-    /*private function getDbConfig()
-    {
-        $type=Config::getProperty('Database', 'type');
-        $host=Config::getProperty('Database', 'host');
-        $dbname=Config::getProperty('Database', 'dbname');
-        $user=Config::getProperty('Database', 'user');
-        $password=Config::getProperty('Database', 'password');
-        $charset = Config::getProperty('Database', 'charset');
-        $dsn="$type:dbname=$dbname;host=$host;charset=$charset";
-        $this->db = new PDO($dsn, $user, $password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET utf8"));
-        return $this->db;
-    }*/
     public function selectPrepare()
     {
         return new Select($this->className, $this->db);
@@ -67,10 +53,12 @@ class DataBase
     public function update($fields, $construct = null, $values = null)
     {
         $fields_res = array();
+        $matches=array();
         for ($i = 0; $i < count($fields); $i++) {
             $fields_cols = array_keys($fields);
             $fields_val = array_values(($fields));
-            preg_match('/([\*\+-\/])/', $fields_val[$i], $matches, PREG_OFFSET_CAPTURE);
+            //preg_match('/([\*\+-\/])/', $fields_val[$i], $matches, PREG_OFFSET_CAPTURE);
+            preg_match('/([\*\+-\/])/', $fields_val[$i], $matches[$i]);
             if (count($matches) != null) {
                 $fields_res[$i] = "`$fields_cols[$i]`=$fields_val[$i]";
             } else {

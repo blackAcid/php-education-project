@@ -9,7 +9,6 @@ use modules\user\model;
 use core\Validator;
 use core\classTables\Users;
 
-
 class UserController
 {
     public function registrationAction()
@@ -80,62 +79,49 @@ class UserController
             }
 
             $emailValid->isEmpty('Заполните поле !');
-            $emailValid->hasFormat('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/','Неверный email !');
+            $emailValid->hasFormat('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/', 'Неверный email !');
             $emailValid->isEmailTaken('Этот email уже занят !');
-            if($emailValid->isValid()){
-
-            }else{
+            if ($emailValid->isValid()) {
+            } else {
                 $message='';
-                foreach($emailValid->getErrors() as $value)
-                {
+                foreach ($emailValid->getErrors() as $value) {
                     $message.=$value."</br>";
                 }
-                $view->assign('email_message',$message);
+                $view->assign('email_message', $message);
             }
-
             $dateOfBirthdayValid->isEmpty('Заполните поле !');
-            $dateOfBirthdayValid->hasFormat('/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/','Дата не соответствует шаблону !');
-            if($dateOfBirthdayValid->isValid()){
-
-            }else{
+            $dateOfBirthdayValid->hasFormat('/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/', 'Дата не соответствует шаблону !');
+            if ($dateOfBirthdayValid->isValid()) {
+            } else {
                 $message='';
-                foreach( $dateOfBirthdayValid->getErrors() as $value)
-                {
+                foreach ($dateOfBirthdayValid->getErrors() as $value) {
                     $message.=$value."</br>";
                 }
                 $view->assign('date_of_birthday_message', $message);
             }
-          //  print_r($userDAO->allUsers());
-
-            if(count($usernameValid->errorStack)==0 &&
-               count($password1Valid->errorStack)==0 &&
-               count($password2Valid->errorStack)==0 &&
-               count($emailValid->errorStack)==0 &&
-               count($dateOfBirthdayValid->errorStack)==0)
-            {
+            if (count($usernameValid->errorStack)==0 &&
+                count($password1Valid->errorStack)==0 &&
+                count($password2Valid->errorStack)==0 &&
+                count($emailValid->errorStack)==0 &&
+                count($dateOfBirthdayValid->errorStack)==0) {
                 $userDAO->insert($user);
                 $view->assign('global_message', "Вы успешно зарегистрировались !");
-
             }
-
         }
-
-            try {
-                $view->addIntoTemplate();
-                $view->display();
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+        try {
+            $view->addIntoTemplate();
+            $view->display();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
-
-    public function  signinAction(){
+    public function signinAction()
+    {
         unset($_SESSION['id']);
         $module = Registry::getValue('module');
         $view = new View($module, 'signin.php');
-        $view->assign('title','Вход');
-
-        if(isset($_POST['username'], $_POST['password_1']))
-        {
+        $view->assign('title', 'Вход');
+        if (isset($_POST['username'], $_POST['password_1'])) {
             echo "username: ".$_POST['username']."<br>password: ".$_POST['password_1'];
             $username=$_POST['username'];
             $password_1= $_POST['password_1'];
@@ -150,12 +136,10 @@ class UserController
 
             $usernameValid->isEmpty('Заполните поле !');
             $usernameValid->hasFormat('/^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/', 'Поле не валидно!');
-            if($usernameValid->isValid()){
-
-            }else{
+            if ($usernameValid->isValid()) {
+            } else {
                 $message='';
-                foreach($usernameValid->getErrors() as $value)
-                {
+                foreach ($usernameValid->getErrors() as $value) {
                     $message.=$value."</br>";
                 }
                 $view->assign('username_message', $message);
@@ -163,25 +147,19 @@ class UserController
 
             $password1Valid->isEmpty('Заполните поле !');
             $password1Valid->lengthBetween(16, 8, "Максимальная длинна поля 16, минимальная 8!");
-            $password1Valid->hasFormat('/([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)/','Поле должно содержать по крайней мере 1 символ и 1 цифру !');
-            if($password1Valid->isValid()){
-
-            }else{
+            $password1Valid->hasFormat('/([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)/', 'Поле должно содержать по крайней мере 1 символ и 1 цифру !');
+            if ($password1Valid->isValid()) {
+            } else {
                 $message='';
-                foreach($password1Valid->getErrors() as $value)
-                {
+                foreach ($password1Valid->getErrors() as $value) {
                     $message.=$value."</br>";
                 }
                 $view->assign('password_1_message', $message);
             }
-
-            if(count($usernameValid->errorStack)==0 && count($password1Valid->errorStack)==0)
-            {
-                if(count($userDAO->getUserId($user))==0)
-                {
+            if (count($usernameValid->errorStack)==0 && count($password1Valid->errorStack)==0) {
+                if (count($userDAO->getUserId($user))==0) {
                     $view->assign('global_message', "Вы еще не зарегистрированы !");
-                }else
-                {
+                } else {
                     ob_start();
                     session_start();
                     $id = $userDAO->getUserId($user);
@@ -189,23 +167,15 @@ class UserController
                     $_SESSION['username'] = $username;
                     header('Location: ' . BASE_URL . 'user/user/profile?id='.$_SESSION['id']);
                     ob_end_flush();
-
                 }
-
             }
-
         }
-
-
-        try
-        {
+        try {
             $view -> addIntoTemplate();
             $view -> display();
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             echo $e -> getMessage();
         }
-
     }
 
     public function profileAction()

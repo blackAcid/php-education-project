@@ -4,14 +4,19 @@
         <ul class="change-data">
             <li>
                 <div class="avatar">
-                    Ваш Аватар: <img src="<?php echo '/images/user_avatars/' . $this->avatar; ?>" class="avatar">
+                    Ваш Аватар: <img src="<?='/images/user_avatars/' . $this->avatar;?>" class="avatar">
                 </div>
                 <div class="change-avatar">
                     Выбрать новый Аватар: <input name="userfile" type="file"/>
                 </div>
             </li>
             <div
-                class="avatar-error"><?php if (isset($this->user_error['avatar'])) echo $this->user_error['avatar']; ?></div>
+                class="avatar-error">
+    <?php
+    if (isset($this->user_error['avatar'])) {
+        echo $this->user_error['avatar'];
+    } ?>
+    </div>
             <li>
                 <div class="actual-login">
                     Ваше Имя: <h3><?php echo $this->username; ?></h3>
@@ -31,7 +36,12 @@
                                              placeholder="Repeat Password">
 
                     <div
-                        class="password-error"><?php if ($this->user_error['password'] !== null) echo $this->user_error['password']; ?></div>
+                        class="password-error">
+    <?php
+    if ($this->user_error['password'] !== null) {
+        echo $this->user_error['password'];
+    }?>
+                    </div>
                 </div>
             </li>
             <input type="submit" value="Изменить" class="btn btn-default" name="user"/>

@@ -41,12 +41,6 @@ class DataBaseConnection
 
     public function getDbConfig()
     {
-        //$type=Config::getProperty('Database', 'type');
-        /*$host=Config::getProperty('Database', 'host');
-        $dbname=Config::getProperty('Database', 'dbname');
-        $user=Config::getProperty('Database', 'user');
-        $password=Config::getProperty('Database', 'password');
-        $charset = Config::getProperty('Database', 'charset');*/
         $dsn = "$this->type:dbname=$this->dbname;host=$this->host;charset=$this->charset";
         $db = new PDO($dsn, $this->user, $this->password);
         return $db;

@@ -4,7 +4,6 @@ namespace modules\subscriptions\model;
 use core\classTables\Users;
 use core\classTables\Subscriptions;
 
-
 class Subscriptions
 {
     public $userId;

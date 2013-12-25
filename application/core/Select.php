@@ -61,6 +61,7 @@ class Select
 
     public function order($field, $flag = null)
     {
+        $flag=strtoupper($flag);
         switch ($flag) {
             case 'ASC':
                 $this->order = 'ORDER BY ' . $field . ' ASC'; //в восходящем порядке
@@ -87,9 +88,9 @@ class Select
     public function group($field, $table = null)
     {
         if (empty($table)) {
-            $this->group = ' GROUP BY ' . $field;
+            $this->group = ' GROUP BY ' . $field." ";
         } else {
-            $this->group = ' GROUP BY ' . $table . '.' . $field;
+            $this->group = ' GROUP BY ' . $table . '.' . $field." ";
         }
         return $this;
     }

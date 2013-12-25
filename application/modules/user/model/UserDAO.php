@@ -12,8 +12,8 @@ class UserDAO
     {
         $selUsers = new Users();
         $selObj = $selUsers->selectPrepare();
-        //$result=$selObj->selectColumns(['id'])->where(['username='=>"$user->username",'and password='=>"$user->password"])->fetch(null);
-        $result = $selObj->selectColumns(['id'])->where(['username=' => "?", 'and password=' => "?"])->fetch([$user->username, $user->password]);
+        $result = $selObj->selectColumns(['id'])->where(['username=' => "?", 'and password=' => "?"])
+            ->fetch([$user->username, $user->password]);
         return $result;
     }
 
@@ -32,6 +32,4 @@ class UserDAO
         $result = $selObj->selectColumns(['username', 'password', 'date_of_birth', 'email'])->fetchAll(null);
         return $result;
     }
-
-
 }

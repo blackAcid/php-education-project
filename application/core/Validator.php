@@ -98,6 +98,4 @@ class Validator
             $this->errorStack[] = $error;
         return $this;
     }
-
-
 }

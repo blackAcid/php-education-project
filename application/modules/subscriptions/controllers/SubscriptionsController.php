@@ -60,6 +60,4 @@ class SubscriptionsController
             echo $e->getMessage();
         }
     }
-
-
-} 
+}

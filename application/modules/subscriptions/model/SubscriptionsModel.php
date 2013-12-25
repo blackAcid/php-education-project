@@ -27,7 +27,8 @@ class SubscriptionsModel
             $this->targetId = $result[$i]['target_id'];
             $selectUser = new Users();
             $selObjUser = $selectUser->selectPrepare();
-            $this->dataSubscriptions[$i] = $selObjUser->where(['id=' => $this->targetId])->selectColumns(['id', 'username', 'avatar', 'date_update'])->fetchAll(null);
+            $this->dataSubscriptions[$i] = $selObjUser->where(['id=' => $this->targetId])
+                ->selectColumns(['id', 'username', 'avatar', 'date_update'])->fetchAll(null);
         }
         return $this->dataSubscriptions;
     }
@@ -44,7 +45,8 @@ class SubscriptionsModel
         $this->targetId = $targetId;
         $selectSubscriptions = new Subscription();
         $selObjSubscriptions = $selectSubscriptions->selectPrepare();
-        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->userId",])->selectColumns(['status'])->fetch(null);
+        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->userId"])
+            ->selectColumns(['status'])->fetch(null);
         if (empty($subExist)) {
             $insertSubscriptions = new Subscription();
             $insertSubscriptions->insert(
@@ -56,16 +58,16 @@ class SubscriptionsModel
         }
     }
 
-    function isSubscribed($targetId)
+    public function isSubscribed($targetId)
     {
         $this->targetId = $targetId;
         $selectSubscriptions = new Subscription();
         $selObjSubscriptions = $selectSubscriptions->selectPrepare();
-        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->userId",])->selectColumns(['status'])->fetch(null);
+        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->userId"])
+            ->selectColumns(['status'])->fetch(null);
         if (!empty($subExist)) {
             return (bool)$subExist['status'];
         }
         return false;
     }
-
 }

@@ -83,13 +83,14 @@ class User
         }
     }
 
-    function isSubscribed($targetId)
+    public function isSubscribed($targetId)
     {
         $this->sub_id = $_SESSION['id'];
         $this->targetId = $targetId;
         $selectSubscriptions = new Subscription();
         $selObjSubscriptions = $selectSubscriptions->selectPrepare();
-        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->sub_id",])->selectColumns(['status'])->fetch(null);
+        $subExist = $selObjSubscriptions->where(['target_id=' => "$this->targetId", ' and user_id=' => "$this->sub_id"])
+            ->selectColumns(['status'])->fetch(null);
         if (!empty($subExist)) {
             return (bool)$subExist['status'];
         }

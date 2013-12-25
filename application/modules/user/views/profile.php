@@ -26,15 +26,19 @@
         </div>
     </div>
     <div class="profile-content col-md-9">
-        <?php for ($i = 0; $this->MemesNumber > $i; $i++) {
-            echo "<div class='meme-zone'><header><a href='/meme/meme/view?id=" . $this->paths_to_my_memes[$i]['id'] . "'>"
+        <?php
+        for ($i = 0; $this->MemesNumber > $i; $i++) {
+            echo "<div class='meme-zone'><header><a href='/meme/meme/view?id="
+                . $this->paths_to_my_memes[$i]['id'] . "'>"
                 . $this->paths_to_my_memes[$i]['name'] . "</a></header><img src='" .
                 BASE_URL . $this->paths_to_my_memes[$i]['path'] . "' class='meme'>
                         <div class='likes_dislikes' id='" . $this->paths_to_my_memes[$i]['id'] . "'>
-                            <button type='submit' form='likes' name='like' value='" . $this->paths_to_my_memes[$i]['id'] . "'>
+                            <button type='submit' form='likes' name='like' value='"
+                                    . $this->paths_to_my_memes[$i]['id'] . "'>
                             <img alt='like' src='" . BASE_URL . "/images/likes/like1.jpg' height='20'/>
                             </button>
-                            <button type='submit' form='dislikes' name='dislike' value='" . $this->paths_to_my_memes[$i]['id'] . "'>
+                            <button type='submit' form='dislikes' name='dislike' value='"
+                                    . $this->paths_to_my_memes[$i]['id'] . "'>
                             <img alt='dislike' src='" . BASE_URL . "/images/likes/dislike1.jpg' height='20'/>
                             </button>
                         </div>
